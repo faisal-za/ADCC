@@ -99,51 +99,57 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Testimonial Carousel */}
-        <Carousel
-          setApi={setApi}
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full max-w-6xl mx-auto"
-        >
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {testimonials.map((testimonial) => (
-              <CarouselItem key={testimonial.id} className="pl-2 md:pl-4 basis-full md:basis-1/3">
-                <Card className="bg-white shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
-                  <CardContent className="p-6">
-                    {/* User Icon */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
-                        <User className="h-5 w-5 text-primary-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-slate-600 text-xs">
-                          {testimonial.company}
-                        </p>
-                      </div>
-                    </div>
+        <div className="px-4 md:px-8">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: true,
+              containScroll: "trimSnaps",
+              dragFree: false,
+            }}
+            className="w-full max-w-6xl mx-auto"
+          >
+            <CarouselContent className="-ml-1">
+              {testimonials.map((testimonial) => (
+                <CarouselItem key={testimonial.id} className="pl-1 md:basis-1/3">
+                  <div className="p-1">
+                    <Card className="bg-white h-full border-0 shadow-lg">
+                      <CardContent className="p-6">
+                        {/* User Icon */}
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
+                            <User className="h-5 w-5 text-primary-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-slate-900 text-sm">
+                              {testimonial.name}
+                            </h4>
+                            <p className="text-slate-600 text-xs">
+                              {testimonial.company}
+                            </p>
+                          </div>
+                        </div>
 
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mb-3">
-                      {renderStars(testimonial.rating)}
-                    </div>
-                    
-                    {/* Testimonial Content */}
-                    <blockquote className="text-slate-700 text-sm leading-relaxed">
-                      "{testimonial.content}"
-                    </blockquote>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
-        </Carousel>
+                        {/* Rating */}
+                        <div className="flex items-center gap-1 mb-3">
+                          {renderStars(testimonial.rating)}
+                        </div>
+                        
+                        {/* Testimonial Content */}
+                        <blockquote className="text-slate-700 text-sm leading-relaxed">
+                          "{testimonial.content}"
+                        </blockquote>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
+        </div>
       </div>
     </section>
   );

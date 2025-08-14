@@ -873,8 +873,8 @@ body.rtl-font,
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
-.-ml-2 {
-  margin-left: -0.5rem;
+.-ml-1 {
+  margin-left: -0.25rem;
 }
 .-ml-4 {
   margin-left: -1rem;
@@ -1491,6 +1491,9 @@ body.rtl-font,
 .border {
   border-width: 1px;
 }
+.border-0 {
+  border-width: 0px;
+}
 .border-2 {
   border-width: 2px;
 }
@@ -1774,8 +1777,8 @@ body.rtl-font,
 .pb-4 {
   padding-bottom: 1rem;
 }
-.pl-2 {
-  padding-left: 0.5rem;
+.pl-1 {
+  padding-left: 0.25rem;
 }
 .pl-2\.5 {
   padding-left: 0.625rem;
@@ -2534,12 +2537,6 @@ body.rtl-font,
 .hover\:shadow-\[0_0_0_1px_hsl\(var\(--sidebar-accent\)\)\]:hover {
   --tw-shadow: 0 0 0 1px hsl(var(--sidebar-accent));
   --tw-shadow-colored: 0 0 0 1px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.hover\:shadow-lg:hover {
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -3386,9 +3383,6 @@ body.rtl-font,
   .md\:absolute {
     position: absolute;
   }
-  .md\:-ml-4 {
-    margin-left: -1rem;
-  }
   .md\:block {
     display: block;
   }
@@ -3419,8 +3413,9 @@ body.rtl-font,
   .md\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .md\:pl-4 {
-    padding-left: 1rem;
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
   .md\:text-2xl {
     font-size: 1.5rem;
