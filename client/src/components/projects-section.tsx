@@ -5,54 +5,54 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
 
-const projects = [
+const getProjects = (t: any) => [
   {
     id: 1,
-    title: "Health Matrix",
-    description: "Modern healthcare facility with state-of-the-art infrastructure and patient-centered design.",
+    titleKey: "healthMatrixTitle",
+    descriptionKey: "healthMatrixDesc",
     category: "commercial",
     image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    badge: "Commercial"
+    badgeKey: "commercial"
   },
   {
     id: 2,
-    title: "Alqasim Apartments",
-    description: "Luxury residential complex featuring modern amenities and sustainable design principles.",
+    titleKey: "alqasimTitle",
+    descriptionKey: "alqasimDesc",
     category: "residential",
     image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    badge: "Residential"
+    badgeKey: "residential"
   },
   {
     id: 3,
-    title: "KF District Villa",
-    description: "Contemporary villa design combining luxury living with functional architecture and premium finishes.",
+    titleKey: "kfVillaTitle",
+    descriptionKey: "kfVillaDesc",
     category: "residential",
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    badge: "Residential"
+    badgeKey: "residential"
   },
   {
     id: 4,
-    title: "Alrahmaniah Villa",
-    description: "Elegant villa featuring traditional elements with modern functionality and beautiful landscaping.",
+    titleKey: "alrahmaniahTitle",
+    descriptionKey: "alrahmaniahDesc",
     category: "residential",
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    badge: "Residential"
+    badgeKey: "residential"
   },
   {
     id: 5,
-    title: "Daisam Real Estate",
-    description: "Modern commercial development with innovative design and sustainable construction practices.",
+    titleKey: "daisamTitle",
+    descriptionKey: "daisamDesc",
     category: "commercial",
     image: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    badge: "Commercial"
+    badgeKey: "commercial"
   },
   {
     id: 6,
-    title: "Abdulrahman Renovation",
-    description: "Complete transformation of existing structure with modern upgrades and enhanced functionality.",
+    titleKey: "abdulrahmanTitle",
+    descriptionKey: "abdulrahmanDesc",
     category: "renovation",
     image: "https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    badge: "Renovation"
+    badgeKey: "renovation"
   }
 ];
 
@@ -68,6 +68,7 @@ export default function ProjectsSection() {
   const [visibleProjects, setVisibleProjects] = useState<Set<number>>(new Set());
   const { t } = useTranslation();
   const filters = getFilters(t);
+  const projects = getProjects(t);
 
   const filteredProjects = activeFilter === "all" 
     ? projects 
@@ -149,7 +150,7 @@ export default function ProjectsSection() {
                       'bg-purple-100 text-purple-800'
                     }`}
                   >
-                    {project.badge}
+                    {t(project.badgeKey as any)}
                   </Badge>
                 </div>
                 <div className="absolute top-4 right-4">
@@ -157,8 +158,8 @@ export default function ProjectsSection() {
                 </div>
               </div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-slate-900 mb-2">{project.title}</h3>
-                <p className="text-slate-600 mb-4">{project.description}</p>
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">{t(project.titleKey)}</h3>
+                <p className="text-slate-600 mb-4">{t(project.descriptionKey)}</p>
                 <button
                   onClick={scrollToContact}
                   className="text-primary-600 font-medium hover:text-primary-700 transition-colors flex items-center gap-1"

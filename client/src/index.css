@@ -146,8 +146,16 @@
     margin-right: 1rem;
   }
 
-  /* RTL support for dropdowns */
+  /* RTL support for dropdowns and select content */
   [dir="rtl"] [role="combobox"] {
+    text-align: right;
+  }
+
+  [dir="rtl"] [role="option"] {
+    text-align: right;
+  }
+
+  [dir="rtl"] [data-radix-select-content] {
     text-align: right;
   }
 }

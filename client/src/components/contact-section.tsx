@@ -145,11 +145,11 @@ export default function ContactSection() {
                                 <SelectValue placeholder={t('selectService')} />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
-                              <SelectItem value="construction">{t('constructionService')}</SelectItem>
-                              <SelectItem value="finishing">{t('finishingService')}</SelectItem>
-                              <SelectItem value="renovation">{t('renovationService')}</SelectItem>
-                              <SelectItem value="interior-exterior">{t('interiorService')}</SelectItem>
+                            <SelectContent className="rtl:text-right">
+                              <SelectItem value="construction" className="rtl:text-right">{t('constructionService')}</SelectItem>
+                              <SelectItem value="finishing" className="rtl:text-right">{t('finishingService')}</SelectItem>
+                              <SelectItem value="renovation" className="rtl:text-right">{t('renovationService')}</SelectItem>
+                              <SelectItem value="interior-exterior" className="rtl:text-right">{t('interiorService')}</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -256,122 +256,6 @@ export default function ContactSection() {
               </div>
             </div>
           </div>
-          
-          {/* Contact Form */}
-          <Card>
-            <CardContent className="p-6">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <FormField
-                      control={form.control}
-                      name="firstName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('firstName')}</FormLabel>
-                          <FormControl>
-                            <Input placeholder={t('enterFirstName')} {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="lastName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('lastName')}</FormLabel>
-                          <FormControl>
-                            <Input placeholder={t('enterLastName')} {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('email')}</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder={t('enterEmail')} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('phoneNumber')}</FormLabel>
-                        <FormControl>
-                          <Input type="tel" placeholder={t('enterPhone')} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="service"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('serviceInterested')}</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder={t('selectService')} />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="construction">{t('constructionService')}</SelectItem>
-                            <SelectItem value="finishing">{t('finishingService')}</SelectItem>
-                            <SelectItem value="renovation">{t('renovationService')}</SelectItem>
-                            <SelectItem value="interior-exterior">{t('interiorService')}</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('message')}</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder={t('messagePlaceholder')} 
-                            className="min-h-[120px]"
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-primary-600 hover:bg-primary-700"
-                    disabled={contactMutation.isPending}
-                  >
-                    {contactMutation.isPending ? t('sending') : t('sendMessage')}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </section>

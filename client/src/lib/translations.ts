@@ -42,6 +42,20 @@ export const translations = {
     renovation: "Renovation",
     viewDetails: "View Details",
     startProjectToday: "Start Your Project Today",
+    
+    // Project Details
+    healthMatrixTitle: "Health Matrix",
+    healthMatrixDesc: "Modern healthcare facility with state-of-the-art infrastructure and patient-centered design.",
+    alqasimTitle: "Alqasim Apartments",
+    alqasimDesc: "Luxury residential complex featuring modern amenities and sustainable design principles.",
+    kfVillaTitle: "KF District Villa",
+    kfVillaDesc: "Contemporary villa design combining luxury living with functional architecture and premium finishes.",
+    alrahmaniahTitle: "Alrahmaniah Villa",
+    alrahmaniahDesc: "Elegant villa featuring traditional elements with modern functionality and beautiful landscaping.",
+    daisamTitle: "Daisam Real Estate",
+    daisamDesc: "Modern commercial development with innovative design and sustainable construction practices.",
+    abdulrahmanTitle: "Abdulrahman Renovation",
+    abdulrahmanDesc: "Complete transformation of existing structure with modern upgrades and enhanced functionality.",
 
     // About Section
     whyChoose: "Why Choose ADCC?",
@@ -138,6 +152,20 @@ export const translations = {
     renovation: "تجديد",
     viewDetails: "عرض التفاصيل",
     startProjectToday: "ابدأ مشروعك اليوم",
+    
+    // Project Details
+    healthMatrixTitle: "هيلث ماتريكس",
+    healthMatrixDesc: "منشأة رعاية صحية حديثة مع بنية تحتية متطورة وتصميم يركز على المرضى.",
+    alqasimTitle: "شقق القاسم",
+    alqasimDesc: "مجمع سكني فاخر يضم وسائل الراحة الحديثة ومبادئ التصميم المستدام.",
+    kfVillaTitle: "فيلا حي كيه اف",
+    kfVillaDesc: "تصميم فيلا معاصر يجمع بين الحياة الفاخرة والعمارة الوظيفية واللمسات الأخيرة المتميزة.",
+    alrahmaniahTitle: "فيلا الرحمانية",
+    alrahmaniahDesc: "فيلا أنيقة تضم عناصر تقليدية مع وظائف حديثة وتنسيق حدائق جميل.",
+    daisamTitle: "دايسام العقارية",
+    daisamDesc: "تطوير تجاري حديث مع تصميم مبتكر وممارسات بناء مستدامة.",
+    abdulrahmanTitle: "تجديد عبدالرحمن",
+    abdulrahmanDesc: "تحويل كامل للهيكل الحالي مع تحديثات حديثة ووظائف محسنة.",
 
     // About Section
     whyChoose: "لماذا تختار ADCC؟",
