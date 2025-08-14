@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "../hooks/use-translation";
 
 const getStats = (t: any) => [
   { value: "50+", label: t('completedProjects') },

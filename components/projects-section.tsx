@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 import { ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "../hooks/use-translation";
 
 // Image Carousel Component
 function ProjectImageCarousel({ images }: { images: string[] }) {
@@ -242,8 +242,8 @@ export default function ProjectsSection() {
                 </div>
               </div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-slate-900 mb-2">{t(project.titleKey)}</h3>
-                <p className="text-slate-600 mb-4">{t(project.descriptionKey)}</p>
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">{t(project.titleKey as any)}</h3>
+                <p className="text-slate-600 mb-4">{t(project.descriptionKey as any)}</p>
                 <button
                   onClick={scrollToContact}
                   className="text-primary-600 font-medium hover:text-primary-700 transition-colors flex items-center gap-1"

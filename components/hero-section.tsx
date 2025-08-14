@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "../hooks/use-translation";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);

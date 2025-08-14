@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "./ui/card";
 import { HardHat, Gem, Wrench, Palette, ArrowRight } from "lucide-react";
-import { useTranslation } from "@/hooks/use-translation";
-import type { TranslationKey } from "@/lib/translations";
+import { useTranslation } from "../hooks/use-translation";
+import type { TranslationKey } from "../lib/translations";
 
 const services = [
   {

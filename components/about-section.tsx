@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "./ui/card";
 import { Award, Clock, Leaf } from "lucide-react";
-import { useTranslation } from "@/hooks/use-translation";
+import { useTranslation } from "../hooks/use-translation";
 
 export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);

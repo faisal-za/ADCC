@@ -1,5 +1,5 @@
-import { useLanguage } from "@/contexts/language-context";
-import { translations, type TranslationKey } from "@/lib/translations";
+import { useLanguage } from "../contexts/language-context";
+import { translations, type TranslationKey } from "../lib/translations";
 
 export function useTranslation() {
   const { language } = useLanguage();
