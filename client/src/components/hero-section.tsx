@@ -19,15 +19,16 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1581244277943-fe4a9c777189?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`
-        }}
-      />
-      <div className="absolute inset-0 hero-bg" />
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Animated GIF Background */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmF3Y2Fsa3Jqd3FpdXJpMGxsN25memJsYXh1MXNyamd5amdwNGFsYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif"
+          alt="Construction Animation"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>

@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
+import Navigation from "@/components/navigation";
+import Footer from "@/components/footer";
 
 // Sample blog post content
 const getBlogPost = (slug: string, t: any) => {
@@ -57,8 +59,10 @@ export default function BlogPostPage() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-slate-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <>
+        <Navigation />
+        <div className="min-h-screen bg-slate-50 pt-24 pb-12">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-slate-900 mb-6">
             {t('postNotFound')}
           </h1>
@@ -71,14 +75,18 @@ export default function BlogPostPage() {
               {t('backToBlog')}
             </Button>
           </Link>
+          </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Hero Section */}
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-slate-50">
+        {/* Hero Section */}
       <div 
         className="h-96 bg-cover bg-center relative"
         style={{ backgroundImage: `url('${post.image}')` }}
@@ -102,8 +110,8 @@ export default function BlogPostPage() {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Content */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Button */}
         <div className="mb-8">
           <Link href="/blog">
@@ -177,8 +185,10 @@ export default function BlogPostPage() {
               {t('contactUs')}
             </Button>
           </Link>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }

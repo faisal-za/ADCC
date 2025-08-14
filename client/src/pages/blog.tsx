@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar, Clock, Search, ArrowRight, User } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
+import Navigation from "@/components/navigation";
+import Footer from "@/components/footer";
 
 // Sample blog posts data
 const getBlogPosts = (t: any) => [
@@ -87,8 +89,10 @@ export default function BlogPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-slate-50 pt-24 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
@@ -219,7 +223,9 @@ export default function BlogPage() {
             </Button>
           </div>
         )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
