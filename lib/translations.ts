@@ -75,6 +75,10 @@ export const translations = {
   tips: "Tips",
   homeImprovement: "Home Improvement",
 
+    // Testimonials Section
+    testimonialsTitle: "What Our Clients Say",
+    testimonialsDescription: "Hear from our satisfied clients about their experience working with ADCC on their construction and renovation projects.",
+
     // Projects Section
     projectsTitle: "Our Featured Projects",
     projectsDescription: "Explore our portfolio of successfully completed projects that showcase our expertise and commitment to excellence.",
@@ -225,6 +229,10 @@ export const translations = {
     trends: "الاتجاهات",
     tips: "نصائح",
     homeImprovement: "تحسين المنزل",
+
+    // Testimonials Section
+    testimonialsTitle: "ماذا يقول عملاؤنا",
+    testimonialsDescription: "استمع لعملائنا الراضين حول تجربتهم في العمل مع ADCC في مشاريع البناء والتجديد.",
 
     // Projects Section
     projectsTitle: "مشاريعنا المميزة",
