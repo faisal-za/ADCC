@@ -30,6 +30,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('language', language);
       document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
       document.documentElement.lang = language;
+      
+      // Force font refresh by adding/removing a class
+      const body = document.body;
+      if (isRTL) {
+        body.classList.add('rtl-font');
+      } else {
+        body.classList.remove('rtl-font');
+      }
     }
   }, [language, isRTL]);
 
