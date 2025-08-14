@@ -1,3 +1,5 @@
+'use client'
+
 import { useLanguage } from "../contexts/language-context";
 import { translations, type TranslationKey } from "../lib/translations";
 
