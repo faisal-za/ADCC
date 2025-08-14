@@ -32,6 +32,48 @@ export const translations = {
     yearsExperience: "Years Experience",
     clientSatisfaction: "Client Satisfaction",
     supportAvailable: "Support Available",
+  
+  // Blog
+  blog: "Blog",
+  blogTitle: "Our Blog",
+  blogDescription: "Stay updated with the latest trends, tips, and insights from the construction and design industry.",
+  searchPlaceholder: "Search articles...",
+  allCategories: "All Categories",
+  construction: "Construction",
+  design: "Design",
+  interior: "Interior",
+  renovation: "Renovation",
+  readMore: "Read More",
+  noResultsFound: "No Results Found",
+  tryDifferentSearch: "Try adjusting your search terms or filters.",
+  clearFilters: "Clear Filters",
+  
+  // Blog Post
+  postNotFound: "Article Not Found",
+  postNotFoundDesc: "The article you're looking for doesn't exist.",
+  backToBlog: "Back to Blog",
+  share: "Share",
+  readyToStart: "Ready to Start Your Project?",
+  contactForProject: "Contact us today to discuss your construction or design needs.",
+  
+  // Blog Content
+  modernConstructionTitle: "Modern Construction Techniques Revolutionizing the Industry",
+  modernConstructionExcerpt: "Discover how innovative construction methods are transforming building projects with enhanced efficiency and sustainability.",
+  sustainableDesignTitle: "Sustainable Design Practices for Modern Buildings",
+  sustainableDesignExcerpt: "Learn about eco-friendly design approaches that reduce environmental impact while creating beautiful spaces.",
+  interiorTrendsTitle: "Interior Design Trends 2024: What's Hot This Year",
+  interiorTrendsExcerpt: "Explore the latest interior design trends that are shaping modern living spaces in 2024.",
+  renovationTipsTitle: "Home Renovation Tips: Maximize Your Investment",
+  renovationTipsExcerpt: "Essential renovation tips to help you make smart decisions and get the best return on your investment.",
+  
+  // Blog Categories
+  innovation: "Innovation",
+  technology: "Technology", 
+  sustainability: "Sustainability",
+  environment: "Environment",
+  trends: "Trends",
+  tips: "Tips",
+  homeImprovement: "Home Improvement",
 
     // Projects Section
     projectsTitle: "Our Featured Projects",
@@ -39,7 +81,6 @@ export const translations = {
     allProjects: "All Projects",
     residential: "Residential",
     commercial: "Commercial",
-    renovation: "Renovation",
     viewDetails: "View Details",
     startProjectToday: "Start Your Project Today",
     
@@ -142,6 +183,48 @@ export const translations = {
     yearsExperience: "سنة خبرة",
     clientSatisfaction: "رضا العملاء",
     supportAvailable: "دعم متاح",
+  
+    // Blog
+    blog: "المدونة",
+    blogTitle: "مدونتنا",
+    blogDescription: "ابق محدثًا بأحدث الاتجاهات والنصائح والرؤى من صناعة البناء والتصميم.",
+    searchPlaceholder: "البحث في المقالات...",
+    allCategories: "جميع الفئات",
+    construction: "البناء",
+    design: "التصميم",
+    interior: "الديكور الداخلي",
+    renovation: "التجديد",
+    readMore: "اقرأ المزيد",
+    noResultsFound: "لا توجد نتائج",
+    tryDifferentSearch: "حاول تعديل مصطلحات البحث أو المرشحات.",
+    clearFilters: "مسح المرشحات",
+    
+    // Blog Post
+    postNotFound: "المقال غير موجود",
+    postNotFoundDesc: "المقال الذي تبحث عنه غير موجود.",
+    backToBlog: "العودة للمدونة",
+    share: "مشاركة",
+    readyToStart: "مستعد لبدء مشروعك؟",
+    contactForProject: "اتصل بنا اليوم لمناقشة احتياجاتك في البناء أو التصميم.",
+    
+    // Blog Content
+    modernConstructionTitle: "تقنيات البناء الحديثة التي تحدث ثورة في الصناعة",
+    modernConstructionExcerpt: "اكتشف كيف تحول طرق البناء المبتكرة مشاريع البناء بكفاءة واستدامة محسنة.",
+    sustainableDesignTitle: "ممارسات التصميم المستدام للمباني الحديثة",
+    sustainableDesignExcerpt: "تعرف على نهج التصميم الصديق للبيئة الذي يقلل التأثير البيئي مع إنشاء مساحات جميلة.",
+    interiorTrendsTitle: "اتجاهات التصميم الداخلي 2024: ما الجديد هذا العام",
+    interiorTrendsExcerpt: "استكشف أحدث اتجاهات التصميم الداخلي التي تشكل مساحات المعيشة الحديثة في 2024.",
+    renovationTipsTitle: "نصائح تجديد المنزل: اعظم استثمارك",
+    renovationTipsExcerpt: "نصائح تجديد أساسية لمساعدتك في اتخاذ قرارات ذكية والحصول على أفضل عائد على استثمارك.",
+    
+    // Blog Categories
+    innovation: "الابتكار",
+    technology: "التكنولوجيا", 
+    sustainability: "الاستدامة",
+    environment: "البيئة",
+    trends: "الاتجاهات",
+    tips: "نصائح",
+    homeImprovement: "تحسين المنزل",
 
     // Projects Section
     projectsTitle: "مشاريعنا المميزة",
@@ -149,7 +232,6 @@ export const translations = {
     allProjects: "جميع المشاريع",
     residential: "سكني",
     commercial: "تجاري",
-    renovation: "تجديد",
     viewDetails: "عرض التفاصيل",
     startProjectToday: "ابدأ مشروعك اليوم",
     

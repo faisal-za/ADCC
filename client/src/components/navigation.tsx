@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import LanguageSwitch from "@/components/language-switch";
 import { useTranslation } from "@/hooks/use-translation";
 
@@ -61,6 +62,11 @@ export default function Navigation() {
               >
                 {t('projects')}
               </button>
+              <Link href="/blog">
+                <button className="text-slate-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
+                  {t('blog')}
+                </button>
+              </Link>
               <button
                 onClick={() => scrollToSection("about")}
                 className="text-slate-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
