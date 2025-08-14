@@ -74,6 +74,7 @@ export const translations = {
   trends: "Trends",
   tips: "Tips",
   homeImprovement: "Home Improvement",
+  architecture: "Architecture",
 
     // Testimonials Section
     testimonialsTitle: "What Our Clients Say",
@@ -229,6 +230,7 @@ export const translations = {
     trends: "الاتجاهات",
     tips: "نصائح",
     homeImprovement: "تحسين المنزل",
+    architecture: "الهندسة المعمارية",
 
     // Testimonials Section
     testimonialsTitle: "ماذا يقول عملاؤنا",
