@@ -45,13 +45,13 @@ export const translations = {
 
     // About Section
     whyChoose: "Why Choose ADCC?",
-    aboutDescription: "At Advanced Design & Contracting Co., we take pride in our ability to execute projects on time and within budget, while maintaining a focus on quality, sustainability, and customer satisfaction.",
+    aboutDescription: "We deliver projects on time and within budget while maintaining excellence in quality, sustainability, and customer satisfaction.",
     excellenceTitle: "Excellence in Craftsmanship",
-    excellenceDesc: "Every project adheres to the highest standards of craftsmanship and efficiency with meticulous attention to detail.",
+    excellenceDesc: "Every project meets the highest standards with meticulous attention to detail.",
     timeTitle: "On-Time Delivery",
-    timeDesc: "We pride ourselves on delivering projects on schedule without compromising quality or safety standards.",
+    timeDesc: "We deliver projects on schedule without compromising quality or safety.",
     sustainableTitle: "Sustainable Practices",
-    sustainableDesc: "Environmental responsibility is at the core of our construction and design methodologies.",
+    sustainableDesc: "Environmental responsibility is central to our construction methods.",
     yearsExcellence: "Years of Excellence",
 
     // Contact Section
@@ -141,13 +141,13 @@ export const translations = {
 
     // About Section
     whyChoose: "لماذا تختار ADCC؟",
-    aboutDescription: "في شركة التصميم والمقاولات المتقدمة، نفتخر بقدرتنا على تنفيذ المشاريع في الوقت المحدد وضمن الميزانية، مع الحفاظ على التركيز على الجودة والاستدامة ورضا العملاء.",
+    aboutDescription: "ننجز المشاريع في الوقت المحدد وضمن الميزانية مع الحفاظ على التميز في الجودة والاستدامة ورضا العملاء.",
     excellenceTitle: "التميز في الحرفية",
-    excellenceDesc: "كل مشروع يلتزم بأعلى معايير الحرفية والكفاءة مع الاهتمام الدقيق بالتفاصيل.",
+    excellenceDesc: "كل مشروع يحقق أعلى المعايير مع الاهتمام الدقيق بالتفاصيل.",
     timeTitle: "التسليم في الوقت المحدد",
-    timeDesc: "نفتخر بتسليم المشاريع في المواعيد المحددة دون التنازل عن معايير الجودة والسلامة.",
+    timeDesc: "نسلم المشاريع في المواعيد المحددة دون التنازل عن الجودة والسلامة.",
     sustainableTitle: "الممارسات المستدامة",
-    sustainableDesc: "المسؤولية البيئية هي جوهر منهجيات البناء والتصميم لدينا.",
+    sustainableDesc: "المسؤولية البيئية أساسية في طرق البناء لدينا.",
     yearsExcellence: "سنة من التميز",
 
     // Contact Section

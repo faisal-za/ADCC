@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ArrowRight } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translation";
 
 const projects = [
   {
@@ -55,16 +56,18 @@ const projects = [
   }
 ];
 
-const filters = [
-  { id: "all", label: "All Projects" },
-  { id: "residential", label: "Residential" },
-  { id: "commercial", label: "Commercial" },
-  { id: "renovation", label: "Renovation" }
+const getFilters = (t: any) => [
+  { id: "all", label: t('allProjects') },
+  { id: "residential", label: t('residential') },
+  { id: "commercial", label: t('commercial') },
+  { id: "renovation", label: t('renovation') }
 ];
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [visibleProjects, setVisibleProjects] = useState(new Set<number>());
+  const [visibleProjects, setVisibleProjects] = useState<Set<number>>(new Set());
+  const { t } = useTranslation();
+  const filters = getFilters(t);
 
   const filteredProjects = activeFilter === "all" 
     ? projects 
@@ -76,7 +79,7 @@ export default function ProjectsSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = parseInt(entry.target.getAttribute('data-index') || '0');
-            setVisibleProjects(prev => new Set([...prev, index]));
+            setVisibleProjects(prev => new Set(Array.from(prev).concat([index])));
           }
         });
       },
@@ -100,9 +103,9 @@ export default function ProjectsSection() {
     <section id="projects" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Our Featured Projects</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">{t('projectsTitle')}</h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-            Explore our portfolio of successfully completed projects that showcase our expertise and commitment to excellence.
+            {t('projectsDescription')}
           </p>
           
           {/* Project Filters */}
@@ -160,7 +163,7 @@ export default function ProjectsSection() {
                   onClick={scrollToContact}
                   className="text-primary-600 font-medium hover:text-primary-700 transition-colors flex items-center gap-1"
                 >
-                  View Details <ArrowRight className="h-4 w-4" />
+                  {t('viewDetails')} <ArrowRight className="h-4 w-4" />
                 </button>
               </CardContent>
             </Card>
@@ -172,7 +175,7 @@ export default function ProjectsSection() {
             onClick={scrollToContact}
             className="bg-primary-600 text-white hover:bg-primary-700 px-8 py-4 text-lg font-semibold"
           >
-            Start Your Project Today
+            {t('startProjectToday')}
           </Button>
         </div>
       </div>

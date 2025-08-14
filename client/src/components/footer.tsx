@@ -1,4 +1,8 @@
+import { useTranslation } from "@/hooks/use-translation";
+
 export default function Footer() {
+  const { t } = useTranslation();
+  
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -16,19 +20,19 @@ export default function Footer() {
             </div>
             <p className="text-slate-300 mb-4">Advanced Design & Contracting Co.</p>
             <p className="text-slate-400">
-              Transforming visionary ideas into tangible, high-quality outcomes with excellence in construction and design.
+              {t('companyDescription')}
             </p>
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('quickLinks')}</h4>
             <ul className="space-y-2">
               <li>
                 <button 
                   onClick={() => scrollToSection("home")}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Home
+                  {t('home')}
                 </button>
               </li>
               <li>
@@ -36,7 +40,7 @@ export default function Footer() {
                   onClick={() => scrollToSection("services")}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Services
+                  {t('services')}
                 </button>
               </li>
               <li>
@@ -44,7 +48,7 @@ export default function Footer() {
                   onClick={() => scrollToSection("projects")}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Projects
+                  {t('projects')}
                 </button>
               </li>
               <li>
@@ -52,7 +56,7 @@ export default function Footer() {
                   onClick={() => scrollToSection("about")}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  About
+                  {t('about')}
                 </button>
               </li>
               <li>
@@ -60,14 +64,14 @@ export default function Footer() {
                   onClick={() => scrollToSection("contact")}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Contact
+                  {t('contactUs')}
                 </button>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('contactInfo')}</h4>
             <div className="space-y-2 text-slate-400">
               <p>+966 55 243 3880</p>
               <p>info@adcc.sa</p>
@@ -103,7 +107,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-slate-800 mt-8 pt-8 text-center">
-          <p className="text-slate-400">&copy; 2024 Advanced Design & Contracting Co. All rights reserved.</p>
+          <p className="text-slate-400">&copy; 2024 Advanced Design & Contracting Co. {t('allRights')}</p>
         </div>
       </div>
     </footer>
