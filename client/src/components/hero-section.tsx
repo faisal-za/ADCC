@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translation";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsVisible(true);
@@ -30,25 +32,25 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h1 className="hero-text text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Transform Your Vision Into
-            <span className="text-accent-500"> Tangible Reality</span>
+            {t('heroTitle')}
+            <span className="text-accent-500"> {t('heroTitleHighlight')}</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-200 mb-8 max-w-4xl mx-auto leading-relaxed">
-            At Advanced Design & Contracting Co., we specialize in delivering exceptional construction, interior design, renovation, and finishing services with uncompromising quality and precision.
+            {t('heroDescription')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               onClick={() => scrollToSection("contact")}
               className="bg-accent-500 text-white hover:bg-accent-600 px-8 py-4 text-lg font-semibold w-full sm:w-auto"
             >
-              Start Your Project
+              {t('startProject')}
             </Button>
             <Button
               onClick={() => scrollToSection("projects")}
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-slate-900 px-8 py-4 text-lg font-semibold w-full sm:w-auto"
+              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-slate-900 px-8 py-4 text-lg font-semibold w-full sm:w-auto transition-all duration-300"
             >
-              View Our Work
+              {t('viewWork')}
             </Button>
           </div>
         </div>
