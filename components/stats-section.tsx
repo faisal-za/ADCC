@@ -8,7 +8,7 @@ const getStats = (t: any) => [
   { value: "10+", label: t('yearsExperience') },
   { value: "100%", label: t('clientSatisfaction') },
   { value: "24/7", label: t('supportAvailable') }
-];
+]
 
 export default function StatsSection() {
   const [isVisible, setIsVisible] = useState(false);
