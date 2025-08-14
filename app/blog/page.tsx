@@ -106,7 +106,7 @@ export default function BlogPage() {
       case "interior":
         return t("interior") || "Interior Design";
       case "architecture":
-        return t("architectur") || "Architecture";
+        return t("architecture") || "Architecture";
       default:
         return categoryKey;
     }
