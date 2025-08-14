@@ -10,7 +10,7 @@ export const translations = {
     // Hero Section
     heroTitle: "Transform Your Vision Into",
     heroTitleHighlight: "Tangible Reality",
-    heroDescription: "At Advanced Design & Contracting Co., we specialize in delivering exceptional construction, interior design, renovation, and finishing services with uncompromising quality and precision.",
+    heroDescription: "We deliver exceptional construction, interior design, renovation, and finishing services with uncompromising quality.",
     startProject: "Start Your Project",
     viewWork: "View Our Work",
 
@@ -106,7 +106,7 @@ export const translations = {
     // Hero Section
     heroTitle: "حوّل رؤيتك إلى",
     heroTitleHighlight: "واقع ملموس",
-    heroDescription: "في شركة التصميم والمقاولات المتقدمة، نختص في تقديم خدمات البناء والتصميم الداخلي والتجديد والتشطيبات الاستثنائية بجودة وعناية لا تضاهى.",
+    heroDescription: "نقدم خدمات البناء والتصميم الداخلي والتجديد والتشطيبات بجودة وعناية استثنائية.",
     startProject: "ابدأ مشروعك",
     viewWork: "اطلع على أعمالنا",
 

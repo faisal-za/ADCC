@@ -92,29 +92,29 @@ export default function Navigation() {
       
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="md:hidden bg-white border-t mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <button
               onClick={() => scrollToSection("home")}
-              className="text-slate-900 block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-slate-900 block px-3 py-2 text-base font-medium w-full text-left rtl:text-right"
             >
               {t('home')}
             </button>
             <button
               onClick={() => scrollToSection("services")}
-              className="text-slate-600 hover:text-slate-900 block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-slate-600 hover:text-slate-900 block px-3 py-2 text-base font-medium w-full text-left rtl:text-right"
             >
               {t('services')}
             </button>
             <button
               onClick={() => scrollToSection("projects")}
-              className="text-slate-600 hover:text-slate-900 block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-slate-600 hover:text-slate-900 block px-3 py-2 text-base font-medium w-full text-left rtl:text-right"
             >
               {t('projects')}
             </button>
             <button
               onClick={() => scrollToSection("about")}
-              className="text-slate-600 hover:text-slate-900 block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-slate-600 hover:text-slate-900 block px-3 py-2 text-base font-medium w-full text-left rtl:text-right"
             >
               {t('about')}
             </button>
