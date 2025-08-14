@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Award, Clock, Leaf } from "lucide-react";

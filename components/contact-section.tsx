@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +12,7 @@ import { Textarea } from "./ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { useToast } from "../hooks/use-toast";
-import { insertContactSchema, type InsertContact } from "../shared/schema";
+import { insertContactSchema, type InsertContact } from "../lib/schema";
 import { apiRequest } from "../lib/queryClient";
 import { useTranslation } from "../hooks/use-translation";
 import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram } from "lucide-react";

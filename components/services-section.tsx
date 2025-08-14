@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "./ui/card";
 import { HardHat, Gem, Wrench, Palette, ArrowRight } from "lucide-react";
