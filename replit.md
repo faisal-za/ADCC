@@ -1,6 +1,12 @@
 # Overview
 
-This is a full-stack construction company website for Advanced Design & Contracting Co. (ADCC). The application features a modern, single-page website with sections for services, projects, company information, and a contact form. It's built as a React frontend with an Express.js backend, designed to showcase the company's construction and design services while capturing customer inquiries through a contact form.
+This is a full-stack construction company website for Advanced Design & Contracting Co. (ADCC). The application features a modern website with sections for services, projects, company information, blog, and contact form. Originally built with React 18 + Vite + Express.js, it's currently being migrated to Next.js 15 with React 19 for improved performance, SEO, and modern development features.
+
+## Migration Status (In Progress)
+- **Current State**: React 18 + Vite + Express.js backend 
+- **Target State**: Next.js 15 + React 19 (App Router)
+- **Challenges**: Dependency conflicts with some libraries (framer-motion, some Radix UI components)
+- **Next Steps**: Complete Next.js App Router structure and resolve dependency compatibility
 
 # User Preferences
 
