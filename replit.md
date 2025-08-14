@@ -8,6 +8,8 @@ This is a full-stack construction company website for Advanced Design & Contract
 - **Completed**: Full migration to Next.js App Router structure, removed Express/Vite setup, created Next.js API routes
 - **Server**: Running on localhost:5000 with Next.js dev server
 - **Notes**: Cleaned up project structure, created contact API route, fixed all import issues
+- **Arabic Font**: Fixed Arabic font (Almarai) support using Next.js Google Fonts with proper RTL styling
+- **Hero Background**: Updated with construction timelapse GIF without text overlay
 
 # User Preferences
 
