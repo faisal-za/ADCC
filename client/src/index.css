@@ -158,6 +158,22 @@
   [dir="rtl"] [data-radix-select-content] {
     text-align: right;
   }
+
+  /* Reduce button and field rounding */
+  .rounded-full {
+    border-radius: 0.5rem !important; /* rounded-lg */
+  }
+
+  /* Keep project tags rounded */
+  .project-tag {
+    border-radius: 1rem !important;
+  }
+
+  /* Softer hover effects */
+  .btn-hover:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .hero-bg {

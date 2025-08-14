@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "@/hooks/use-translation";
 
-const stats = [
-  { value: "50+", label: "Completed Projects" },
-  { value: "10+", label: "Years Experience" },
-  { value: "100%", label: "Client Satisfaction" },
-  { value: "24/7", label: "Support Available" }
+const getStats = (t: any) => [
+  { value: "50+", label: t('completedProjects') },
+  { value: "10+", label: t('yearsExperience') },
+  { value: "100%", label: t('clientSatisfaction') },
+  { value: "24/7", label: t('supportAvailable') }
 ];
 
 export default function StatsSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useTranslation();
+  const stats = getStats(t);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

@@ -116,7 +116,7 @@ export default function ProjectsSection() {
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id)}
                 variant={activeFilter === filter.id ? "default" : "outline"}
-                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                className={`px-6 py-2 rounded-lg font-medium transition-all btn-hover ${
                   activeFilter === filter.id 
                     ? "bg-primary-600 text-white" 
                     : "bg-slate-200 text-slate-600 hover:bg-slate-300"
@@ -144,7 +144,7 @@ export default function ProjectsSection() {
                 <div className="absolute top-4 left-4">
                   <Badge 
                     variant="secondary"
-                    className={`${
+                    className={`project-tag ${
                       project.category === 'commercial' ? 'bg-blue-100 text-blue-800' :
                       project.category === 'residential' ? 'bg-green-100 text-green-800' :
                       'bg-purple-100 text-purple-800'

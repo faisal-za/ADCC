@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Phone, Mail, MapPin } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { insertContactSchema, type InsertContact } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useTranslation } from "@/hooks/use-translation";
+import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram } from "lucide-react";
 
 export default function ContactSection() {
   const { toast } = useToast();
@@ -233,25 +234,25 @@ export default function ContactSection() {
                   href="https://wa.me/+966552433880" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors"
+                  className="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-all btn-hover"
                 >
-                  <i className="fab fa-whatsapp text-xl"></i>
+                  <MessageCircle className="h-6 w-6" />
                 </a>
                 <a 
                   href="https://www.linkedin.com/company/adccsa/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-colors"
+                  className="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-all btn-hover"
                 >
-                  <i className="fab fa-linkedin text-xl"></i>
+                  <Linkedin className="h-6 w-6" />
                 </a>
                 <a 
                   href="https://www.instagram.com/adccsaudi/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-12 h-12 bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"
+                  className="w-12 h-12 bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-600 transition-all btn-hover"
                 >
-                  <i className="fab fa-instagram text-xl"></i>
+                  <Instagram className="h-6 w-6" />
                 </a>
               </div>
             </div>
