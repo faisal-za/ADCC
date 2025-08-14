@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import { Star, User } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import {
@@ -8,6 +9,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "./ui/carousel";
 import { useTranslation } from "../hooks/use-translation";
 
@@ -59,6 +61,18 @@ const testimonials: Testimonial[] = [
 
 export default function TestimonialsSection() {
   const { t } = useTranslation();
+  const [api, setApi] = useState<CarouselApi>();
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!api) return;
+
+    const intervalId = setInterval(() => {
+      api.scrollNext();
+    }, 4000); // Auto-advance every 4 seconds
+
+    return () => clearInterval(intervalId);
+  }, [api]);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -86,6 +100,7 @@ export default function TestimonialsSection() {
 
         {/* Testimonial Carousel */}
         <Carousel
+          setApi={setApi}
           opts={{
             align: "start",
             loop: true,
