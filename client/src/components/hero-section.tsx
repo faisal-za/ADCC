@@ -23,8 +23,8 @@ export default function HeroSection() {
       {/* Animated GIF Background */}
       <div className="absolute inset-0">
         <img 
-          src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmF3Y2Fsa3Jqd3FpdXJpMGxsN25memJsYXh1MXNyamd5amdwNGFsYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif"
-          alt="Construction Animation"
+          src="https://media.giphy.com/media/xT9IgEHkj9mE42D0Zu/giphy.gif"
+          alt="Building Construction Timelapse"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
