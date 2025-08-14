@@ -115,6 +115,40 @@
 
   [dir="rtl"] {
     font-family: var(--font-arabic);
+    text-align: right;
+  }
+
+  /* RTL support for form elements */
+  [dir="rtl"] select,
+  [dir="rtl"] input,
+  [dir="rtl"] textarea {
+    text-align: right;
+    direction: rtl;
+  }
+
+  [dir="rtl"] .mobile-menu {
+    text-align: right;
+  }
+
+  [dir="rtl"] .mobile-menu button {
+    text-align: right;
+    justify-content: flex-end;
+  }
+
+  /* RTL support for navigation */
+  [dir="rtl"] .space-x-6 > * + * {
+    margin-left: 0;
+    margin-right: 1.5rem;
+  }
+
+  [dir="rtl"] .space-x-4 > * + * {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+
+  /* RTL support for dropdowns */
+  [dir="rtl"] [role="combobox"] {
+    text-align: right;
   }
 }
 
