@@ -12,14 +12,14 @@ const services = [
     titleKey: "constructionTitle" as TranslationKey,
     descriptionKey: "constructionDesc" as TranslationKey,
     image: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    color: "bg-primary-100 text-primary-600"
+    color: "bg-accent-100 text-accent-600"
   },
   {
     icon: Gem,
     titleKey: "finishingTitle" as TranslationKey,
     descriptionKey: "finishingDesc" as TranslationKey,
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    color: "bg-accent-100 text-accent-600"
+    color: "bg-secondary-100 text-secondary-600"
   },
   {
     icon: Wrench,
@@ -98,12 +98,7 @@ export default function ServicesSection() {
                   </div>
                   <h3 className="text-xl font-semibold text-slate-900 mb-3">{t(service.titleKey)}</h3>
                   <p className="text-slate-600 mb-4">{t(service.descriptionKey)}</p>
-                  <button
-                    onClick={scrollToContact}
-                    className="text-primary-600 font-medium hover:text-primary-700 transition-colors flex items-center gap-1"
-                  >
-                    {t('learnMore')} <ArrowRight className="h-4 w-4" />
-                  </button>
+
                 </CardContent>
               </Card>
             );

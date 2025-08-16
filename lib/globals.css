@@ -112,6 +112,21 @@
     }
   }
 
+  @keyframes slide-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-1rem) scaleY(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   [dir="rtl"] {
     font-family: var(--font-arabic), 'Almarai', Arial, sans-serif !important;
     text-align: right;
@@ -178,6 +193,16 @@
 
   [dir="rtl"] [data-radix-select-content] {
     text-align: right;
+  }
+
+  /* RTL support for arrows */
+  [dir="rtl"] .rotate-180 {
+    transform: rotate(0deg) !important;
+  }
+
+  [dir="rtl"] svg[role="img"],
+  [dir="rtl"] .back-arrow {
+    transform: scaleX(-1);
   }
 
   /* Reduce button and field rounding */

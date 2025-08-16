@@ -6,10 +6,12 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "../hooks/use-translation";
+import { useLanguage } from "../contexts/language-context";
 
 // Image Carousel Component
 function ProjectImageCarousel({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isRTL } = useLanguage();
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -36,33 +38,42 @@ function ProjectImageCarousel({ images }: { images: string[] }) {
         <>
           <button
             onClick={prevImage}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70"
+            className={`absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70 ${
+              isRTL ? 'right-2' : 'left-2'
+            }`}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className={`h-4 w-4 ${isRTL ? 'transform scale-x-[-1]' : ''}`} />
           </button>
           <button
             onClick={nextImage}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70"
+            className={`absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70 ${
+              isRTL ? 'left-2' : 'right-2'
+            }`}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className={`h-4 w-4 ${isRTL ? 'transform scale-x-[-1]' : ''}`} />
           </button>
         </>
       )}
       
       {/* Image Indicators */}
       {images.length > 1 && (
-        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-white' 
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-              }`}
-            />
-          ))}
+        <div
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-auto"
+          dir={isRTL ? 'rtl' : 'ltr'}
+        >
+          <div className="flex items-center gap-x-2 mx-auto">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentIndex
+                    ? 'bg-white'
+                    : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                }`}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -246,12 +257,7 @@ export default function ProjectsSection() {
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-slate-900 mb-2">{t(project.titleKey as any)}</h3>
                 <p className="text-slate-600 mb-4">{t(project.descriptionKey as any)}</p>
-                <button
-                  onClick={scrollToContact}
-                  className="text-primary-600 font-medium hover:text-primary-700 transition-colors flex items-center gap-1"
-                >
-                  {t('viewDetails')} <ArrowRight className="h-4 w-4" />
-                </button>
+
               </CardContent>
             </Card>
           ))}

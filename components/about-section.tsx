@@ -38,7 +38,7 @@ export default function AboutSection() {
       icon: Clock,
       titleKey: "timeTitle" as const,
       descriptionKey: "timeDesc" as const,
-      color: "bg-accent-100 text-accent-600"
+      color: "bg-secondary-100 text-secondary-600"
     },
     {
       icon: Leaf,

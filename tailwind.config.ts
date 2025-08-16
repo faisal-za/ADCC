@@ -29,18 +29,18 @@ export default {
           foreground: "var(--popover-foreground)",
         },
         primary: {
-          DEFAULT: "var(--primary)",
+          DEFAULT: "#1A3A53",
           foreground: "var(--primary-foreground)",
-          50: "#eff6ff",
-          500: "#2563eb",
-          600: "#2563eb",
-          700: "#1d4ed8",
-          800: "#1e40af",
-          900: "#1e3a8a"
+          50: "#e6ecf0",
+          500: "#1A3A53",
+          600: "#18344a",
+          700: "#142b3d",
+          800: "#10222f",
+          900: "#0c1921"
         },
         secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
+          DEFAULT: "#D4AF37",
+          foreground: "#1A3A53",
         },
         muted: {
           DEFAULT: "var(--muted)",
@@ -49,8 +49,8 @@ export default {
         accent: {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
-          500: "#f59e0b",
-          600: "#d97706"
+          500: "#D4AF37",
+          600: "#bfa134"
         },
         destructive: {
           DEFAULT: "var(--destructive)",

@@ -206,7 +206,6 @@ export default function ContactSection() {
                   <p className="text-slate-600">+966 55 243 3880</p>
                 </div>
               </div>
-              
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-accent-100 rounded-lg flex items-center justify-center mr-4">
                   <Mail className="h-6 w-6 text-accent-600" />
@@ -216,7 +215,6 @@ export default function ContactSection() {
                   <p className="text-slate-600">info@adcc.sa</p>
                 </div>
               </div>
-              
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
                   <MapPin className="h-6 w-6 text-green-600" />
@@ -226,36 +224,37 @@ export default function ContactSection() {
                   <p className="text-slate-600">{t('saudiArabia')}</p>
                 </div>
               </div>
-            </div>
-            
-            {/* Social Media Links */}
-            <div className="space-y-4">
-              <h4 className="font-semibold text-slate-900">{t('connectWith')}</h4>
-              <div className="flex space-x-4">
-                <a 
-                  href="https://wa.me/+966552433880" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-all btn-hover"
-                >
-                  <MessageCircle className="h-6 w-6" />
-                </a>
-                <a 
-                  href="https://www.linkedin.com/company/adccsa/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-all btn-hover"
-                >
-                  <Linkedin className="h-6 w-6" />
-                </a>
-                <a 
-                  href="https://www.instagram.com/adccsaudi/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-600 transition-all btn-hover"
-                >
-                  <Instagram className="h-6 w-6" />
-                </a>
+              <div className="flex items-center">
+                <div className="w-12 h-12 flex items-center justify-center mr-4"></div>
+                <div>
+                  <h4 className="font-semibold text-slate-900">{t('connectWith')}</h4>
+                  <div className="flex gap-x-4 items-center mt-2">
+                    <a 
+                      href="https://wa.me/+966552433880" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-green-500 text-white rounded-lg flex items-center justify-center hover:bg-green-600 transition-all btn-hover"
+                    >
+                      <MessageCircle className="h-6 w-6" />
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/company/adccsa/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-all btn-hover"
+                    >
+                      <Linkedin className="h-6 w-6" />
+                    </a>
+                    <a 
+                      href="https://www.instagram.com/adccsaudi/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-600 transition-all btn-hover"
+                    >
+                      <Instagram className="h-6 w-6" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

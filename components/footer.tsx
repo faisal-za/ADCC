@@ -13,15 +13,15 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-900 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-secondary text-secondary-foreground py-12">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center mb-4">
               <span className="text-2xl font-bold text-primary-400">ADCC</span>
             </div>
-            <p className="text-slate-300 mb-4">Advanced Design & Contracting Co.</p>
-            <p className="text-slate-400">
+            <p className="text-secondary-foreground mb-4">Advanced Design & Contracting Co.</p>
+            <p className="text-secondary-foreground/80">
               {t('companyDescription')}
             </p>
           </div>
@@ -32,7 +32,7 @@ export default function Footer() {
               <li>
                 <button 
                   onClick={() => scrollToSection("home")}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
                 >
                   {t('home')}
                 </button>
@@ -40,7 +40,7 @@ export default function Footer() {
               <li>
                 <button 
                   onClick={() => scrollToSection("services")}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
                 >
                   {t('services')}
                 </button>
@@ -48,7 +48,7 @@ export default function Footer() {
               <li>
                 <button 
                   onClick={() => scrollToSection("projects")}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
                 >
                   {t('projects')}
                 </button>
@@ -56,7 +56,7 @@ export default function Footer() {
               <li>
                 <button 
                   onClick={() => scrollToSection("about")}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
                 >
                   {t('about')}
                 </button>
@@ -64,7 +64,7 @@ export default function Footer() {
               <li>
                 <button 
                   onClick={() => scrollToSection("contact")}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
                 >
                   {t('contactUs')}
                 </button>
@@ -74,17 +74,17 @@ export default function Footer() {
           
           <div>
             <h4 className="text-lg font-semibold mb-4">{t('contactInfo')}</h4>
-            <div className="space-y-2 text-slate-400">
+            <div className="space-y-2 text-secondary-foreground/80">
               <p>+966 55 243 3880</p>
               <p>info@adcc.sa</p>
               <p>Saudi Arabia</p>
             </div>
-            <div className="flex space-x-4 mt-4">
+            <div className="flex justify-center gap-x-4 mt-4">
               <a 
                 href="https://wa.me/+966552433880" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-green-400 transition-colors"
+                className="text-secondary-foreground/80 hover:text-green-400 transition-colors"
               >
                 <i className="fab fa-whatsapp text-xl"></i>
               </a>
@@ -92,7 +92,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/company/adccsa/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-blue-400 transition-colors"
+                className="text-secondary-foreground/80 hover:text-blue-400 transition-colors"
               >
                 <i className="fab fa-linkedin text-xl"></i>
               </a>
@@ -100,7 +100,7 @@ export default function Footer() {
                 href="https://www.instagram.com/adccsaudi/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-pink-400 transition-colors"
+                className="text-secondary-foreground/80 hover:text-pink-400 transition-colors"
               >
                 <i className="fab fa-instagram text-xl"></i>
               </a>
@@ -108,8 +108,8 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-slate-800 mt-8 pt-8 text-center">
-          <p className="text-slate-400">&copy; 2024 Advanced Design & Contracting Co. {t('allRights')}</p>
+        <div className="border-t border-secondary-foreground/20 mt-8 pt-8 text-center">
+          <p className="text-secondary-foreground/80">&copy; 2024 Advanced Design & Contracting Co. {t('allRights')}</p>
         </div>
       </div>
     </footer>
