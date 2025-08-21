@@ -1,12 +1,14 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import LanguageSwitch from "./language-switch";
 import { useTranslation } from "../hooks/use-translation";
+import { useLanguage } from "../contexts/language-context";
+import { useWindowScroll, useDebounce } from "react-use";
 
 export default function Navigation() {
   const router = useRouter();
@@ -14,6 +16,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -43,27 +46,65 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    if (pathname !== "/") {
-      router.push(`/#${id}`);
-      setIsOpen(false);
-      setActiveSection(id);
-      return;
+  const scrollToSection = useCallback((id: string) => {
+    const isHomePage = pathname === `/${language}`;
+    
+    const performScroll = () => {
+      // Use querySelector for more flexible selection
+      const element = document.querySelector(`#${id}`);
+      if (element) {
+        const yOffset = -80; // Height of navbar
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({ 
+          top: y, 
+          behavior: 'smooth' 
+        });
+        setActiveSection(id);
+      }
+    };
+    
+    if (!isHomePage) {
+      // Navigate to home page first
+      router.push(`/${language}`);
+      
+      // Use MutationObserver for more reliable element detection
+      const observer = new MutationObserver((mutations, obs) => {
+        const element = document.querySelector(`#${id}`);
+        if (element) {
+          obs.disconnect();
+          performScroll();
+        }
+      });
+      
+      // Start observing after navigation
+      setTimeout(() => {
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+        
+        // Fallback timeout to prevent infinite observation
+        setTimeout(() => observer.disconnect(), 5000);
+      }, 100);
+    } else {
+      performScroll();
     }
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
-      setActiveSection(id);
-    }
-  };
+    
+    setIsOpen(false);
+  }, [pathname, language, router]);
 
-  const [activeSection, setActiveSection] = useState<string>(pathname === "/blog" ? "blog" : "home");
+  const [activeSection, setActiveSection] = useState<string>(() => {
+    if (pathname.includes("/blog")) return "blog";
+    return "home";
+  });
 
   // Listen to scroll and update active section only on homepage
   useEffect(() => {
-    if (pathname !== "/") {
-      setActiveSection(pathname === "/blog" ? "blog" : "home");
+    const isHomePage = pathname === `/${language}`;
+    
+    if (!isHomePage) {
+      setActiveSection(pathname.includes("/blog") ? "blog" : "home");
       return;
     }
     const handleScroll = () => {
@@ -83,12 +124,10 @@ export default function Navigation() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [pathname]);
+  }, [pathname, language]);
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      scrolled ? "bg-white shadow-lg" : "bg-white shadow-lg"
-    }`}>
+    <nav className={`fixed top-0 w-full z-50 bg-gradient-to-b from-white via-white via-90% to-transparent`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -120,7 +159,7 @@ export default function Navigation() {
               >
                 {t('projects')}
               </button>
-              <Link href="/blog">
+              <Link href={`/${language}/blog`}>
                 <button className={`font-bold px-3 py-2 text-sm transition-colors ${activeSection === "blog" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`} onClick={() => setActiveSection("blog")}> 
                   {t('blog')}
                 </button>

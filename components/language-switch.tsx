@@ -11,7 +11,7 @@ import {
 import { useLanguage } from "../contexts/language-context";
 
 export default function LanguageSwitch() {
-  const { language, setLanguage } = useLanguage();
+  const { language, switchLanguage } = useLanguage();
 
   return (
     <DropdownMenu>
@@ -25,13 +25,13 @@ export default function LanguageSwitch() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[120px]">
         <DropdownMenuItem
-          onClick={() => setLanguage('en')}
+          onClick={() => switchLanguage('en')}
           className={`cursor-pointer ${language === 'en' ? 'bg-slate-100' : ''}`}
         >
           <span className="text-sm">English</span>
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => setLanguage('ar')}
+          onClick={() => switchLanguage('ar')}
           className={`cursor-pointer ${language === 'ar' ? 'bg-slate-100' : ''}`}
         >
           <span className="text-sm">العربية</span>

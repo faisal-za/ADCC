@@ -1,17 +1,18 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { Star, User } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
 } from "./ui/carousel";
 import { useTranslation } from "../hooks/use-translation";
+import { useLanguage } from "../contexts/language-context";
 
 interface Testimonial {
   id: number;
@@ -56,23 +57,39 @@ const testimonials: Testimonial[] = [
     company: "Urban Retail Group",
     content: "Creative solutions with remarkable attention to detail. Stayed true to our brand identity.",
     rating: 5,
+  },
+  {
+    id: 6,
+    name: "Ahmed Al-Mansouri",
+    company: "Gulf Construction",
+    content: "Outstanding construction quality and timely delivery. ADCC exceeded all our expectations for this major project.",
+    rating: 5,
+  },
+  {
+    id: 7,
+    name: "Fatima Hassan",
+    company: "Modern Living Spaces",
+    content: "Incredible interior design work. They understood our vision perfectly and brought it to life beautifully.",
+    rating: 5,
+  },
+  {
+    id: 8,
+    name: "Omar Khalil",
+    company: "Riyadh Developments",
+    content: "Professional team with excellent project management. Delivered a high-quality renovation on schedule.",
+    rating: 5,
   }
 ];
 
 export default function TestimonialsSection() {
   const { t } = useTranslation();
-  const [api, setApi] = useState<CarouselApi>();
+  const { isRTL } = useLanguage();
+  const [api, setApi] = React.useState<any>();
+  
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!api) return;
-
-    const intervalId = setInterval(() => {
-      api.scrollNext();
-    }, 4000); // Auto-advance every 4 seconds
-
-    return () => clearInterval(intervalId);
-  }, [api]);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -102,20 +119,24 @@ export default function TestimonialsSection() {
         <div className="px-4 md:px-8">
           <Carousel
             setApi={setApi}
+            plugins={[plugin.current]}
             opts={{
               align: "start",
               loop: true,
-              containScroll: "trimSnaps",
-              dragFree: false,
+              slidesToScroll: 1,
+              skipSnaps: false,
+              direction: isRTL ? "rtl" : "ltr",
             }}
-            className="w-full max-w-6xl mx-auto"
+            onMouseEnter={() => plugin.current?.stop?.()}
+            onMouseLeave={() => plugin.current?.play?.()}
+            className="w-full max-w-7xl mx-auto"
           >
-            <CarouselContent className="-ml-1">
-              {testimonials.map((testimonial) => (
-                <CarouselItem key={testimonial.id} className="pl-1 md:basis-1/3">
-                  <div className="p-1">
-                    <Card className="bg-white h-full border-0 shadow-lg">
-                      <CardContent className="p-6">
+            <CarouselContent className="-ml-2">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={`${testimonial.id}-${index}`} className="pl-2 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <div className="px-1 py-4">
+                    <Card className="bg-white h-56 border-0 shadow-lg flex flex-col">
+                      <CardContent className="p-4 flex flex-col h-full">
                         {/* User Icon */}
                         <div className="flex items-center gap-3 mb-4">
                           <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
@@ -137,7 +158,7 @@ export default function TestimonialsSection() {
                         </div>
                         
                         {/* Testimonial Content */}
-                        <blockquote className="text-slate-700 text-sm leading-relaxed">
+                        <blockquote className="text-slate-700 text-sm leading-relaxed flex-1">
                           "{testimonial.content}"
                         </blockquote>
                       </CardContent>
@@ -146,8 +167,8 @@ export default function TestimonialsSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
+            <CarouselPrevious className="flex" />
+            <CarouselNext className="flex" />
           </Carousel>
         </div>
       </div>

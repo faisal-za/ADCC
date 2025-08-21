@@ -7,8 +7,10 @@ export function useTranslation() {
   const { language } = useLanguage();
   
   const t = (key: TranslationKey): string => {
-    return translations[language][key] || translations.en[key] || key;
+    // Fallback to 'en' if language is undefined or not in translations
+    const currentLang = language && translations[language] ? language : 'en';
+    return translations[currentLang]?.[key] || translations.en?.[key] || key;
   };
 
-  return { t, language };
+  return { t, language: language || 'en' };
 }

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(grep:*)",
+      "Bash(rm:*)",
+      "Bash(npm run check:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(npx kill-port:*)",
+      "Bash(wmic process where:*)",
+      "WebFetch(domain:ui.shadcn.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

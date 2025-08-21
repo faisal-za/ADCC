@@ -154,6 +154,16 @@ export const translations = {
     messageSuccess: "Thank you for your message! We will get back to you soon.",
     error: "Error",
     messageFailed: "Failed to send message. Please try again.",
+
+    // Project tags
+    luxury: "Luxury",
+    modern: "Modern",
+    healthcare: "Healthcare",
+    upgrade: "Upgrade", 
+    traditional: "Traditional",
+    apartments: "Apartments",
+    sustainable: "Sustainable",
+    "real-estate": "Real Estate",
   },
   ar: {
     // Navigation
@@ -310,6 +320,16 @@ export const translations = {
     messageSuccess: "شكراً لرسالتك! سنتواصل معك قريباً.",
     error: "خطأ",
     messageFailed: "فشل في إرسال الرسالة. حاول مرة أخرى.",
+
+    // Project tags
+    luxury: "فاخر",
+    modern: "عصري",
+    healthcare: "رعاية صحية",
+    upgrade: "ترقية", 
+    traditional: "تقليدي",
+    apartments: "شقق",
+    sustainable: "مستدام",
+    "real-estate": "عقاري",
   }
 };
 

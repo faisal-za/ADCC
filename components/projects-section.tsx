@@ -1,17 +1,90 @@
-'use client'
+"use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "../hooks/use-translation";
-import { useLanguage } from "../contexts/language-context";
 
-// Image Carousel Component
-function ProjectImageCarousel({ images }: { images: string[] }) {
+const projects = [
+  {
+    id: 1,
+    titleKey: "kfVillaTitle",
+    descriptionKey: "kfVillaDesc",
+    category: "construction",
+    images: [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1600607687644-c7171b176c86?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+    ],
+    tags: ["residential", "luxury", "modern"]
+  },
+  {
+    id: 2,
+    titleKey: "healthMatrixTitle",
+    descriptionKey: "healthMatrixDesc",
+    category: "commercial",
+    images: [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+    ],
+    tags: ["commercial", "healthcare", "modern"]
+  },
+  {
+    id: 3,
+    titleKey: "abdulrahmanTitle",
+    descriptionKey: "abdulrahmanDesc",
+    category: "renovation",
+    images: [
+      "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+    ],
+    tags: ["renovation", "residential", "upgrade"]
+  },
+  {
+    id: 4,
+    titleKey: "alrahmaniahTitle",
+    descriptionKey: "alrahmaniahDesc",
+    category: "residential",
+    images: [
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+    ],
+    tags: ["residential", "traditional", "luxury"]
+  },
+  {
+    id: 5,
+    titleKey: "daisamTitle",
+    descriptionKey: "daisamDesc",
+    category: "commercial",
+    images: [
+      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+    ],
+    tags: ["commercial", "real-estate", "sustainable"]
+  },
+  {
+    id: 6,
+    titleKey: "alqasimTitle",
+    descriptionKey: "alqasimDesc",
+    category: "residential",
+    images: [
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+    ],
+    tags: ["residential", "apartments", "luxury"]
+  }
+];
+
+function ImageScroller({ images, title }: { images: string[]; title: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { isRTL } = useLanguage();
+  const [isHovered, setIsHovered] = useState(false);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -21,254 +94,177 @@ function ProjectImageCarousel({ images }: { images: string[] }) {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Auto-play functionality
   useEffect(() => {
-    const interval = setInterval(nextImage, 4000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+    if (images.length > 1) {
+      const interval = setInterval(() => {
+        if (!isHovered) {
+          setCurrentIndex((prev) => (prev + 1) % images.length);
+        }
+      }, 4000); // Change image every 4 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [images.length, isHovered]);
 
   return (
-    <div className="relative w-full h-full group">
-      <div 
-        className="w-full h-full bg-cover bg-center transition-all duration-500"
-        style={{ backgroundImage: `url('${images[currentIndex]}')` }}
-      />
-      
-      {/* Navigation Arrows */}
+    <div 
+      className="h-64 relative overflow-hidden group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {images.map((image, index) => (
+        <Image
+          key={index}
+          src={image}
+          alt={`${title} - ${index + 1}`}
+          fill
+          className={`object-cover transition-opacity duration-700 ease-in-out ${
+            index === currentIndex ? "opacity-100" : "opacity-0"
+          }`}
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+      ))}
       {images.length > 1 && (
         <>
-          <button
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 bg-white/80 hover:bg-white/90 z-10"
             onClick={prevImage}
-            className={`absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70 ${
-              isRTL ? 'right-2' : 'left-2'
-            }`}
           >
-            <ChevronLeft className={`h-4 w-4 ${isRTL ? 'transform scale-x-[-1]' : ''}`} />
-          </button>
-          <button
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 bg-white/80 hover:bg-white/90 z-10"
             onClick={nextImage}
-            className={`absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70 ${
-              isRTL ? 'left-2' : 'right-2'
-            }`}
           >
-            <ChevronRight className={`h-4 w-4 ${isRTL ? 'transform scale-x-[-1]' : ''}`} />
-          </button>
-        </>
-      )}
-      
-      {/* Image Indicators */}
-      {images.length > 1 && (
-        <div
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-auto"
-          dir={isRTL ? 'rtl' : 'ltr'}
-        >
-          <div className="flex items-center gap-x-2 mx-auto">
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
             {images.map((_, index) => (
-              <button
+              <div
                 key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentIndex
-                    ? 'bg-white'
-                    : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  index === currentIndex ? "bg-white scale-110" : "bg-white/50 hover:bg-white/70"
                 }`}
+                onClick={() => setCurrentIndex(index)}
               />
             ))}
           </div>
-        </div>
+        </>
       )}
     </div>
   );
 }
 
-const getProjects = (t: any) => [
-  {
-    id: 1,
-    titleKey: "healthMatrixTitle",
-    descriptionKey: "healthMatrixDesc",
-    category: "commercial",
-    images: [
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1555421689-d68471e189f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-    ],
-    badgeKey: "commercial"
-  },
-  {
-    id: 2,
-    titleKey: "alqasimTitle",
-    descriptionKey: "alqasimDesc",
-    category: "residential",
-    images: [
-      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-    ],
-    badgeKey: "residential"
-  },
-  {
-    id: 3,
-    titleKey: "kfVillaTitle",
-    descriptionKey: "kfVillaDesc",
-    category: "residential",
-    images: [
-      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-    ],
-    badgeKey: "residential"
-  },
-  {
-    id: 4,
-    titleKey: "alrahmaniahTitle",
-    descriptionKey: "alrahmaniahDesc",
-    category: "residential",
-    images: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1571939228382-b2f2b585ce15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-    ],
-    badgeKey: "residential"
-  },
-  {
-    id: 5,
-    titleKey: "daisamTitle",
-    descriptionKey: "daisamDesc",
-    category: "commercial",
-    images: [
-      "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-    ],
-    badgeKey: "commercial"
-  },
-  {
-    id: 6,
-    titleKey: "abdulrahmanTitle",
-    descriptionKey: "abdulrahmanDesc",
-    category: "renovation",
-    images: [
-      "https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      "https://images.unsplash.com/photo-1615873968403-89e068629265?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-    ],
-    badgeKey: "renovation"
-  }
-];
-
-const getFilters = (t: any) => [
-  { id: "all", label: t('allProjects') },
-  { id: "residential", label: t('residential') },
-  { id: "commercial", label: t('commercial') },
-  { id: "renovation", label: t('renovation') }
-];
-
 export default function ProjectsSection() {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [visibleProjects, setVisibleProjects] = useState<Set<number>>(new Set());
   const { t } = useTranslation();
-  const filters = getFilters(t);
-  const projects = getProjects(t);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  const filteredProjects = activeFilter === "all" 
-    ? projects 
-    : projects.filter(project => project.category === activeFilter);
+  // Get all unique tags
+  const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0');
-            setVisibleProjects(prev => new Set(Array.from(prev).concat([index])));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, [filteredProjects]);
-
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // Filter projects based on selected tag
+  const filteredProjects = selectedTag 
+    ? projects.filter(project => project.tags.includes(selectedTag))
+    : projects;
 
   return (
     <section id="projects" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">{t('projectsTitle')}</h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-            {t('projectsDescription')}
+        <header className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+            {t('projectsTitle') || 'Our Projects'}
+          </h2>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            {t('projectsDescription') || 'Discover our portfolio of exceptional construction and design projects that showcase our expertise and commitment to excellence.'}
           </p>
-          
-          {/* Project Filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {filters.map((filter) => (
-              <Button
-                key={filter.id}
-                onClick={() => setActiveFilter(filter.id)}
-                variant={activeFilter === filter.id ? "default" : "outline"}
-                className={`px-6 py-2 rounded-lg font-medium transition-all btn-hover ${
-                  activeFilter === filter.id 
-                    ? "bg-primary-600 text-white" 
-                    : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-                }`}
-              >
-                {filter.label}
-              </Button>
-            ))}
-          </div>
+        </header>
+
+        {/* Tag Filter */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <Button
+            variant={selectedTag === null ? "default" : "outline"}
+            onClick={() => setSelectedTag(null)}
+            className={`transition-all duration-300 ${
+              selectedTag === null 
+                ? "bg-primary-600 hover:bg-primary-700 text-white" 
+                : "border-slate-300 text-slate-600 hover:bg-slate-50"
+            }`}
+          >
+            {t('allProjects')}
+          </Button>
+          {allTags.map((tag) => (
+            <Button
+              key={tag}
+              variant={selectedTag === tag ? "default" : "outline"}
+              onClick={() => setSelectedTag(tag)}
+              className={`transition-all duration-300 ${
+                selectedTag === tag 
+                  ? "bg-primary-600 hover:bg-primary-700 text-white" 
+                  : "border-slate-300 text-slate-600 hover:bg-slate-50"
+              }`}
+            >
+              {t(tag as any) || tag}
+            </Button>
+          ))}
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project) => (
             <Card
               key={project.id}
-              className={`project-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-105 ${
-                visibleProjects.has(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              data-index={index}
+              className="project-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
             >
-              <div className="h-64 relative overflow-hidden">
-                <ProjectImageCarousel images={project.images} />
-                <div className="absolute top-4 left-4">
-                  <Badge 
-                    variant="secondary"
-                    className={`project-tag ${
-                      project.category === 'commercial' ? 'bg-blue-100 text-blue-800' :
-                      project.category === 'residential' ? 'bg-green-100 text-green-800' :
-                      'bg-purple-100 text-purple-800'
-                    }`}
-                  >
-                    {t(project.badgeKey as any)}
-                  </Badge>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <ExternalLink className="h-5 w-5 text-white opacity-70 hover:opacity-100 cursor-pointer transition-opacity" />
-                </div>
-              </div>
+              <ImageScroller images={project.images} title={project.titleKey} />
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-slate-900 mb-2">{t(project.titleKey as any)}</h3>
-                <p className="text-slate-600 mb-4">{t(project.descriptionKey as any)}</p>
-
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {project.tags.map((tag) => (
+                    <Badge 
+                      key={tag} 
+                      variant={tag === selectedTag ? "default" : "secondary"}
+                      className={`transition-all duration-300 ${
+                        tag === selectedTag 
+                          ? "bg-primary-600 text-white shadow-md" 
+                          : "bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      {t(tag as any) || tag}
+                    </Badge>
+                  ))}
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">
+                  {t(project.titleKey as any) || project.titleKey}
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  {t(project.descriptionKey as any) || project.descriptionKey}
+                </p>
               </CardContent>
             </Card>
           ))}
         </div>
-        
-        <div className="text-center mt-12">
+
+        {filteredProjects.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-slate-500 text-lg">No projects found with the selected tag.</p>
+          </div>
+        )}
+
+        {/* Call to Action Button */}
+        <div className="text-center mt-16">
           <Button
-            onClick={scrollToContact}
-            className="bg-primary-600 text-white hover:bg-primary-700 px-8 py-4 text-lg font-semibold"
+            size="lg"
+            className="bg-primary-600 hover:bg-primary-700 px-8 py-3"
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              contactSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
-            {t('startProjectToday')}
+            {t('startProjectToday') || 'ابدأ مشروعك اليوم'}
           </Button>
         </div>
       </div>

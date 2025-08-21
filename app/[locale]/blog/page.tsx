@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardFooter } from "../../components/ui/card";
+import { Card, CardContent, CardFooter } from "../../../components/ui/card";
 import { Calendar, User, ArrowLeft, Loader2 } from "lucide-react";
-import { useTranslation } from "../../hooks/use-translation";
+import { useTranslation } from "../../../hooks/use-translation";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import Navigation from "../../components/navigation";
-import Footer from "../../components/footer";
+import Navigation from "../../../components/navigation";
+import Footer from "../../../components/footer";
+import { useLanguage } from "../../../contexts/language-context";
+import { InlineLoader } from "../../../components/ui/loader";
 
 // Mock data generator for infinite scroll
 const generateBlogPost = (id: number) => {
@@ -60,6 +62,7 @@ const fetchBlogPosts = async ({ pageParam = 1 }: { pageParam?: number }) => {
 
 export default function BlogPage() {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const categoryKeys = [
@@ -120,7 +123,7 @@ export default function BlogPage() {
       <div className="bg-white shadow-sm pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Link
-            href="/"
+            href={`/${language}`}
             className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -157,7 +160,7 @@ export default function BlogPage() {
         {/* Loading State */}
         {isLoading && (
           <div className="flex justify-center items-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-primary-600" />
+            <InlineLoader />
           </div>
         )}
 
@@ -174,7 +177,7 @@ export default function BlogPage() {
         {!isLoading && !isError && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
-              <Link key={post.id} href={`/blog/${post.id}`}>
+              <Link key={post.id} href={`/${language}/blog/${post.id}`}>
                 <Card className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
                   <div
                     className="h-48 bg-cover bg-center"

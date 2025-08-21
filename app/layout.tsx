@@ -12,8 +12,61 @@ const almarai = Almarai({
 })
 
 export const metadata: Metadata = {
-  title: 'ADCC - Advanced Design & Contracting Co.',
-  description: 'Professional construction and contracting services with modern design solutions',
+  title: {
+    default: 'ADCC - Advanced Design & Contracting Company | Construction & Interior Design',
+    template: '%s | ADCC'
+  },
+  description: 'Leading construction company in UAE offering professional building, renovation, interior design, and finishing services. Transform your vision with ADCC\'s expert craftsmanship and modern solutions.',
+  keywords: ['construction company', 'interior design', 'renovation services', 'building contractor', 'finishing works', 'UAE construction', 'design and build'],
+  authors: [{ name: 'ADCC Team' }],
+  creator: 'ADCC - Advanced Design & Contracting Co.',
+  publisher: 'ADCC',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://adcc-website.com'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en': '/en',
+      'ar': '/ar',
+    },
+  },
+  openGraph: {
+    title: 'ADCC - Advanced Design & Contracting Company',
+    description: 'Leading construction company offering professional building, renovation, and interior design services in UAE.',
+    url: 'https://adcc-website.com',
+    siteName: 'ADCC',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'ADCC Construction and Design Services',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ADCC - Advanced Design & Contracting Company',
+    description: 'Professional construction, renovation, and interior design services.',
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({

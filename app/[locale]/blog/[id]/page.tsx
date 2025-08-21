@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "../../../components/ui/card";
+import { Card, CardContent } from "../../../../components/ui/card";
 import { Calendar, User, ArrowLeft, Share2, Loader2 } from "lucide-react";
-import { useTranslation } from "../../../hooks/use-translation";
+import { useTranslation } from "../../../../hooks/use-translation";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import Navigation from "../../../components/navigation";
-import Footer from "../../../components/footer";
+import Navigation from "../../../../components/navigation";
+import Footer from "../../../../components/footer";
+import { useLanguage } from "../../../../contexts/language-context";
 
 // Mock data generator for blog post detail
 const generateBlogPostDetail = (id: number) => {
@@ -81,6 +82,7 @@ const fetchBlogPost = async (id: string) => {
 
 export default function BlogPostPage() {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const params = useParams();
   const [blogPost, setBlogPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -146,7 +148,7 @@ export default function BlogPostPage() {
               {t("postNotFoundDesc") || "The blog post you're looking for doesn't exist."}
             </p>
             <Link
-              href="/blog"
+              href={`/${language}/blog`}
               className="inline-flex items-center text-primary-600 hover:text-primary-700"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -173,7 +175,7 @@ export default function BlogPostPage() {
           <div className="absolute inset-0 flex items-center">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
               <Link
-                href="/blog"
+                href={`/${language}/blog`}
                 className="inline-flex items-center text-white/80 hover:text-white mb-4"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -253,7 +255,7 @@ export default function BlogPostPage() {
               {t("contactForProject") || "Contact us today to discuss your construction or design needs."}
             </p>
             <Link
-              href="/#contact"
+              href={`/${language}#contact`}
               className="inline-flex items-center bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors"
             >
               {t("contactUs") || "Contact Us"}
