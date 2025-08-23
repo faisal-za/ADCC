@@ -16,7 +16,7 @@ export const directus = createDirectus(DIRECTUS_URL)
  * Execute a GraphQL query using GenQL-generated types
  * This combines Directus SDK with GenQL for type-safe queries
  */
-export async function graphqlQuery<T = any>(
+export async function graphqlQuery<T extends object = any>(
   query: any,
   options?: { 
     variables?: Record<string, any>;
@@ -35,7 +35,7 @@ export async function graphqlQuery<T = any>(
 /**
  * Execute a GraphQL mutation using GenQL-generated types
  */
-export async function graphqlMutation<T = any>(
+export async function graphqlMutation<T extends object = any>(
   mutation: any,
   options?: { 
     variables?: Record<string, any>;
