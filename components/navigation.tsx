@@ -108,7 +108,7 @@ export default function Navigation() {
       return;
     }
     const handleScroll = () => {
-      const sections = ["home", "services", "projects", "about", "contact"];
+      const sections = ["home", "services", "about", "projects", "blog"];
       let found = "home";
       for (const id of sections) {
         const el = document.getElementById(id);
@@ -138,9 +138,9 @@ export default function Navigation() {
             </div>
           </div>
           
-          {/* Desktop Menu */}
-          <div className="hidden lg:block">
-            <div className="flex items-baseline gap-6">
+          {/* Desktop Menu - Centered Navigation Links */}
+          <div className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2">
+            <div className="flex items-center gap-6">
               <button
                 onClick={() => { scrollToSection("home"); setActiveSection("home"); }}
                 className={`font-bold px-3 py-2 text-sm transition-colors ${activeSection === "home" ? "text-secondary" : "text-slate-900 hover:text-primary-600"}`}
@@ -154,6 +154,12 @@ export default function Navigation() {
                 {t('services')}
               </button>
               <button
+                onClick={() => { scrollToSection("about"); setActiveSection("about"); }}
+                className={`font-bold px-3 py-2 text-sm transition-colors ${activeSection === "about" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
+              >
+                {t('about')}
+              </button>
+              <button
                 onClick={() => { scrollToSection("projects"); setActiveSection("projects"); }}
                 className={`font-bold px-3 py-2 text-sm transition-colors ${activeSection === "projects" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
               >
@@ -164,20 +170,18 @@ export default function Navigation() {
                   {t('blog')}
                 </button>
               </Link>
-              <button
-                onClick={() => { scrollToSection("about"); setActiveSection("about"); }}
-                className={`font-bold px-3 py-2 text-sm transition-colors ${activeSection === "about" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
-              >
-                {t('about')}
-              </button>
-              <LanguageSwitch />
-              <Button
-                onClick={() => scrollToSection("contact")}
-                className="bg-primary-600 text-white hover:bg-primary-700"
-              >
-                {t('contactUs')}
-              </Button>
             </div>
+          </div>
+
+          {/* Desktop Right Side - Language Switch & CTA Button */}
+          <div className="hidden lg:flex items-center gap-4">
+            <LanguageSwitch />
+            <Button
+              onClick={() => scrollToSection("contact")}
+              className="bg-primary-600 text-white hover:bg-primary-700"
+            >
+              {t('contactUs')}
+            </Button>
           </div>
           
           {/* Mobile menu button */}
@@ -211,6 +215,12 @@ export default function Navigation() {
               {t('services')}
             </button>
             <button
+              onClick={() => { scrollToSection("about"); setActiveSection("about"); }}
+              className={`font-bold block px-3 py-2 text-base w-full text-left rtl:text-right transition-colors ${activeSection === "about" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
+            >
+              {t('about')}
+            </button>
+            <button
               onClick={() => { scrollToSection("projects"); setActiveSection("projects"); }}
               className={`font-bold block px-3 py-2 text-base w-full text-left rtl:text-right transition-colors ${activeSection === "projects" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
             >
@@ -221,12 +231,6 @@ export default function Navigation() {
               className={`font-bold block px-3 py-2 text-base w-full text-left rtl:text-right transition-colors ${activeSection === "blog" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
             >
               {t('blog')}
-            </button>
-            <button
-              onClick={() => { scrollToSection("about"); setActiveSection("about"); }}
-              className={`font-bold block px-3 py-2 text-base w-full text-left rtl:text-right transition-colors ${activeSection === "about" ? "text-secondary" : "text-slate-600 hover:text-primary-600"}`}
-            >
-              {t('about')}
             </button>
             <div className="px-3 py-2">
               <LanguageSwitch />

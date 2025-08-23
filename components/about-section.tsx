@@ -32,7 +32,7 @@ export default function AboutSection() {
       icon: Award,
       titleKey: "excellenceTitle" as const,
       descriptionKey: "excellenceDesc" as const,
-      color: "bg-primary-100 text-primary-600"
+      color: "bg-primary-50 text-primary-600"
     },
     {
       icon: Clock,

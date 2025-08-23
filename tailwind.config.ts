@@ -41,6 +41,8 @@ export default {
         secondary: {
           DEFAULT: "#D4AF37",
           foreground: "#1A3A53",
+          100: "#faf6e8",
+          600: "#D4AF37",
         },
         muted: {
           DEFAULT: "var(--muted)",
@@ -49,8 +51,9 @@ export default {
         accent: {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
+          100: "#f0f4f7",
           500: "#D4AF37",
-          600: "#bfa134"
+          600: "#1A3A53"
         },
         destructive: {
           DEFAULT: "var(--destructive)",

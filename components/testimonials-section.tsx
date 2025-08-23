@@ -22,7 +22,7 @@ interface Testimonial {
   rating: number;
 }
 
-const testimonials: Testimonial[] = [
+const fallbackTestimonials = [
   {
     id: 1,
     name: "Sarah Johnson",
@@ -81,7 +81,11 @@ const testimonials: Testimonial[] = [
   }
 ];
 
-export default function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  testimonials?: any[];
+}
+
+export default function TestimonialsSection({ testimonials = [] }: TestimonialsSectionProps) {
   const { t } = useTranslation();
   const { isRTL } = useLanguage();
   const [api, setApi] = React.useState<any>();
@@ -90,8 +94,10 @@ export default function TestimonialsSection() {
     Autoplay({ delay: 3000, stopOnInteraction: false })
   );
 
+  // Use dynamic testimonials if available, otherwise use fallback
+  const displayTestimonials = testimonials.length > 0 ? testimonials : fallbackTestimonials;
 
-  const renderStars = (rating: number) => {
+  const renderStars = (rating: number = 5) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
@@ -132,34 +138,34 @@ export default function TestimonialsSection() {
             className="w-full max-w-7xl mx-auto"
           >
             <CarouselContent className="-ml-2">
-              {testimonials.map((testimonial, index) => (
+              {displayTestimonials.map((testimonial, index) => (
                 <CarouselItem key={`${testimonial.id}-${index}`} className="pl-2 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div className="px-1 py-4">
-                    <Card className="bg-white h-56 border-0 shadow-lg flex flex-col">
-                      <CardContent className="p-4 flex flex-col h-full">
-                        {/* User Icon */}
-                        <div className="flex items-center gap-3 mb-4">
+                    <Card className="bg-white h-64 border-0 shadow-lg">
+                      <CardContent className="p-4 h-full flex flex-col">
+                        {/* User Info - Top */}
+                        <div className="flex items-center gap-3 mb-3 flex-shrink-0">
                           <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
                             <User className="h-5 w-5 text-primary-600" />
                           </div>
                           <div>
                             <h4 className="font-semibold text-slate-900 text-sm">
-                              {testimonial.name}
+                              {testimonial.translations?.[0]?.name || testimonial.name || 'Client'}
                             </h4>
                             <p className="text-slate-600 text-xs">
-                              {testimonial.company}
+                              {testimonial.translations?.[0]?.client || testimonial.company || ''}
                             </p>
                           </div>
                         </div>
-
-                        {/* Rating */}
-                        <div className="flex items-center gap-1 mb-3">
-                          {renderStars(testimonial.rating)}
-                        </div>
                         
-                        {/* Testimonial Content */}
-                        <blockquote className="text-slate-700 text-sm leading-relaxed flex-1">
-                          "{testimonial.content}"
+                        {/* Rating */}
+                        <div className="flex items-center gap-1 mb-3 flex-shrink-0">
+                          {renderStars(testimonial.rating || 5)}
+                        </div>
+
+                        {/* Testimonial Content - Takes remaining space with overflow hidden */}
+                        <blockquote className="text-slate-700 text-sm leading-relaxed overflow-hidden">
+                          "{testimonial.translations?.[0]?.text || testimonial.content || ''}"
                         </blockquote>
                       </CardContent>
                     </Card>

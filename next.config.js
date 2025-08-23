@@ -8,6 +8,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'admin.adcc.sa',
+        port: '',
+        pathname: '/assets/**',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
   },

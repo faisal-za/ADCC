@@ -1,16 +1,59 @@
 'use client'
 
 import { useTranslation } from "../hooks/use-translation";
+import { useLanguage } from "../contexts/language-context";
+import { useRouter, usePathname } from "next/navigation";
+import { useCallback } from "react";
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
   
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = useCallback((id: string) => {
+    const isHomePage = pathname === `/${language}`;
+    
+    const performScroll = () => {
+      const element = document.querySelector(`#${id}`);
+      if (element) {
+        const yOffset = -80; // Height of navbar
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({ 
+          top: y, 
+          behavior: 'smooth' 
+        });
+      }
+    };
+    
+    if (!isHomePage) {
+      // Navigate to home page first
+      router.push(`/${language}`);
+      
+      // Use MutationObserver for more reliable element detection
+      const observer = new MutationObserver((mutations, obs) => {
+        const element = document.querySelector(`#${id}`);
+        if (element) {
+          obs.disconnect();
+          performScroll();
+        }
+      });
+      
+      // Start observing after navigation
+      setTimeout(() => {
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+        
+        // Fallback timeout to prevent infinite observation
+        setTimeout(() => observer.disconnect(), 5000);
+      }, 100);
+    } else {
+      performScroll();
     }
-  };
+  }, [pathname, language, router]);
 
   return (
     <footer className="bg-secondary text-secondary-foreground py-12">
@@ -75,7 +118,7 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">{t('contactInfo')}</h4>
             <div className="space-y-2 text-secondary-foreground/80">
-              <p>+966 55 243 3880</p>
+              <p dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'bidi-override' }}>+966 55 243 3880</p>
               <p>info@adcc.sa</p>
               <p>Saudi Arabia</p>
             </div>

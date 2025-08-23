@@ -1,0 +1,1163 @@
+type Query {
+  languages(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [languages!]!
+  languages_by_id(id: ID!, version: String): languages
+  languages_aggregated(groupBy: [String], filter: languages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [languages_aggregated!]!
+  languages_by_version(version: String!, id: ID!): version_languages
+  service_translations(filter: service_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [service_translations!]!
+  service_translations_by_id(id: ID!, version: String): service_translations
+  service_translations_aggregated(groupBy: [String], filter: service_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [service_translations_aggregated!]!
+  service_translations_by_version(version: String!, id: ID!): version_service_translations
+  service(filter: service_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [service!]!
+  service_by_id(id: ID!, version: String): service
+  service_aggregated(groupBy: [String], filter: service_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [service_aggregated!]!
+  service_by_version(version: String!, id: ID!): version_service
+  categories(filter: categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [categories!]!
+  categories_by_id(id: ID!, version: String): categories
+  categories_aggregated(groupBy: [String], filter: categories_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [categories_aggregated!]!
+  categories_by_version(version: String!, id: ID!): version_categories
+  categories_translations(filter: categories_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [categories_translations!]!
+  categories_translations_by_id(id: ID!, version: String): categories_translations
+  categories_translations_aggregated(groupBy: [String], filter: categories_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [categories_translations_aggregated!]!
+  categories_translations_by_version(version: String!, id: ID!): version_categories_translations
+  blog(filter: blog_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [blog!]!
+  blog_by_id(id: ID!, version: String): blog
+  blog_aggregated(groupBy: [String], filter: blog_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [blog_aggregated!]!
+  blog_by_version(version: String!, id: ID!): version_blog
+  testimonials(filter: testimonials_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [testimonials!]!
+  testimonials_by_id(id: ID!, version: String): testimonials
+  testimonials_aggregated(groupBy: [String], filter: testimonials_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [testimonials_aggregated!]!
+  testimonials_by_version(version: String!, id: ID!): version_testimonials
+  project(filter: project_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project!]!
+  project_by_id(id: ID!, version: String): project
+  project_aggregated(groupBy: [String], filter: project_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [project_aggregated!]!
+  project_by_version(version: String!, id: ID!): version_project
+  project_categories_1(filter: project_categories_1_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project_categories_1!]!
+  project_categories_1_by_id(id: ID!, version: String): project_categories_1
+  project_categories_1_aggregated(groupBy: [String], filter: project_categories_1_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [project_categories_1_aggregated!]!
+  project_categories_1_by_version(version: String!, id: ID!): version_project_categories_1
+  project_files(filter: project_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project_files!]!
+  project_files_by_id(id: ID!, version: String): project_files
+  project_files_aggregated(groupBy: [String], filter: project_files_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [project_files_aggregated!]!
+  project_files_by_version(version: String!, id: ID!): version_project_files
+  project_translations(filter: project_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project_translations!]!
+  project_translations_by_id(id: ID!, version: String): project_translations
+  project_translations_aggregated(groupBy: [String], filter: project_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [project_translations_aggregated!]!
+  project_translations_by_version(version: String!, id: ID!): version_project_translations
+  blog_translations(filter: blog_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [blog_translations!]!
+  blog_translations_by_id(id: ID!, version: String): blog_translations
+  blog_translations_aggregated(groupBy: [String], filter: blog_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [blog_translations_aggregated!]!
+  blog_translations_by_version(version: String!, id: ID!): version_blog_translations
+  blog_categories(filter: blog_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [blog_categories!]!
+  blog_categories_by_id(id: ID!, version: String): blog_categories
+  blog_categories_aggregated(groupBy: [String], filter: blog_categories_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [blog_categories_aggregated!]!
+  blog_categories_by_version(version: String!, id: ID!): version_blog_categories
+  testimonials_translations(filter: testimonials_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [testimonials_translations!]!
+  testimonials_translations_by_id(id: ID!, version: String): testimonials_translations
+  testimonials_translations_aggregated(groupBy: [String], filter: testimonials_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [testimonials_translations_aggregated!]!
+  testimonials_translations_by_version(version: String!, id: ID!): version_testimonials_translations
+}
+
+type languages {
+  code: ID!
+  name: String
+  direction: String
+}
+
+input languages_filter {
+  code: string_filter_operators
+  name: string_filter_operators
+  direction: string_filter_operators
+  _and: [languages_filter]
+  _or: [languages_filter]
+}
+
+input string_filter_operators {
+  _eq: String
+  _neq: String
+  _contains: String
+  _icontains: String
+  _ncontains: String
+  _starts_with: String
+  _nstarts_with: String
+  _istarts_with: String
+  _nistarts_with: String
+  _ends_with: String
+  _nends_with: String
+  _iends_with: String
+  _niends_with: String
+  _in: [String]
+  _nin: [String]
+  _null: Boolean
+  _nnull: Boolean
+  _empty: Boolean
+  _nempty: Boolean
+}
+
+type languages_aggregated {
+  group: JSON
+  countAll: Int
+  count: languages_aggregated_count
+  countDistinct: languages_aggregated_count
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type languages_aggregated_count {
+  code: Int
+  name: Int
+  direction: Int
+}
+
+""""""
+type version_languages {
+  code: ID!
+  name: String
+  direction: String
+}
+
+type service_translations {
+  id: ID!
+  service_id(filter: service_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): service
+  languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
+  title: String
+  description: String
+}
+
+type service {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  image(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
+  icon: String
+  translations(filter: service_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [service_translations]
+  translations_func: count_functions
+}
+
+"""ISO8601 Date values"""
+scalar Date
+
+type datetime_functions {
+  year: Int
+  month: Int
+  week: Int
+  day: Int
+  weekday: Int
+  hour: Int
+  minute: Int
+  second: Int
+}
+
+type directus_files {
+  id: ID!
+}
+
+input directus_files_filter {
+  id: id_filter_operators
+  _and: [directus_files_filter]
+  _or: [directus_files_filter]
+}
+
+input id_filter_operators {
+  _eq: ID
+  _neq: ID
+  _contains: ID
+  _icontains: ID
+  _ncontains: ID
+  _starts_with: ID
+  _nstarts_with: ID
+  _istarts_with: ID
+  _nistarts_with: ID
+  _ends_with: ID
+  _nends_with: ID
+  _iends_with: ID
+  _niends_with: ID
+  _in: [ID]
+  _nin: [ID]
+  _null: Boolean
+  _nnull: Boolean
+  _empty: Boolean
+  _nempty: Boolean
+}
+
+input service_translations_filter {
+  id: number_filter_operators
+  service_id: service_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  description: string_filter_operators
+  _and: [service_translations_filter]
+  _or: [service_translations_filter]
+}
+
+input number_filter_operators {
+  _eq: GraphQLStringOrFloat
+  _neq: GraphQLStringOrFloat
+  _in: [GraphQLStringOrFloat]
+  _nin: [GraphQLStringOrFloat]
+  _gt: GraphQLStringOrFloat
+  _gte: GraphQLStringOrFloat
+  _lt: GraphQLStringOrFloat
+  _lte: GraphQLStringOrFloat
+  _null: Boolean
+  _nnull: Boolean
+  _between: [GraphQLStringOrFloat]
+  _nbetween: [GraphQLStringOrFloat]
+}
+
+"""A Float or a String"""
+scalar GraphQLStringOrFloat
+
+input service_filter {
+  id: id_filter_operators
+  user_created: id_filter_operators
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: id_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  image: directus_files_filter
+  icon: string_filter_operators
+  translations: service_translations_quantifier_filter
+  translations_func: count_function_filter_operators
+  _and: [service_filter]
+  _or: [service_filter]
+}
+
+input date_filter_operators {
+  _eq: String
+  _neq: String
+  _gt: String
+  _gte: String
+  _lt: String
+  _lte: String
+  _null: Boolean
+  _nnull: Boolean
+  _in: [String]
+  _nin: [String]
+  _between: [GraphQLStringOrFloat]
+  _nbetween: [GraphQLStringOrFloat]
+}
+
+input datetime_function_filter_operators {
+  year: number_filter_operators
+  month: number_filter_operators
+  week: number_filter_operators
+  day: number_filter_operators
+  weekday: number_filter_operators
+  hour: number_filter_operators
+  minute: number_filter_operators
+  second: number_filter_operators
+}
+
+""""""
+input service_translations_quantifier_filter {
+  id: number_filter_operators
+  service_id: service_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  description: string_filter_operators
+  _and: [service_translations_filter]
+  _or: [service_translations_filter]
+  _some: service_translations_filter
+  _none: service_translations_filter
+}
+
+input count_function_filter_operators {
+  count: number_filter_operators
+}
+
+type count_functions {
+  count: Int
+}
+
+type service_translations_aggregated {
+  group: JSON
+  countAll: Int
+  count: service_translations_aggregated_count
+  countDistinct: service_translations_aggregated_count
+  avg: service_translations_aggregated_fields
+  sum: service_translations_aggregated_fields
+  avgDistinct: service_translations_aggregated_fields
+  sumDistinct: service_translations_aggregated_fields
+  min: service_translations_aggregated_fields
+  max: service_translations_aggregated_fields
+}
+
+type service_translations_aggregated_count {
+  id: Int
+  service_id: Int
+  languages_code: Int
+  title: Int
+  description: Int
+}
+
+type service_translations_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_service_translations {
+  id: ID!
+  service_id: JSON
+  languages_code: JSON
+  title: String
+  description: String
+}
+
+type service_aggregated {
+  group: JSON
+  countAll: Int
+  count: service_aggregated_count
+  countDistinct: service_aggregated_count
+}
+
+type service_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  image: Int
+  icon: Int
+  translations: Int
+}
+
+""""""
+type version_service {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  image: JSON
+  icon: String
+  translations: JSON
+  translations_func: count_functions
+}
+
+type categories {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  projects(filter: project_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): project
+  blogs(filter: blog_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): blog
+  translations(filter: categories_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [categories_translations]
+  translations_func: count_functions
+}
+
+type project {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  translations(filter: project_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project_translations]
+  translations_func: count_functions
+  images(filter: project_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project_files]
+  images_func: count_functions
+  categories(filter: project_categories_1_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [project_categories_1]
+  categories_func: count_functions
+}
+
+type project_translations {
+  id: ID!
+  project_id(filter: project_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): project
+  languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
+  title: String
+  description: String
+}
+
+input project_filter {
+  id: id_filter_operators
+  user_created: id_filter_operators
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: id_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  translations: project_translations_quantifier_filter
+  translations_func: count_function_filter_operators
+  images: project_files_quantifier_filter
+  images_func: count_function_filter_operators
+  categories: project_categories_1_quantifier_filter
+  categories_func: count_function_filter_operators
+  _and: [project_filter]
+  _or: [project_filter]
+}
+
+""""""
+input project_translations_quantifier_filter {
+  id: number_filter_operators
+  project_id: project_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  description: string_filter_operators
+  _and: [project_translations_filter]
+  _or: [project_translations_filter]
+  _some: project_translations_filter
+  _none: project_translations_filter
+}
+
+input project_translations_filter {
+  id: number_filter_operators
+  project_id: project_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  description: string_filter_operators
+  _and: [project_translations_filter]
+  _or: [project_translations_filter]
+}
+
+""""""
+input project_files_quantifier_filter {
+  id: number_filter_operators
+  project_id: project_filter
+  directus_files_id: directus_files_filter
+  _and: [project_files_filter]
+  _or: [project_files_filter]
+  _some: project_files_filter
+  _none: project_files_filter
+}
+
+input project_files_filter {
+  id: number_filter_operators
+  project_id: project_filter
+  directus_files_id: directus_files_filter
+  _and: [project_files_filter]
+  _or: [project_files_filter]
+}
+
+""""""
+input project_categories_1_quantifier_filter {
+  id: number_filter_operators
+  project: project_filter
+  categories: categories_filter
+  _and: [project_categories_1_filter]
+  _or: [project_categories_1_filter]
+  _some: project_categories_1_filter
+  _none: project_categories_1_filter
+}
+
+input categories_filter {
+  id: id_filter_operators
+  user_created: id_filter_operators
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: id_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  projects: project_filter
+  blogs: blog_filter
+  translations: categories_translations_quantifier_filter
+  translations_func: count_function_filter_operators
+  _and: [categories_filter]
+  _or: [categories_filter]
+}
+
+input blog_filter {
+  id: id_filter_operators
+  user_created: id_filter_operators
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: id_filter_operators
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  image: directus_files_filter
+  read_time: string_filter_operators
+  translations: blog_translations_quantifier_filter
+  translations_func: count_function_filter_operators
+  categories: blog_categories_quantifier_filter
+  categories_func: count_function_filter_operators
+  _and: [blog_filter]
+  _or: [blog_filter]
+}
+
+""""""
+input blog_translations_quantifier_filter {
+  id: number_filter_operators
+  blog_id: blog_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  description: string_filter_operators
+  content: string_filter_operators
+  _and: [blog_translations_filter]
+  _or: [blog_translations_filter]
+  _some: blog_translations_filter
+  _none: blog_translations_filter
+}
+
+input blog_translations_filter {
+  id: number_filter_operators
+  blog_id: blog_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  description: string_filter_operators
+  content: string_filter_operators
+  _and: [blog_translations_filter]
+  _or: [blog_translations_filter]
+}
+
+""""""
+input blog_categories_quantifier_filter {
+  id: number_filter_operators
+  blog: blog_filter
+  categories: categories_filter
+  _and: [blog_categories_filter]
+  _or: [blog_categories_filter]
+  _some: blog_categories_filter
+  _none: blog_categories_filter
+}
+
+input blog_categories_filter {
+  id: number_filter_operators
+  blog: blog_filter
+  categories: categories_filter
+  _and: [blog_categories_filter]
+  _or: [blog_categories_filter]
+}
+
+""""""
+input categories_translations_quantifier_filter {
+  id: number_filter_operators
+  categories_id: categories_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  slug: string_filter_operators
+  description: string_filter_operators
+  _and: [categories_translations_filter]
+  _or: [categories_translations_filter]
+  _some: categories_translations_filter
+  _none: categories_translations_filter
+}
+
+input categories_translations_filter {
+  id: number_filter_operators
+  categories_id: categories_filter
+  languages_code: languages_filter
+  title: string_filter_operators
+  slug: string_filter_operators
+  description: string_filter_operators
+  _and: [categories_translations_filter]
+  _or: [categories_translations_filter]
+}
+
+input project_categories_1_filter {
+  id: number_filter_operators
+  project: project_filter
+  categories: categories_filter
+  _and: [project_categories_1_filter]
+  _or: [project_categories_1_filter]
+}
+
+type project_files {
+  id: ID!
+  project_id(filter: project_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): project
+  directus_files_id(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
+}
+
+type project_categories_1 {
+  id: ID!
+  project(filter: project_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): project
+  categories(filter: categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): categories
+}
+
+type blog {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  image(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
+  read_time: String
+  translations(filter: blog_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [blog_translations]
+  translations_func: count_functions
+  categories(filter: blog_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [blog_categories]
+  categories_func: count_functions
+}
+
+type blog_translations {
+  id: ID!
+  blog_id(filter: blog_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): blog
+  languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
+  title: String
+  description: String
+  content: String
+}
+
+type blog_categories {
+  id: ID!
+  blog(filter: blog_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): blog
+  categories(filter: categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): categories
+}
+
+type categories_translations {
+  id: ID!
+  categories_id(filter: categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): categories
+  languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
+  title: String
+  slug: String
+  description: String
+}
+
+type categories_aggregated {
+  group: JSON
+  countAll: Int
+  count: categories_aggregated_count
+  countDistinct: categories_aggregated_count
+}
+
+type categories_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  projects: Int
+  blogs: Int
+  translations: Int
+}
+
+""""""
+type version_categories {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  projects: JSON
+  blogs: JSON
+  translations: JSON
+  translations_func: count_functions
+}
+
+type categories_translations_aggregated {
+  group: JSON
+  countAll: Int
+  count: categories_translations_aggregated_count
+  countDistinct: categories_translations_aggregated_count
+  avg: categories_translations_aggregated_fields
+  sum: categories_translations_aggregated_fields
+  avgDistinct: categories_translations_aggregated_fields
+  sumDistinct: categories_translations_aggregated_fields
+  min: categories_translations_aggregated_fields
+  max: categories_translations_aggregated_fields
+}
+
+type categories_translations_aggregated_count {
+  id: Int
+  categories_id: Int
+  languages_code: Int
+  title: Int
+  slug: Int
+  description: Int
+}
+
+type categories_translations_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_categories_translations {
+  id: ID!
+  categories_id: JSON
+  languages_code: JSON
+  title: String
+  slug: String
+  description: String
+}
+
+type blog_aggregated {
+  group: JSON
+  countAll: Int
+  count: blog_aggregated_count
+  countDistinct: blog_aggregated_count
+}
+
+type blog_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  image: Int
+  read_time: Int
+  translations: Int
+  categories: Int
+}
+
+""""""
+type version_blog {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  image: JSON
+  read_time: String
+  translations: JSON
+  translations_func: count_functions
+  categories: JSON
+  categories_func: count_functions
+}
+
+type testimonials {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  translations(filter: testimonials_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [testimonials_translations]
+  translations_func: count_functions
+}
+
+type testimonials_translations {
+  id: ID!
+  testimonials_id(filter: testimonials_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): testimonials
+  languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
+  text: String
+  client: String
+  name: String
+}
+
+input testimonials_filter {
+  id: id_filter_operators
+  user_created: id_filter_operators
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  translations: testimonials_translations_quantifier_filter
+  translations_func: count_function_filter_operators
+  _and: [testimonials_filter]
+  _or: [testimonials_filter]
+}
+
+""""""
+input testimonials_translations_quantifier_filter {
+  id: number_filter_operators
+  testimonials_id: testimonials_filter
+  languages_code: languages_filter
+  text: string_filter_operators
+  client: string_filter_operators
+  name: string_filter_operators
+  _and: [testimonials_translations_filter]
+  _or: [testimonials_translations_filter]
+  _some: testimonials_translations_filter
+  _none: testimonials_translations_filter
+}
+
+input testimonials_translations_filter {
+  id: number_filter_operators
+  testimonials_id: testimonials_filter
+  languages_code: languages_filter
+  text: string_filter_operators
+  client: string_filter_operators
+  name: string_filter_operators
+  _and: [testimonials_translations_filter]
+  _or: [testimonials_translations_filter]
+}
+
+type testimonials_aggregated {
+  group: JSON
+  countAll: Int
+  count: testimonials_aggregated_count
+  countDistinct: testimonials_aggregated_count
+}
+
+type testimonials_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  translations: Int
+}
+
+""""""
+type version_testimonials {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  translations: JSON
+  translations_func: count_functions
+}
+
+type project_aggregated {
+  group: JSON
+  countAll: Int
+  count: project_aggregated_count
+  countDistinct: project_aggregated_count
+}
+
+type project_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  translations: Int
+  images: Int
+  categories: Int
+}
+
+""""""
+type version_project {
+  id: ID!
+  user_created: ID
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated: ID
+  date_updated: Date
+  date_updated_func: datetime_functions
+  translations: JSON
+  translations_func: count_functions
+  images: JSON
+  images_func: count_functions
+  categories: JSON
+  categories_func: count_functions
+}
+
+type project_categories_1_aggregated {
+  group: JSON
+  countAll: Int
+  count: project_categories_1_aggregated_count
+  countDistinct: project_categories_1_aggregated_count
+  avg: project_categories_1_aggregated_fields
+  sum: project_categories_1_aggregated_fields
+  avgDistinct: project_categories_1_aggregated_fields
+  sumDistinct: project_categories_1_aggregated_fields
+  min: project_categories_1_aggregated_fields
+  max: project_categories_1_aggregated_fields
+}
+
+type project_categories_1_aggregated_count {
+  id: Int
+  project: Int
+  categories: Int
+}
+
+type project_categories_1_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_project_categories_1 {
+  id: ID!
+  project: JSON
+  categories: JSON
+}
+
+type project_files_aggregated {
+  group: JSON
+  countAll: Int
+  count: project_files_aggregated_count
+  countDistinct: project_files_aggregated_count
+  avg: project_files_aggregated_fields
+  sum: project_files_aggregated_fields
+  avgDistinct: project_files_aggregated_fields
+  sumDistinct: project_files_aggregated_fields
+  min: project_files_aggregated_fields
+  max: project_files_aggregated_fields
+}
+
+type project_files_aggregated_count {
+  id: Int
+  project_id: Int
+  directus_files_id: Int
+}
+
+type project_files_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_project_files {
+  id: ID!
+  project_id: JSON
+  directus_files_id: JSON
+}
+
+type project_translations_aggregated {
+  group: JSON
+  countAll: Int
+  count: project_translations_aggregated_count
+  countDistinct: project_translations_aggregated_count
+  avg: project_translations_aggregated_fields
+  sum: project_translations_aggregated_fields
+  avgDistinct: project_translations_aggregated_fields
+  sumDistinct: project_translations_aggregated_fields
+  min: project_translations_aggregated_fields
+  max: project_translations_aggregated_fields
+}
+
+type project_translations_aggregated_count {
+  id: Int
+  project_id: Int
+  languages_code: Int
+  title: Int
+  description: Int
+}
+
+type project_translations_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_project_translations {
+  id: ID!
+  project_id: JSON
+  languages_code: JSON
+  title: String
+  description: String
+}
+
+type blog_translations_aggregated {
+  group: JSON
+  countAll: Int
+  count: blog_translations_aggregated_count
+  countDistinct: blog_translations_aggregated_count
+  avg: blog_translations_aggregated_fields
+  sum: blog_translations_aggregated_fields
+  avgDistinct: blog_translations_aggregated_fields
+  sumDistinct: blog_translations_aggregated_fields
+  min: blog_translations_aggregated_fields
+  max: blog_translations_aggregated_fields
+}
+
+type blog_translations_aggregated_count {
+  id: Int
+  blog_id: Int
+  languages_code: Int
+  title: Int
+  description: Int
+  content: Int
+}
+
+type blog_translations_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_blog_translations {
+  id: ID!
+  blog_id: JSON
+  languages_code: JSON
+  title: String
+  description: String
+  content: String
+}
+
+type blog_categories_aggregated {
+  group: JSON
+  countAll: Int
+  count: blog_categories_aggregated_count
+  countDistinct: blog_categories_aggregated_count
+  avg: blog_categories_aggregated_fields
+  sum: blog_categories_aggregated_fields
+  avgDistinct: blog_categories_aggregated_fields
+  sumDistinct: blog_categories_aggregated_fields
+  min: blog_categories_aggregated_fields
+  max: blog_categories_aggregated_fields
+}
+
+type blog_categories_aggregated_count {
+  id: Int
+  blog: Int
+  categories: Int
+}
+
+type blog_categories_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_blog_categories {
+  id: ID!
+  blog: JSON
+  categories: JSON
+}
+
+type testimonials_translations_aggregated {
+  group: JSON
+  countAll: Int
+  count: testimonials_translations_aggregated_count
+  countDistinct: testimonials_translations_aggregated_count
+  avg: testimonials_translations_aggregated_fields
+  sum: testimonials_translations_aggregated_fields
+  avgDistinct: testimonials_translations_aggregated_fields
+  sumDistinct: testimonials_translations_aggregated_fields
+  min: testimonials_translations_aggregated_fields
+  max: testimonials_translations_aggregated_fields
+}
+
+type testimonials_translations_aggregated_count {
+  id: Int
+  testimonials_id: Int
+  languages_code: Int
+  text: Int
+  client: Int
+  name: Int
+}
+
+type testimonials_translations_aggregated_fields {
+  id: Float
+}
+
+""""""
+type version_testimonials_translations {
+  id: ID!
+  testimonials_id: JSON
+  languages_code: JSON
+  text: String
+  client: String
+  name: String
+}
+
+type Mutation {
+  create_contact_us_items(data: [create_contact_us_input!]): Boolean
+  create_contact_us_item(data: create_contact_us_input!): Boolean
+}
+
+input create_contact_us_input {
+  id: ID
+  user_created: ID
+  date_created: Date
+  user_updated: ID
+  date_updated: Date
+  name: String
+  email: String
+  phone_number: String
+  service_type: String
+  description: String
+}
+
+type Subscription {
+  directus_files_mutated(event: EventEnum): directus_files_mutated
+  languages_mutated(event: EventEnum): languages_mutated
+  service_translations_mutated(event: EventEnum): service_translations_mutated
+  service_mutated(event: EventEnum): service_mutated
+  categories_mutated(event: EventEnum): categories_mutated
+  categories_translations_mutated(event: EventEnum): categories_translations_mutated
+  blog_mutated(event: EventEnum): blog_mutated
+  testimonials_mutated(event: EventEnum): testimonials_mutated
+  project_mutated(event: EventEnum): project_mutated
+  project_categories_1_mutated(event: EventEnum): project_categories_1_mutated
+  project_files_mutated(event: EventEnum): project_files_mutated
+  project_translations_mutated(event: EventEnum): project_translations_mutated
+  blog_translations_mutated(event: EventEnum): blog_translations_mutated
+  blog_categories_mutated(event: EventEnum): blog_categories_mutated
+  testimonials_translations_mutated(event: EventEnum): testimonials_translations_mutated
+}
+
+type directus_files_mutated {
+  key: ID!
+  event: EventEnum
+  data: directus_files
+}
+
+enum EventEnum {
+  create
+  update
+  delete
+}
+
+type languages_mutated {
+  key: ID!
+  event: EventEnum
+  data: languages
+}
+
+type service_translations_mutated {
+  key: ID!
+  event: EventEnum
+  data: service_translations
+}
+
+type service_mutated {
+  key: ID!
+  event: EventEnum
+  data: service
+}
+
+type categories_mutated {
+  key: ID!
+  event: EventEnum
+  data: categories
+}
+
+type categories_translations_mutated {
+  key: ID!
+  event: EventEnum
+  data: categories_translations
+}
+
+type blog_mutated {
+  key: ID!
+  event: EventEnum
+  data: blog
+}
+
+type testimonials_mutated {
+  key: ID!
+  event: EventEnum
+  data: testimonials
+}
+
+type project_mutated {
+  key: ID!
+  event: EventEnum
+  data: project
+}
+
+type project_categories_1_mutated {
+  key: ID!
+  event: EventEnum
+  data: project_categories_1
+}
+
+type project_files_mutated {
+  key: ID!
+  event: EventEnum
+  data: project_files
+}
+
+type project_translations_mutated {
+  key: ID!
+  event: EventEnum
+  data: project_translations
+}
+
+type blog_translations_mutated {
+  key: ID!
+  event: EventEnum
+  data: blog_translations
+}
+
+type blog_categories_mutated {
+  key: ID!
+  event: EventEnum
+  data: blog_categories
+}
+
+type testimonials_translations_mutated {
+  key: ID!
+  event: EventEnum
+  data: testimonials_translations
+}

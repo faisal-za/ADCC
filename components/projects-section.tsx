@@ -8,7 +8,12 @@ import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "../hooks/use-translation";
 
-const projects = [
+interface ProjectsSectionProps {
+  projects?: any[];
+  categories?: any[];
+}
+
+const fallbackProjects = [
   {
     id: 1,
     titleKey: "kfVillaTitle",
@@ -161,16 +166,19 @@ function ImageScroller({ images, title }: { images: string[]; title: string }) {
   );
 }
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ projects = [], categories = [] }: ProjectsSectionProps) {
   const { t } = useTranslation();
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Get all unique tags
-  const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
+  // Debug log
+  console.log('Projects received:', projects);
+  console.log('Categories received:', categories);
 
-  // Filter projects based on selected tag
-  const filteredProjects = selectedTag 
-    ? projects.filter(project => project.tags.includes(selectedTag))
+  // Filter projects based on selected category
+  const filteredProjects = selectedCategory 
+    ? projects.filter(project => 
+        project.categories?.some((cat: any) => cat.categories?.id === selectedCategory)
+      )
     : projects;
 
   return (
@@ -185,31 +193,31 @@ export default function ProjectsSection() {
           </p>
         </header>
 
-        {/* Tag Filter */}
+        {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           <Button
-            variant={selectedTag === null ? "default" : "outline"}
-            onClick={() => setSelectedTag(null)}
+            variant={selectedCategory === null ? "default" : "outline"}
+            onClick={() => setSelectedCategory(null)}
             className={`transition-all duration-300 ${
-              selectedTag === null 
+              selectedCategory === null 
                 ? "bg-primary-600 hover:bg-primary-700 text-white" 
                 : "border-slate-300 text-slate-600 hover:bg-slate-50"
             }`}
           >
             {t('allProjects')}
           </Button>
-          {allTags.map((tag) => (
+          {categories.map((category) => (
             <Button
-              key={tag}
-              variant={selectedTag === tag ? "default" : "outline"}
-              onClick={() => setSelectedTag(tag)}
+              key={category.id}
+              variant={selectedCategory === category.id ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category.id)}
               className={`transition-all duration-300 ${
-                selectedTag === tag 
+                selectedCategory === category.id
                   ? "bg-primary-600 hover:bg-primary-700 text-white" 
                   : "border-slate-300 text-slate-600 hover:bg-slate-50"
               }`}
             >
-              {t(tag as any) || tag}
+              {category.translations?.[0]?.title || 'Category'}
             </Button>
           ))}
         </div>
@@ -220,28 +228,31 @@ export default function ProjectsSection() {
               key={project.id}
               className="project-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
             >
-              <ImageScroller images={project.images} title={project.titleKey} />
+              <ImageScroller 
+                images={project.images?.map((img: any) => `https://admin.adcc.sa/assets/${img.directus_files_id?.id}`).filter(Boolean) || []} 
+                title={project.translations?.[0]?.title || 'Project'} 
+              />
               <CardContent className="p-6">
                 <div className="flex flex-wrap gap-2 mb-3">
-                  {project.tags.map((tag) => (
+                  {project.categories?.map((cat: any) => (
                     <Badge 
-                      key={tag} 
-                      variant={tag === selectedTag ? "default" : "secondary"}
+                      key={cat.id}
+                      variant={cat.categories?.id === selectedCategory ? "default" : "secondary"}
                       className={`transition-all duration-300 ${
-                        tag === selectedTag 
+                        cat.categories?.id === selectedCategory 
                           ? "bg-primary-600 text-white shadow-md" 
                           : "bg-slate-100 text-slate-700"
                       }`}
                     >
-                      {t(tag as any) || tag}
+                      {cat.categories?.translations?.[0]?.title || 'Category'}
                     </Badge>
-                  ))}
+                  )) || []}
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  {t(project.titleKey as any) || project.titleKey}
+                  {project.translations?.[0]?.title || 'Untitled'}
                 </h3>
                 <p className="text-slate-600 mb-4">
-                  {t(project.descriptionKey as any) || project.descriptionKey}
+                  {project.translations?.[0]?.description || ''}
                 </p>
               </CardContent>
             </Card>
@@ -250,7 +261,7 @@ export default function ProjectsSection() {
 
         {filteredProjects.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-slate-500 text-lg">No projects found with the selected tag.</p>
+            <p className="text-slate-500 text-lg">No projects found with the selected category.</p>
           </div>
         )}
 

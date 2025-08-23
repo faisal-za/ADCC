@@ -47,6 +47,11 @@ export const translations = {
   noResultsFound: "No Results Found",
   tryDifferentSearch: "Try adjusting your search terms or filters.",
   clearFilters: "Clear Filters",
+  loadMore: "Load More Posts",
+  loadingMore: "Loading more...",
+  noBlogPosts: "No blog posts available yet. Check back soon!",
+  noPostsInCategory: "No posts found in this category.",
+  minRead: "min read",
   
   // Blog Post
   postNotFound: "Article Not Found",
@@ -123,6 +128,7 @@ export const translations = {
     location: "Location",
     saudiArabia: "Saudi Arabia",
     connectWith: "Connect With Us",
+    name: "Name",
     firstName: "First Name",
     lastName: "Last Name",
     phoneNumber: "Phone Number",
@@ -135,6 +141,7 @@ export const translations = {
     message: "Message",
     messagePlaceholder: "Tell us about your project...",
     sendMessage: "Send Message",
+    submit: "Submit", 
     sending: "Sending...",
 
     // Footer
@@ -144,6 +151,7 @@ export const translations = {
     allRights: "All rights reserved.",
 
     // Form placeholders
+    enterName: "Enter your name",
     enterFirstName: "Enter your first name",
     enterLastName: "Enter your last name",
     enterEmail: "Enter your email",
@@ -154,6 +162,7 @@ export const translations = {
     messageSuccess: "Thank you for your message! We will get back to you soon.",
     error: "Error",
     messageFailed: "Failed to send message. Please try again.",
+    duplicateSubmissionError: "You already have a contact request with the same phone number. We will contact you soon.",
 
     // Project tags
     luxury: "Luxury",
@@ -171,7 +180,7 @@ export const translations = {
     services: "الخدمات",
     projects: "المشاريع",
     about: "من نحن",
-    contactUs: "اتصل بنا",
+    contactUs: "تواصل معنا",
 
     // Hero Section
     heroTitle: "حوّل رؤيتك إلى",
@@ -213,6 +222,11 @@ export const translations = {
     noResultsFound: "لا توجد نتائج",
     tryDifferentSearch: "حاول تعديل مصطلحات البحث أو المرشحات.",
     clearFilters: "مسح المرشحات",
+    loadMore: "تحميل المزيد",
+    loadingMore: "جارٍ تحميل المزيد...",
+    noBlogPosts: "لا توجد مقالات متاحة بعد. تحقق قريباً!",
+    noPostsInCategory: "لا توجد مقالات في هذه الفئة.",
+    minRead: "دقائق قراءة",
     
     // Blog Post
     postNotFound: "المقال غير موجود",
@@ -289,6 +303,7 @@ export const translations = {
     location: "الموقع",
     saudiArabia: "المملكة العربية السعودية",
     connectWith: "تواصل معنا",
+    name: "الإسم",
     firstName: "الاسم الأول",
     lastName: "اسم العائلة",
     phoneNumber: "رقم الهاتف",
@@ -301,6 +316,7 @@ export const translations = {
     message: "الرسالة",
     messagePlaceholder: "أخبرنا عن مشروعك...",
     sendMessage: "إرسال الرسالة",
+    submit: "إرسال",
     sending: "جارٍ الإرسال...",
 
     // Footer
@@ -310,6 +326,7 @@ export const translations = {
     allRights: "جميع الحقوق محفوظة.",
 
     // Form placeholders
+    enterName: "أدخل اسمك",
     enterFirstName: "أدخل اسمك الأول",
     enterLastName: "أدخل اسم العائلة",
     enterEmail: "أدخل بريدك الإلكتروني",
@@ -320,6 +337,7 @@ export const translations = {
     messageSuccess: "شكراً لرسالتك! سنتواصل معك قريباً.",
     error: "خطأ",
     messageFailed: "فشل في إرسال الرسالة. حاول مرة أخرى.",
+    duplicateSubmissionError: "لديك بالفعل طلب تواصل على نفس رقم الجوال. سيتم التواصل معك قريباً.",
 
     // Project tags
     luxury: "فاخر",

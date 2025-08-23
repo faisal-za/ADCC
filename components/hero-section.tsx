@@ -21,7 +21,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+    <section id="home" className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
       {/* Animated GIF Background */}
       <div className="absolute inset-0">
         <img 
