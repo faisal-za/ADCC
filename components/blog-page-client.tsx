@@ -7,8 +7,7 @@ import { User, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "../hooks/use-translation";
 import { useQuery } from "@tanstack/react-query";
-import { generateQueryOp } from "../lib/generated";
-import { directus } from "../lib/directus";
+import { loadMoreBlogPosts } from "../lib/actions/blog";
 
 interface BlogPageClientProps {
   locale: string;
@@ -40,45 +39,7 @@ export default function BlogPageClient({
   } = useQuery({
     queryKey: ['blog-load-more', locale, currentOffset],
     queryFn: async () => {
-      const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US';
-      
-      const { query, variables } = generateQueryOp({
-        blog: {
-          __args: { 
-            sort: ["-date_created"], 
-            limit: pageSize,
-            offset: currentOffset 
-          },
-          id: true,
-          image: { id: true },
-          read_time: true,
-          date_created: true,
-          categories: {
-            id: true,
-            categories: {
-              id: true,
-              translations: {
-                __args: { filter: { languages_code: { code: { _eq: directusLocale } } } },
-                title: true,
-                languages_code: { code: true }
-              }
-            }
-          },
-          translations: {
-            __args: { filter: { languages_code: { code: { _eq: directusLocale } } } },
-            title: true,
-            description: true,
-            content: true,
-            languages_code: { code: true }
-          }
-        }
-      });
-
-      const result = await directus.query(query, variables);
-      return {
-        data: result.blog || [],
-        hasMore: (result.blog || []).length === pageSize
-      };
+      return await loadMoreBlogPosts(currentOffset, pageSize, locale);
     },
     enabled: false // Only run when manually triggered
   });
