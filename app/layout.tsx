@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     default: 'ADCC - Advanced Design & Contracting Company | Construction & Interior Design',
     template: '%s | ADCC'
   },
-  description: 'Leading construction company in UAE offering professional building, renovation, interior design, and finishing services. Transform your vision with ADCC\'s expert craftsmanship and modern solutions.',
-  keywords: ['construction company', 'interior design', 'renovation services', 'building contractor', 'finishing works', 'UAE construction', 'design and build'],
+  description: 'Leading construction company in Saudi Arabia offering professional building, renovation, interior design, and finishing services. Transform your vision with ADCC\'s expert craftsmanship and modern solutions.',
+  keywords: ['construction company', 'interior design', 'renovation services', 'building contractor', 'finishing works', 'Saudi Arabia construction', 'design and build'],
   authors: [{ name: 'ADCC Team' }],
   creator: 'ADCC - Advanced Design & Contracting Co.',
   publisher: 'ADCC',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'ADCC - Advanced Design & Contracting Company',
-    description: 'Leading construction company offering professional building, renovation, and interior design services in UAE.',
+    description: 'Leading construction company offering professional building, renovation, and interior design services in Saudi Arabia.',
     url: 'https://adcc-website.com',
     siteName: 'ADCC',
     images: [

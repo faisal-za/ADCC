@@ -4,7 +4,7 @@ export function OrganizationStructuredData() {
     "@type": "Organization",
     "name": "ADCC - Advanced Design & Contracting Company",
     "alternateName": "ADCC",
-    "description": "Leading construction company in UAE offering professional building, renovation, interior design, and finishing services.",
+    "description": "Leading construction company in Saudi Arabia offering professional building, renovation, interior design, and finishing services.",
     "url": "https://adcc-website.com",
     "logo": "https://adcc-website.com/logo.png",
     "sameAs": [
@@ -14,15 +14,15 @@ export function OrganizationStructuredData() {
     ],
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+971-XX-XXX-XXXX",
+      "telephone": "+966-55-243-3880",
       "contactType": "customer service",
       "availableLanguage": ["English", "Arabic"]
     },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Business District",
-      "addressLocality": "Dubai",
-      "addressCountry": "UAE"
+      "addressLocality": "Riyadh",
+      "addressCountry": "Saudi Arabia"
     },
     "foundingDate": "2020",
     "numberOfEmployees": "50-100",
@@ -36,7 +36,7 @@ export function OrganizationStructuredData() {
     ],
     "serviceArea": {
       "@type": "Place",
-      "name": "United Arab Emirates"
+      "name": "kingdom of Saudi Arabia"
     }
   };
 

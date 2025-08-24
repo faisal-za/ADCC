@@ -24,10 +24,10 @@ export async function generateMetadata({
   return {
     title: isArabic 
       ? 'شركة ADCC للتصميم والمقاولات المتقدمة | إنشاء وتصميم داخلي'
-      : 'ADCC - Construction & Interior Design Company UAE',
+      : 'ADCC - Construction & Interior Design Company',
     description: isArabic
-      ? 'شركة رائدة في الإنشاءات في الإمارات تقدم خدمات البناء والتجديد والتصميم الداخلي والتشطيبات المهنية. حوّل رؤيتك مع خبرة ADCC والحلول العصرية.'
-      : 'Leading UAE construction company offering professional building, renovation, interior design, and finishing services. Transform your vision with ADCC expert craftsmanship.',
+      ? 'شركة رائدة في الإنشاءات في المملكة العربية السعودية تقدم خدمات البناء والتجديد والتصميم الداخلي والتشطيبات المهنية. حوّل رؤيتك مع خبرة ADCC والحلول العصرية.'
+      : 'Leading Saudi construction company offering professional building, renovation, interior design, and finishing services. Transform your vision with ADCC expert craftsmanship.',
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -40,10 +40,10 @@ export async function generateMetadata({
         ? 'شركة ADCC للتصميم والمقاولات المتقدمة'
         : 'ADCC - Advanced Design & Contracting Company',
       description: isArabic
-        ? 'شركة رائدة في الإنشاءات تقدم خدمات البناء والتجديد والتصميم الداخلي المهنية في الإمارات.'
-        : 'Leading construction company offering professional building, renovation, and interior design services in UAE.',
+        ? 'شركة رائدة في الإنشاءات تقدم خدمات البناء والتجديد والتصميم الداخلي المهنية في المملكة العربية السعودية.'
+        : 'Leading construction company offering professional building, renovation, and interior design services in Saudi Arabia.',
       url: `https://adcc-website.com/${locale}`,
-      locale: isArabic ? 'ar_AE' : 'en_US',
+      locale: isArabic ? 'ar_SA' : 'en_SA',
     },
   }
 }
