@@ -5,6 +5,7 @@ import ProjectsSection from '../../components/projects-section'
 import AboutSection from '../../components/about-section'
 import TestimonialsSection from '../../components/testimonials-section'
 import ContactSection from '../../components/contact-section'
+import ClientsSection from '../../components/clients-section'
 import {
    OrganizationStructuredData, 
    ServicesStructuredData, BreadcrumbStructuredData } from '../../components/structured-data'
@@ -156,6 +157,13 @@ export default async function HomePage({
         text: true,
         client: true
       }
+    },
+    clients: {
+      id: true,
+      name: true,
+      logo: {
+        id: true
+      }
     }
   })
 
@@ -163,6 +171,7 @@ export default async function HomePage({
   let projectsData = []
   let categoriesData = []
   let testimonialsData = []
+  let clientsData = []
   try {
     const result = await directus.query(query, variables)
     
@@ -170,6 +179,7 @@ export default async function HomePage({
     projectsData = result.project || []
     categoriesData = result.categories || []
     testimonialsData = result.testimonials || []
+    clientsData = result.clients || []
   } catch (error) {
     console.error('Failed to fetch data:', error)
   }
@@ -182,6 +192,7 @@ export default async function HomePage({
       <div className="min-h-screen overflow-x-hidden">
         <HeroSection />
         <ServicesSection services={servicesData} />
+        <ClientsSection clients={clientsData} locale={locale} />
         <AboutSection />
         <ProjectsSection projects={projectsData} categories={categoriesData} />
         <TestimonialsSection testimonials={testimonialsData} />

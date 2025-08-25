@@ -71,6 +71,10 @@ export interface Query {
     testimonials_translations_by_id: (testimonials_translations | null)
     testimonials_translations_aggregated: testimonials_translations_aggregated[]
     testimonials_translations_by_version: (version_testimonials_translations | null)
+    clients: clients[]
+    clients_by_id: (clients | null)
+    clients_aggregated: clients_aggregated[]
+    clients_by_version: (version_clients | null)
     __typename: 'Query'
 }
 
@@ -729,6 +733,35 @@ export interface version_testimonials_translations {
     __typename: 'version_testimonials_translations'
 }
 
+export interface clients {
+    id: Scalars['ID']
+    logo: (directus_files | null)
+    name: (Scalars['String'] | null)
+    __typename: 'clients'
+}
+
+export interface clients_aggregated {
+    group: (Scalars['JSON'] | null)
+    countAll: (Scalars['Int'] | null)
+    count: (clients_aggregated_count | null)
+    countDistinct: (clients_aggregated_count | null)
+    __typename: 'clients_aggregated'
+}
+
+export interface clients_aggregated_count {
+    id: (Scalars['Int'] | null)
+    logo: (Scalars['Int'] | null)
+    name: (Scalars['Int'] | null)
+    __typename: 'clients_aggregated_count'
+}
+
+export interface version_clients {
+    id: Scalars['ID']
+    logo: (Scalars['JSON'] | null)
+    name: (Scalars['String'] | null)
+    __typename: 'version_clients'
+}
+
 export interface Mutation {
     create_contact_us_items: (Scalars['Boolean'] | null)
     create_contact_us_item: (Scalars['Boolean'] | null)
@@ -751,6 +784,7 @@ export interface Subscription {
     blog_translations_mutated: (blog_translations_mutated | null)
     blog_categories_mutated: (blog_categories_mutated | null)
     testimonials_translations_mutated: (testimonials_translations_mutated | null)
+    clients_mutated: (clients_mutated | null)
     __typename: 'Subscription'
 }
 
@@ -861,6 +895,13 @@ export interface testimonials_translations_mutated {
     __typename: 'testimonials_translations_mutated'
 }
 
+export interface clients_mutated {
+    key: Scalars['ID']
+    event: (EventEnum | null)
+    data: (clients | null)
+    __typename: 'clients_mutated'
+}
+
 export interface QueryGenqlSelection{
     languages?: (languagesGenqlSelection & { __args?: {filter?: (languages_filter | null), sort?: ((Scalars['String'] | null)[] | null), limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null), page?: (Scalars['Int'] | null), search?: (Scalars['String'] | null)} })
     languages_by_id?: (languagesGenqlSelection & { __args: {id: Scalars['ID'], version?: (Scalars['String'] | null)} })
@@ -918,6 +959,10 @@ export interface QueryGenqlSelection{
     testimonials_translations_by_id?: (testimonials_translationsGenqlSelection & { __args: {id: Scalars['ID'], version?: (Scalars['String'] | null)} })
     testimonials_translations_aggregated?: (testimonials_translations_aggregatedGenqlSelection & { __args?: {groupBy?: ((Scalars['String'] | null)[] | null), filter?: (testimonials_translations_filter | null), limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null), page?: (Scalars['Int'] | null), search?: (Scalars['String'] | null), sort?: ((Scalars['String'] | null)[] | null)} })
     testimonials_translations_by_version?: (version_testimonials_translationsGenqlSelection & { __args: {version: Scalars['String'], id: Scalars['ID']} })
+    clients?: (clientsGenqlSelection & { __args?: {filter?: (clients_filter | null), sort?: ((Scalars['String'] | null)[] | null), limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null), page?: (Scalars['Int'] | null), search?: (Scalars['String'] | null)} })
+    clients_by_id?: (clientsGenqlSelection & { __args: {id: Scalars['ID'], version?: (Scalars['String'] | null)} })
+    clients_aggregated?: (clients_aggregatedGenqlSelection & { __args?: {groupBy?: ((Scalars['String'] | null)[] | null), filter?: (clients_filter | null), limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null), page?: (Scalars['Int'] | null), search?: (Scalars['String'] | null), sort?: ((Scalars['String'] | null)[] | null)} })
+    clients_by_version?: (version_clientsGenqlSelection & { __args: {version: Scalars['String'], id: Scalars['ID']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1702,6 +1747,41 @@ export interface version_testimonials_translationsGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface clientsGenqlSelection{
+    id?: boolean | number
+    logo?: (directus_filesGenqlSelection & { __args?: {filter?: (directus_files_filter | null), sort?: ((Scalars['String'] | null)[] | null), limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null), page?: (Scalars['Int'] | null), search?: (Scalars['String'] | null)} })
+    name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface clients_filter {id?: (id_filter_operators | null),logo?: (directus_files_filter | null),name?: (string_filter_operators | null),_and?: ((clients_filter | null)[] | null),_or?: ((clients_filter | null)[] | null)}
+
+export interface clients_aggregatedGenqlSelection{
+    group?: boolean | number
+    countAll?: boolean | number
+    count?: clients_aggregated_countGenqlSelection
+    countDistinct?: clients_aggregated_countGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface clients_aggregated_countGenqlSelection{
+    id?: boolean | number
+    logo?: boolean | number
+    name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface version_clientsGenqlSelection{
+    id?: boolean | number
+    logo?: boolean | number
+    name?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface MutationGenqlSelection{
     create_contact_us_items?: { __args: {data?: (create_contact_us_input[] | null)} } | boolean | number
     create_contact_us_item?: { __args: {data: create_contact_us_input} }
@@ -1727,6 +1807,7 @@ export interface SubscriptionGenqlSelection{
     blog_translations_mutated?: (blog_translations_mutatedGenqlSelection & { __args?: {event?: (EventEnum | null)} })
     blog_categories_mutated?: (blog_categories_mutatedGenqlSelection & { __args?: {event?: (EventEnum | null)} })
     testimonials_translations_mutated?: (testimonials_translations_mutatedGenqlSelection & { __args?: {event?: (EventEnum | null)} })
+    clients_mutated?: (clients_mutatedGenqlSelection & { __args?: {event?: (EventEnum | null)} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -1847,6 +1928,14 @@ export interface testimonials_translations_mutatedGenqlSelection{
     key?: boolean | number
     event?: boolean | number
     data?: testimonials_translationsGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface clients_mutatedGenqlSelection{
+    key?: boolean | number
+    event?: boolean | number
+    data?: clientsGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -2396,6 +2485,38 @@ export interface testimonials_translations_mutatedGenqlSelection{
     
 
 
+    const clients_possibleTypes: string[] = ['clients']
+    export const isclients = (obj?: { __typename?: any } | null): obj is clients => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isclients"')
+      return clients_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const clients_aggregated_possibleTypes: string[] = ['clients_aggregated']
+    export const isclients_aggregated = (obj?: { __typename?: any } | null): obj is clients_aggregated => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isclients_aggregated"')
+      return clients_aggregated_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const clients_aggregated_count_possibleTypes: string[] = ['clients_aggregated_count']
+    export const isclients_aggregated_count = (obj?: { __typename?: any } | null): obj is clients_aggregated_count => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isclients_aggregated_count"')
+      return clients_aggregated_count_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const version_clients_possibleTypes: string[] = ['version_clients']
+    export const isversion_clients = (obj?: { __typename?: any } | null): obj is version_clients => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isversion_clients"')
+      return version_clients_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const Mutation_possibleTypes: string[] = ['Mutation']
     export const isMutation = (obj?: { __typename?: any } | null): obj is Mutation => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isMutation"')
@@ -2528,6 +2649,14 @@ export interface testimonials_translations_mutatedGenqlSelection{
     export const istestimonials_translations_mutated = (obj?: { __typename?: any } | null): obj is testimonials_translations_mutated => {
       if (!obj?.__typename) throw new Error('__typename is missing in "istestimonials_translations_mutated"')
       return testimonials_translations_mutated_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const clients_mutated_possibleTypes: string[] = ['clients_mutated']
+    export const isclients_mutated = (obj?: { __typename?: any } | null): obj is clients_mutated => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isclients_mutated"')
+      return clients_mutated_possibleTypes.includes(obj.__typename)
     }
     
 

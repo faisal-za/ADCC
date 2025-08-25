@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -235,15 +235,25 @@ export default function Navigation() {
             <div className="px-3 py-2">
               <LanguageSwitch />
             </div>
-            <Button
-              onClick={() => scrollToSection("contact")}
-              className="bg-primary-600 text-white mx-3 mt-2 w-auto"
-            >
-              {t('contactUs')}
-            </Button>
           </div>
         </div>
       )}
+      
+      {/* Sticky Contact Button for Mobile */}
+      <div className={`lg:hidden fixed bottom-6 ${language === 'ar' ? 'right-6' : 'left-6'} z-50`}>
+        <Button
+          onClick={() => scrollToSection("contact")}
+          variant="default"
+          size="icon"
+          className="!rounded-full bg-primary-600 hover:bg-primary-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
+          aria-label={t('contactUs')}
+        >
+          <Phone className="h-6 w-6" />
+          <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            {t('contactUs')}
+          </span>
+        </Button>
+      </div>
     </nav>
   );
 }

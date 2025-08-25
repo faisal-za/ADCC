@@ -8,7 +8,7 @@ export default {
         14,
         21,
         31,
-        109
+        114
     ],
     "types": {
         "Query": {
@@ -1079,6 +1079,83 @@ export default {
             ],
             "testimonials_translations_by_version": [
                 104,
+                {
+                    "version": [
+                        3,
+                        "String!"
+                    ],
+                    "id": [
+                        2,
+                        "ID!"
+                    ]
+                }
+            ],
+            "clients": [
+                105,
+                {
+                    "filter": [
+                        106
+                    ],
+                    "sort": [
+                        3,
+                        "[String]"
+                    ],
+                    "limit": [
+                        7
+                    ],
+                    "offset": [
+                        7
+                    ],
+                    "page": [
+                        7
+                    ],
+                    "search": [
+                        3
+                    ]
+                }
+            ],
+            "clients_by_id": [
+                105,
+                {
+                    "id": [
+                        2,
+                        "ID!"
+                    ],
+                    "version": [
+                        3
+                    ]
+                }
+            ],
+            "clients_aggregated": [
+                107,
+                {
+                    "groupBy": [
+                        3,
+                        "[String]"
+                    ],
+                    "filter": [
+                        106
+                    ],
+                    "limit": [
+                        7
+                    ],
+                    "offset": [
+                        7
+                    ],
+                    "page": [
+                        7
+                    ],
+                    "search": [
+                        3
+                    ],
+                    "sort": [
+                        3,
+                        "[String]"
+                    ]
+                }
+            ],
+            "clients_by_version": [
+                109,
                 {
                     "version": [
                         3,
@@ -4126,12 +4203,112 @@ export default {
                 3
             ]
         },
+        "clients": {
+            "id": [
+                2
+            ],
+            "logo": [
+                16,
+                {
+                    "filter": [
+                        17
+                    ],
+                    "sort": [
+                        3,
+                        "[String]"
+                    ],
+                    "limit": [
+                        7
+                    ],
+                    "offset": [
+                        7
+                    ],
+                    "page": [
+                        7
+                    ],
+                    "search": [
+                        3
+                    ]
+                }
+            ],
+            "name": [
+                3
+            ],
+            "__typename": [
+                3
+            ]
+        },
+        "clients_filter": {
+            "id": [
+                18
+            ],
+            "logo": [
+                17
+            ],
+            "name": [
+                5
+            ],
+            "_and": [
+                106
+            ],
+            "_or": [
+                106
+            ],
+            "__typename": [
+                3
+            ]
+        },
+        "clients_aggregated": {
+            "group": [
+                9
+            ],
+            "countAll": [
+                7
+            ],
+            "count": [
+                108
+            ],
+            "countDistinct": [
+                108
+            ],
+            "__typename": [
+                3
+            ]
+        },
+        "clients_aggregated_count": {
+            "id": [
+                7
+            ],
+            "logo": [
+                7
+            ],
+            "name": [
+                7
+            ],
+            "__typename": [
+                3
+            ]
+        },
+        "version_clients": {
+            "id": [
+                2
+            ],
+            "logo": [
+                9
+            ],
+            "name": [
+                3
+            ],
+            "__typename": [
+                3
+            ]
+        },
         "Mutation": {
             "create_contact_us_items": [
                 6,
                 {
                     "data": [
-                        106,
+                        111,
                         "[create_contact_us_input!]"
                     ]
                 }
@@ -4140,7 +4317,7 @@ export default {
                 6,
                 {
                     "data": [
-                        106,
+                        111,
                         "create_contact_us_input!"
                     ]
                 }
@@ -4186,122 +4363,130 @@ export default {
         },
         "Subscription": {
             "directus_files_mutated": [
-                108,
+                113,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "languages_mutated": [
-                110,
+                115,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "service_translations_mutated": [
-                111,
+                116,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "service_mutated": [
-                112,
+                117,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "categories_mutated": [
-                113,
+                118,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "categories_translations_mutated": [
-                114,
+                119,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "blog_mutated": [
-                115,
+                120,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "testimonials_mutated": [
-                116,
+                121,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "project_mutated": [
-                117,
+                122,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "project_categories_1_mutated": [
-                118,
+                123,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "project_files_mutated": [
-                119,
+                124,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "project_translations_mutated": [
-                120,
+                125,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "blog_translations_mutated": [
-                121,
+                126,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "blog_categories_mutated": [
-                122,
+                127,
                 {
                     "event": [
-                        109
+                        114
                     ]
                 }
             ],
             "testimonials_translations_mutated": [
-                123,
+                128,
                 {
                     "event": [
-                        109
+                        114
+                    ]
+                }
+            ],
+            "clients_mutated": [
+                129,
+                {
+                    "event": [
+                        114
                     ]
                 }
             ],
@@ -4314,7 +4499,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 16
@@ -4329,7 +4514,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 1
@@ -4343,7 +4528,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 12
@@ -4357,7 +4542,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 13
@@ -4371,7 +4556,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 36
@@ -4385,7 +4570,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 59
@@ -4399,7 +4584,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 56
@@ -4413,7 +4598,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 70
@@ -4427,7 +4612,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 37
@@ -4441,7 +4626,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 55
@@ -4455,7 +4640,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 54
@@ -4469,7 +4654,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 38
@@ -4483,7 +4668,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 57
@@ -4497,7 +4682,7 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 58
@@ -4511,10 +4696,24 @@ export default {
                 2
             ],
             "event": [
-                109
+                114
             ],
             "data": [
                 71
+            ],
+            "__typename": [
+                3
+            ]
+        },
+        "clients_mutated": {
+            "key": [
+                2
+            ],
+            "event": [
+                114
+            ],
+            "data": [
+                105
             ],
             "__typename": [
                 3

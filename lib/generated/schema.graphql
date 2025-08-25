@@ -55,6 +55,10 @@ type Query {
   testimonials_translations_by_id(id: ID!, version: String): testimonials_translations
   testimonials_translations_aggregated(groupBy: [String], filter: testimonials_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [testimonials_translations_aggregated!]!
   testimonials_translations_by_version(version: String!, id: ID!): version_testimonials_translations
+  clients(filter: clients_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [clients!]!
+  clients_by_id(id: ID!, version: String): clients
+  clients_aggregated(groupBy: [String], filter: clients_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [clients_aggregated!]!
+  clients_by_version(version: String!, id: ID!): version_clients
 }
 
 type languages {
@@ -1030,6 +1034,40 @@ type version_testimonials_translations {
   name: String
 }
 
+type clients {
+  id: ID!
+  logo(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
+  name: String
+}
+
+input clients_filter {
+  id: id_filter_operators
+  logo: directus_files_filter
+  name: string_filter_operators
+  _and: [clients_filter]
+  _or: [clients_filter]
+}
+
+type clients_aggregated {
+  group: JSON
+  countAll: Int
+  count: clients_aggregated_count
+  countDistinct: clients_aggregated_count
+}
+
+type clients_aggregated_count {
+  id: Int
+  logo: Int
+  name: Int
+}
+
+""""""
+type version_clients {
+  id: ID!
+  logo: JSON
+  name: String
+}
+
 type Mutation {
   create_contact_us_items(data: [create_contact_us_input!]): Boolean
   create_contact_us_item(data: create_contact_us_input!): Boolean
@@ -1064,6 +1102,7 @@ type Subscription {
   blog_translations_mutated(event: EventEnum): blog_translations_mutated
   blog_categories_mutated(event: EventEnum): blog_categories_mutated
   testimonials_translations_mutated(event: EventEnum): testimonials_translations_mutated
+  clients_mutated(event: EventEnum): clients_mutated
 }
 
 type directus_files_mutated {
@@ -1160,4 +1199,10 @@ type testimonials_translations_mutated {
   key: ID!
   event: EventEnum
   data: testimonials_translations
+}
+
+type clients_mutated {
+  key: ID!
+  event: EventEnum
+  data: clients
 }

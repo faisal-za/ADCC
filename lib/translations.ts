@@ -81,6 +81,10 @@ export const translations = {
   homeImprovement: "Home Improvement",
   architecture: "Architecture",
 
+    // Clients Section
+    ourClients: 'Our Clients',
+    clientsDescription: 'Trusted by leading companies across Saudi Arabia',
+
     // Testimonials Section
     testimonialsTitle: "What Our Clients Say",
     testimonialsDescription: "Hear from our satisfied clients about their experience working with ADCC on their construction and renovation projects.",
@@ -207,6 +211,10 @@ export const translations = {
     yearsExperience: "سنة خبرة",
     clientSatisfaction: "رضا العملاء",
     supportAvailable: "دعم متاح",
+  
+    // Clients Section
+    ourClients: 'عملاؤنا',
+    clientsDescription: 'موثوق بنا من قبل الشركات الرائدة في المملكة العربية السعودية',
   
     // Blog
     blog: "المدونة",
