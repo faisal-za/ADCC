@@ -147,6 +147,7 @@ export const translations = {
     sendMessage: "Send Message",
     submit: "Submit", 
     sending: "Sending...",
+    continue: "Continue",
 
     // Footer
     quickLinks: "Quick Links",
@@ -326,6 +327,7 @@ export const translations = {
     sendMessage: "إرسال الرسالة",
     submit: "إرسال",
     sending: "جارٍ الإرسال...",
+    continue: "متابعة",
 
     // Footer
     quickLinks: "روابط سريعة",

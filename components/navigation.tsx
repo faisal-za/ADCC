@@ -9,12 +9,14 @@ import LanguageSwitch from "./language-switch";
 import { useTranslation } from "../hooks/use-translation";
 import { useLanguage } from "../contexts/language-context";
 import { useWindowScroll, useDebounce } from "react-use";
+import ContactDrawer from "./contact-drawer";
 
 export default function Navigation() {
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { t } = useTranslation();
   const { language } = useLanguage();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -242,7 +244,14 @@ export default function Navigation() {
       {/* Sticky Contact Button for Mobile */}
       <div className={`lg:hidden fixed bottom-6 ${language === 'ar' ? 'right-6' : 'left-6'} z-50`}>
         <Button
-          onClick={() => scrollToSection("contact")}
+          onClick={() => {
+            const isHomePage = pathname === `/${language}`;
+            if (isHomePage) {
+              scrollToSection("contact");
+            } else {
+              setIsDrawerOpen(true);
+            }
+          }}
           variant="default"
           size="icon"
           className="!rounded-full bg-primary-600 hover:bg-primary-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
@@ -254,6 +263,12 @@ export default function Navigation() {
           </span>
         </Button>
       </div>
+
+      {/* Contact Drawer */}
+      <ContactDrawer 
+        isOpen={isDrawerOpen} 
+        onClose={() => setIsDrawerOpen(false)} 
+      />
     </nav>
   );
 }
