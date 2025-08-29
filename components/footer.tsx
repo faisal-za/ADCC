@@ -4,6 +4,7 @@ import { useTranslation } from "../hooks/use-translation";
 import { useLanguage } from "../contexts/language-context";
 import { useRouter, usePathname } from "next/navigation";
 import { useCallback } from "react";
+import Image from "next/image";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -59,11 +60,15 @@ export default function Footer() {
     <footer className="bg-primary text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <div className="flex items-center mb-4">
-              <span className="text-2xl font-bold text-primary-400">ADCC</span>
+          <div className="flex flex-col gap-3">
+            <div className="">
+              <Image
+                src="/logo_dark.png"
+                alt="ADCC - Advanced Design & Contracting Co."
+                width={130}
+                height={100}
+              />
             </div>
-            <p className=" mb-4">Advanced Design & Contracting Co.</p>
             <p className="">
               {t('companyDescription')}
             </p>

@@ -7,11 +7,36 @@ import { useTranslation } from "../hooks/use-translation";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState(0);
   const { t } = useTranslation();
+
+   const videos = [
+    "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/video-1.webm",
+    "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/video-2.webm",    
+    "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/video-3.webm"     
+  ];
+
+  const switchToNextVideo = () => {
+    setCurrentVideo((prev) => {
+      const next = (prev + 1) % videos.length;
+      console.log(`🎬 Switching video: ${prev} → ${next}`);
+      return next;
+    });
+  };
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Restart video when it becomes active
+  useEffect(() => {
+    const activeVideo = document.querySelector(`video[data-index="${currentVideo}"]`) as HTMLVideoElement;
+    if (activeVideo) {
+      activeVideo.currentTime = 0;
+      activeVideo.play();
+      console.log(`🔄 Restarting video ${currentVideo + 1}`);
+    }
+  }, [currentVideo]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -22,18 +47,32 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
-      {/* Animated GIF Background */}
+      {/* Simple Stacked Videos with CSS Transitions */}
       <div className="absolute inset-0">
-        <img 
-          src="https://media.giphy.com/media/g4nHG6pBP525q/giphy.gif"
-          alt="Building Construction Timelapse"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        {videos.map((video, index) => (
+          <video
+            key={video}
+            data-index={index}
+            autoPlay
+            muted
+            playsInline
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+              index === currentVideo ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoadedData={() => console.log(`📹 Video ${index + 1} loaded:`, video)}
+            onEnded={index === currentVideo ? switchToNextVideo : undefined}
+          >
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ))}
+        
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60"></div>
       </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`backdrop-blur-lg bg-gradient-to-b from-black/30 via-black/20 to-black/10 rounded-3xl px-10 py-6 md:p-12 shadow-2xl border border-transparent transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h1 className="hero-text text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
             {t('heroTitle')}
             <span className="text-accent-500"> {t('heroTitleHighlight')}</span>

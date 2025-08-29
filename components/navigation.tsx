@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import LanguageSwitch from "./language-switch";
 import { useTranslation } from "../hooks/use-translation";
@@ -24,8 +25,14 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // Check if click is on a select portal
+      const target = event.target as HTMLElement;
+      const isSelectPortal = target.closest('[data-radix-popper-content-wrapper]') || 
+                            target.closest('[role="listbox"]');
+      
       if (
         isOpen &&
+        !isSelectPortal &&
         mobileMenuRef.current &&
         !mobileMenuRef.current.contains(event.target as Node) &&
         menuButtonRef.current &&
@@ -135,8 +142,14 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <span className="text-2xl font-bold text-primary-600">ADCC</span>
-              <span className="text-sm text-slate-600 block -mt-1">Advanced Design & Contracting Co.</span>
+              <Image
+                src="/logo_white.png"
+                alt="ADCC - Advanced Design & Contracting Co."
+                width={100}
+                height={10}
+                priority
+                quality={100}
+              />
             </div>
           </div>
           
@@ -202,8 +215,8 @@ export default function Navigation() {
       
       {/* Mobile Menu */}
       {isOpen && (
-        <div ref={mobileMenuRef} className="lg:hidden animate-slide-down mt-2 mx-2">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/80 backdrop-blur-sm border-t mobile-menu rounded-2xl shadow-lg">
+        <div ref={mobileMenuRef} className="lg:hidden animate-slide-down mt-2 mx-2 relative z-50">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-sm border-t mobile-menu rounded-2xl shadow-lg">
               <button
                 onClick={() => { scrollToSection("home"); setActiveSection("home"); }}
                 className={`font-bold block px-3 py-2 text-base w-full text-left rtl:text-right transition-colors ${activeSection === "home" ? "text-secondary" : "text-slate-900 hover:text-primary-600"}`}
@@ -234,7 +247,7 @@ export default function Navigation() {
             >
               {t('blog')}
             </button>
-            <div className="px-3 py-2">
+            <div className="px-3 py-2 relative z-10">
               <LanguageSwitch />
             </div>
           </div>

@@ -166,7 +166,7 @@ export default function ContactSection() {
           <div className="order-1 lg:order-2">
             <h3 className="text-2xl font-semibold text-slate-900 mb-8">{t('contactInformation')}</h3>
             <div className="space-y-10 mb-8">
-              <div className="flex items-center gap-3">
+              <a href="tel:+966552433880" className="flex items-center gap-3 hover:bg-slate-50 rounded-lg p-2 -m-2 transition-colors">
                 <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center">
                   <Phone className="h-6 w-6 text-secondary-600" />
                 </div>
@@ -174,8 +174,8 @@ export default function ContactSection() {
                   <h4 className="font-semibold text-slate-900">{t('phone')}</h4>
                   <p className="text-slate-600" dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'bidi-override' }}>+966 55 243 3880</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
+              </a>
+              <a href="mailto:info@adcc.sa" className="flex items-center gap-3 hover:bg-slate-50 rounded-lg p-2 -m-2 transition-colors">
                 <div className="p-3 bg-accent-100 rounded-lg flex items-center justify-center">
                   <Mail className="h-6 w-6 text-accent-600" />
                 </div>
@@ -183,7 +183,7 @@ export default function ContactSection() {
                   <h4 className="font-semibold text-slate-900">{t('email')}</h4>
                   <p className="text-slate-600">info@adcc.sa</p>
                 </div>
-              </div>
+              </a>
               <div className="flex items-center gap-3 cursor-pointer" onClick={()=> window.open("https://www.google.com/maps/place/24%C2%B045'07.8%22N+46%C2%B040'22.1%22E/@24.752192,46.672832,21z/data=!4m4!3m3!8m2!3d24.752177!4d46.672803?hl=en-US&entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D")}>
                 <div className="p-3 bg-green-100 rounded-lg flex items-center justify-center">
                   <MapPin className="h-6 w-6 text-green-600" />
