@@ -47,7 +47,6 @@ export default function HeroSection() {
             muted
             playsInline
             preload={index === 0 ? "auto" : "metadata"}
-            priority={index === 0 ? "high" : "low"}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
               index === currentVideo ? 'opacity-100' : 'opacity-0'
             }`}
