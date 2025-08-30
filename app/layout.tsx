@@ -4,11 +4,16 @@ import '../lib/globals.css'
 import Providers from './providers'
 import { ReactNode } from 'react'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter'
+})
 const almarai = Almarai({ 
   subsets: ['arabic'], 
   weight: ['300', '400', '700', '800'],
-  variable: '--font-arabic'
+  variable: '--font-arabic',
+  display: 'swap'
 })
 
 export const metadata: Metadata = {
@@ -76,6 +81,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <link rel="dns-prefetch" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev" />
+        <link rel="preconnect" href="https://admin.adcc.sa" />
+        <link rel="prefetch" href="/logo_white.png" />
+      </head>
       <body className={`${inter.className} ${almarai.variable}`}>
         <Providers>
           {children}

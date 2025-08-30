@@ -42,7 +42,7 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
                   key={service.id}
                   className="service-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
                 >
-                  <div className="h-48 relative overflow-hidden">
+                  <div className="aspect-[16/9] relative overflow-hidden">
                     <Image
                       src={service.image?.id ? `https://admin.adcc.sa/assets/${service.image.id}` : '/placeholder-service.jpg'}
                       alt={service.translations?.[0]?.title || 'Service'}

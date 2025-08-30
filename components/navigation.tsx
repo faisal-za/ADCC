@@ -9,8 +9,8 @@ import { useRouter, usePathname } from "next/navigation";
 import LanguageSwitch from "./language-switch";
 import { useTranslation } from "../hooks/use-translation";
 import { useLanguage } from "../contexts/language-context";
-import { useWindowScroll, useDebounce } from "react-use";
 import ContactDrawer from "./contact-drawer";
+import { scrollToSection as scrollToSectionUtil } from "../lib/utils/scroll";
 
 export default function Navigation() {
   const router = useRouter();

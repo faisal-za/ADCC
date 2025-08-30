@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
 import { useTranslation } from "../hooks/use-translation";
+import { scrollToSection } from "../lib/utils/scroll";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,11 +18,7 @@ export default function HeroSection() {
   ];
 
   const switchToNextVideo = () => {
-    setCurrentVideo((prev) => {
-      const next = (prev + 1) % videos.length;
-      console.log(`🎬 Switching video: ${prev} → ${next}`);
-      return next;
-    });
+    setCurrentVideo((prev) => (prev + 1) % videos.length);
   };
 
   useEffect(() => {
@@ -34,16 +31,9 @@ export default function HeroSection() {
     if (activeVideo) {
       activeVideo.currentTime = 0;
       activeVideo.play();
-      console.log(`🔄 Restarting video ${currentVideo + 1}`);
     }
   }, [currentVideo]);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <section id="home" className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
@@ -56,13 +46,15 @@ export default function HeroSection() {
             autoPlay
             muted
             playsInline
+            preload={index === 0 ? "auto" : "metadata"}
+            priority={index === 0 ? "high" : "low"}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
               index === currentVideo ? 'opacity-100' : 'opacity-0'
             }`}
-            onLoadedData={() => console.log(`📹 Video ${index + 1} loaded:`, video)}
             onEnded={index === currentVideo ? switchToNextVideo : undefined}
           >
-            <source src={video} type="video/mp4" />
+            <source src={video} type="video/webm" />
+            <source src={video.replace('.webm', '.mp4')} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         ))}

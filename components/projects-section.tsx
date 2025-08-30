@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -91,13 +91,13 @@ function ImageScroller({ images, title }: { images: string[]; title: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+  }, [images.length]);
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  }, [images.length]);
 
   // Auto-play functionality
   useEffect(() => {
@@ -114,7 +114,7 @@ function ImageScroller({ images, title }: { images: string[]; title: string }) {
 
   return (
     <div 
-      className="h-64 relative overflow-hidden group"
+      className="aspect-[4/3] relative overflow-hidden group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -124,11 +124,13 @@ function ImageScroller({ images, title }: { images: string[]; title: string }) {
           src={image}
           alt={`${title} - ${index + 1}`}
           fill
+          loading="lazy"
+          priority={false}
+          quality={85}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className={`object-cover transition-opacity duration-700 ease-in-out ${
             index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
-          loading="lazy"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       ))}
       {images.length > 1 && (
@@ -171,8 +173,6 @@ export default function ProjectsSection({ projects = [], categories = [] }: Proj
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Debug log
-  console.log('Projects received:', projects);
-  console.log('Categories received:', categories);
 
   // Filter projects based on selected category
   const filteredProjects = selectedCategory 

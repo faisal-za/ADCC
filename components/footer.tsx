@@ -67,6 +67,8 @@ export default function Footer() {
                 alt="ADCC - Advanced Design & Contracting Co."
                 width={130}
                 height={100}
+                loading="lazy"
+                quality={90}
               />
             </div>
             <p className="">
