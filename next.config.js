@@ -28,7 +28,6 @@ const nextConfig = {
   experimental: {
     workerThreads: false,
     cpus: 1,
-    optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-select', '@radix-ui/react-dropdown-menu'],
   },
   compress: true,
@@ -63,6 +62,29 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin',
           },
+        ],
+      },
+      {
+        source: '/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/(.*\\.(?:jpg|jpeg|png|webp|avif|ico|svg))',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400',
+          },
+        ],
+      },
+      {
+        source: '/(.*\\.(?:js|css|woff|woff2))',
+        headers: [
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',

@@ -85,7 +85,18 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="dns-prefetch" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev" />
         <link rel="preconnect" href="https://admin.adcc.sa" />
-        <link rel="prefetch" href="/logo_white.png" />
+        <link rel="preload" href="/logo_white.png" as="image" />
+        <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/poster-1.jpg" as="image" />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical CSS for above-the-fold content */
+            .hero-text{font-size:2.5rem;line-height:1.2;font-weight:700;color:#fff;margin-bottom:1.5rem}
+            @media(min-width:768px){.hero-text{font-size:4rem}}
+            .backdrop-blur-lg{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+            .animate-bounce{animation:bounce 1s infinite}
+            @keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}
+          `
+        }} />
       </head>
       <body className={`${inter.className} ${almarai.variable}`}>
         <Providers>

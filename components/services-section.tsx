@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
+import { Skeleton } from "./ui/skeleton";
 import { getIconComponent } from "../lib/icon-map";
 import ServicesSectionHeader from "./services-section-header";
 
@@ -24,7 +25,37 @@ function getServiceColorClass(index: number): string {
   return colorClasses[index % colorClasses.length];
 }
 
+function ServicesSkeleton() {
+  return (
+    <section id="services" className="py-20 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Skeleton className="h-12 w-64 mx-auto mb-4" />
+        <Skeleton className="h-6 w-96 mx-auto mb-16" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Card key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <Skeleton className="aspect-[16/9] w-full" />
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <Skeleton className="h-12 w-12 rounded-lg" />
+                </div>
+                <Skeleton className="h-6 w-full mb-2" />
+                <Skeleton className="h-4 w-full mb-1" />
+                <Skeleton className="h-4 w-3/4" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ServicesSection({ services = [] }: ServicesSectionProps) {
+  if (!services || services.length === 0) {
+    return <ServicesSkeleton />;
+  }
 
   return (
     <section id="services" className="py-24 bg-slate-50">
