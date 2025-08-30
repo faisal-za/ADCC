@@ -14,6 +14,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/_next/', '/admin/'],
       }
     ],
-    sitemap: 'https://adcc-website.com/sitemap.xml',
+    sitemap: 'https://adcc.sa/sitemap.xml',
   }
 }

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://adcc-website.com'),
+  metadataBase: new URL('https://adcc.sa'),
   alternates: {
     canonical: '/',
     languages: {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ADCC - Advanced Design & Contracting Company',
     description: 'Leading construction company offering professional building, renovation, and interior design services in Saudi Arabia.',
-    url: 'https://adcc-website.com',
+    url: 'https://adcc.sa',
     siteName: 'ADCC',
     images: [
       {

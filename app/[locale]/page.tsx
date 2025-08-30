@@ -43,7 +43,7 @@ export async function generateMetadata({
       description: isArabic
         ? 'شركة رائدة في الإنشاءات تقدم خدمات البناء والتجديد والتصميم الداخلي المهنية في المملكة العربية السعودية.'
         : 'Leading construction company offering professional building, renovation, and interior design services in Saudi Arabia.',
-      url: `https://adcc-website.com/${locale}`,
+      url: `https://adcc.sa/${locale}`,
       locale: isArabic ? 'ar_SA' : 'en_SA',
     },
   }

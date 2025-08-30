@@ -5,8 +5,8 @@ export function OrganizationStructuredData() {
     "name": "ADCC - Advanced Design & Contracting Company",
     "alternateName": "ADCC",
     "description": "Leading construction company in Saudi Arabia offering professional building, renovation, interior design, and finishing services.",
-    "url": "https://adcc-website.com",
-    "logo": "https://adcc-website.com/logo.png",
+    "url": "https://adcc.sa",
+    "logo": "https://adcc.sa/logo.png",
     "sameAs": [
       "https://www.linkedin.com/company/adcc",
       "https://www.facebook.com/adcc",
@@ -119,7 +119,7 @@ export function BreadcrumbStructuredData({ locale }: { locale: string }) {
         "@type": "ListItem",
         "position": 1,
         "name": locale === 'ar' ? 'الرئيسية' : 'Home',
-        "item": `https://adcc-website.com/${locale}`
+        "item": `https://adcc.sa/${locale}`
       }
     ]
   };
