@@ -1,7 +1,9 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import bundleAnalyzer from '@next/bundle-analyzer'
+import crypto from 'crypto'
+
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
 })
-const crypto = require('crypto')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -29,24 +31,12 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [320, 420, 640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 24, 32, 48, 64, 96, 128, 256, 384],
-    quality: 85,
     minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
-    workerThreads: false,
-    cpus: 1,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-select', '@radix-ui/react-dropdown-menu', '@radix-ui/react-dialog', '@radix-ui/react-tooltip', 'class-variance-authority'],
-    optimizeCss: true,
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
   compress: true,
   poweredByHeader: false,

@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { Suspense } from 'react'
 import HeroSection from '../../components/hero-section'
 import dynamic from 'next/dynamic'
 import { Skeleton } from '../../components/ui/skeleton'
@@ -10,22 +9,22 @@ const ServicesSection = dynamic(() => import('../../components/services-section'
 })
 
 const ProjectsSection = dynamic(() => import('../../components/projects-section').then(mod => ({ default: mod.default })), {
-  ssr: false,
+  ssr: true,
   loading: () => <ProjectsSkeleton />
 })
 
 const AboutSection = dynamic(() => import('../../components/about-section').then(mod => ({ default: mod.default })), {
-  ssr: false,
+  ssr: true,
   loading: () => <AboutSkeleton />
 })
 
 const TestimonialsSection = dynamic(() => import('../../components/testimonials-section').then(mod => ({ default: mod.default })), {
-  ssr: false,
+  ssr: true,
   loading: () => <TestimonialsSkeleton />
 })
 
 const ContactSection = dynamic(() => import('../../components/contact-section').then(mod => ({ default: mod.default })), {
-  ssr: false,
+  ssr: true,
   loading: () => <ContactSkeleton />
 })
 
