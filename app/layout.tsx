@@ -7,13 +7,16 @@ import { ReactNode } from 'react'
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter'
+  variable: '--font-inter',
+  preload: true,
+  weight: ['300', '400', '500', '600', '700', '800']
 })
 const almarai = Almarai({ 
   subsets: ['arabic'], 
   weight: ['300', '400', '700', '800'],
   variable: '--font-arabic',
-  display: 'swap'
+  display: 'swap',
+  preload: true
 })
 
 export const metadata: Metadata = {
@@ -86,7 +89,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev" />
         <link rel="preconnect" href="https://admin.adcc.sa" />
         <link rel="preload" href="/logo_white.png" as="image" />
-        <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/poster-1.jpg" as="image" />
+        <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg?w=750&f=webp" as="image" />
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Critical CSS for above-the-fold content */

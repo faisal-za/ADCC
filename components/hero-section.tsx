@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
 import { useTranslation } from "../hooks/use-translation";
@@ -8,7 +9,19 @@ import { scrollToSection } from "../lib/utils/scroll";
 
 export default function HeroSection() {
   const [currentVideo, setCurrentVideo] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
    const videos = [
     "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/video-1.webm",
@@ -32,32 +45,74 @@ export default function HeroSection() {
   }, [currentVideo]);
 
 
+  const mobileImages = [
+    "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg",
+    "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-2-mobile.jpg",
+    "https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-3-mobile.jpg"
+  ];
+
   return (
     <section id="home" className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
-      {/* Hero Video with Poster for Instant LCP */}
+      {/* Optimized Background - Images for Mobile, Videos for Desktop */}
       <div className="absolute inset-0">
-        {/* Current Video */}
-        <video
-          key={videos[currentVideo]}
-          autoPlay
-          muted
-          playsInline
-          preload="metadata"
-          poster={`https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/poster-${currentVideo + 1}.jpg`}
-          className="absolute inset-0 w-full h-full object-cover"
-          onEnded={switchToNextVideo}
-          onLoadStart={() => {
-            // Preload next video
-            const nextIndex = (currentVideo + 1) % videos.length;
-            const nextVideo = document.createElement('video');
-            nextVideo.preload = 'metadata';
-            nextVideo.src = videos[nextIndex];
-          }}
-        >
-          <source src={videos[currentVideo]} type="video/webm" />
-          <source src={videos[currentVideo].replace('.webm', '.mp4')} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {isMobile ? (
+          // Mobile: Use optimized responsive images
+          <div className="relative w-full h-full">
+            <picture>
+              <source
+                media="(max-width: 640px)"
+                srcSet={`${mobileImages[currentVideo]}?w=640&f=webp 640w, ${mobileImages[currentVideo]}?w=750&f=webp 750w`}
+                sizes="100vw"
+                type="image/webp"
+              />
+              <source
+                media="(max-width: 640px)"
+                srcSet={`${mobileImages[currentVideo]}?w=640 640w, ${mobileImages[currentVideo]}?w=750 750w`}
+                sizes="100vw"
+              />
+              <Image
+                src={`${mobileImages[currentVideo]}?w=750&f=webp`}
+                alt="ADCC Construction"
+                fill
+                priority
+                quality={85}
+                sizes="100vw"
+                className="object-cover"
+                onLoad={() => setVideoLoaded(true)}
+              />
+            </picture>
+          </div>
+        ) : (
+          // Desktop: Use videos with lazy loading
+          <>
+            {!videoLoaded && (
+              <Image
+                src={`https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-videos/poster-${currentVideo + 1}.jpg`}
+                alt="ADCC Construction"
+                fill
+                priority
+                quality={85}
+                sizes="100vw"
+                className="object-cover"
+              />
+            )}
+            <video
+              key={videos[currentVideo]}
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                videoLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              onLoadedData={() => setVideoLoaded(true)}
+              onEnded={switchToNextVideo}
+            >
+              <source src={videos[currentVideo]} type="video/webm" />
+              <source src={videos[currentVideo].replace('.webm', '.mp4')} type="video/mp4" />
+            </video>
+          </>
+        )}
         
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60"></div>

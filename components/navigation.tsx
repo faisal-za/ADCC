@@ -9,7 +9,11 @@ import { useRouter, usePathname } from "next/navigation";
 import LanguageSwitch from "./language-switch";
 import { useTranslation } from "../hooks/use-translation";
 import { useLanguage } from "../contexts/language-context";
-import ContactDrawer from "./contact-drawer";
+import dynamic from "next/dynamic";
+
+const ContactDrawer = dynamic(() => import("./contact-drawer").then(mod => ({ default: mod.default })), {
+  ssr: false
+});
 import { scrollToSection as scrollToSectionUtil } from "../lib/utils/scroll";
 
 export default function Navigation() {

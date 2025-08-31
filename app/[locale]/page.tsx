@@ -1,11 +1,30 @@
 import { Metadata } from 'next'
 import HeroSection from '../../components/hero-section'
-import ServicesSection from '../../components/services-section'
-import ProjectsSection from '../../components/projects-section'
-import AboutSection from '../../components/about-section'
-import TestimonialsSection from '../../components/testimonials-section'
-import ContactSection from '../../components/contact-section'
-import ClientsSection from '../../components/clients-section'
+import dynamic from 'next/dynamic'
+
+const ServicesSection = dynamic(() => import('../../components/services-section').then(mod => ({ default: mod.default })), {
+  ssr: true
+})
+
+const ProjectsSection = dynamic(() => import('../../components/projects-section').then(mod => ({ default: mod.default })), {
+  ssr: true
+})
+
+const AboutSection = dynamic(() => import('../../components/about-section').then(mod => ({ default: mod.default })), {
+  ssr: true
+})
+
+const TestimonialsSection = dynamic(() => import('../../components/testimonials-section').then(mod => ({ default: mod.default })), {
+  ssr: true
+})
+
+const ContactSection = dynamic(() => import('../../components/contact-section').then(mod => ({ default: mod.default })), {
+  ssr: true
+})
+
+const ClientsSection = dynamic(() => import('../../components/clients-section').then(mod => ({ default: mod.default })), {
+  ssr: true
+})
 import {
    OrganizationStructuredData, 
    ServicesStructuredData, BreadcrumbStructuredData } from '../../components/structured-data'
