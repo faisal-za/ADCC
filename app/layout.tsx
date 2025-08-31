@@ -92,17 +92,24 @@ export default function RootLayout({
         <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg?w=750&f=avif" as="image" type="image/avif" />
         <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg?w=750&f=webp" as="image" type="image/webp" />
         <link rel="modulepreload" href="/_next/static/chunks/main.js" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <meta name="theme-color" content="#1e293b" />
         <meta name="color-scheme" content="light" />
         <meta name="application-name" content="ADCC" />
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="prefetch" href="/_next/static/css/app/layout.css" as="style" />
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Critical CSS for above-the-fold content */
-            .hero-text{font-size:2.5rem;line-height:1.2;font-weight:700;color:#fff;margin-bottom:1.5rem}
+            .hero-text{font-size:2.5rem;line-height:1.2;font-weight:700;color:#fff;margin-bottom:1.5rem;font-feature-settings:"kern" 1;text-rendering:optimizeLegibility}
             @media(min-width:768px){.hero-text{font-size:4rem}}
-            .backdrop-blur-lg{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-            .animate-bounce{animation:bounce 1s infinite}
+            .backdrop-blur-lg{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);will-change:backdrop-filter}
+            .animate-bounce{animation:bounce 1s infinite;will-change:transform}
             @keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}
+            .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:loading 1.5s infinite}
+            @keyframes loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
+            .contain-layout{contain:layout style paint}
+            img{content-visibility:auto;contain-intrinsic-size:300px 200px}
           `
         }} />
       </head>

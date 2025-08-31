@@ -9,18 +9,28 @@ import { scrollToSection } from "../lib/utils/scroll";
 
 export default function HeroSection() {
   const [currentVideo, setCurrentVideo] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [shouldShowVideo, setShouldShowVideo] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkConnection = () => {
+      // Check if user prefers reduced data usage
+      const connection = (navigator as any).connection;
+      const prefersReducedData = navigator.userAgent?.includes('Mobile') && 
+                                 connection?.effectiveType && 
+                                 ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+      
+      // Show videos on fast connections or desktop
+      const isFastConnection = !prefersReducedData && 
+                              (!connection || connection.effectiveType === '4g');
+      
+      setShouldShowVideo(isFastConnection || window.innerWidth >= 768);
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkConnection();
+    window.addEventListener('resize', checkConnection);
+    return () => window.removeEventListener('resize', checkConnection);
   }, []);
 
    const videos = [
@@ -55,35 +65,8 @@ export default function HeroSection() {
     <section id="home" className="relative h-[calc(100vh-4rem)] flex items-center overflow-hidden">
       {/* Optimized Background - Images for Mobile, Videos for Desktop */}
       <div className="absolute inset-0">
-        {isMobile ? (
-          // Mobile: Use optimized responsive images
-          <div className="relative w-full h-full">
-            <picture>
-              <source
-                media="(max-width: 640px)"
-                srcSet={`${mobileImages[currentVideo]}?w=640&f=webp 640w, ${mobileImages[currentVideo]}?w=750&f=webp 750w`}
-                sizes="100vw"
-                type="image/webp"
-              />
-              <source
-                media="(max-width: 640px)"
-                srcSet={`${mobileImages[currentVideo]}?w=640 640w, ${mobileImages[currentVideo]}?w=750 750w`}
-                sizes="100vw"
-              />
-              <Image
-                src={`${mobileImages[currentVideo]}?w=750&f=webp`}
-                alt="ADCC Construction"
-                fill
-                priority
-                quality={85}
-                sizes="100vw"
-                className="object-cover"
-                onLoad={() => setVideoLoaded(true)}
-              />
-            </picture>
-          </div>
-        ) : (
-          // Desktop: Use videos with lazy loading
+        {shouldShowVideo ? (
+          // Fast connections: Use videos
           <>
             {!videoLoaded && (
               <Image
@@ -112,6 +95,42 @@ export default function HeroSection() {
               <source src={videos[currentVideo].replace('.webm', '.mp4')} type="video/mp4" />
             </video>
           </>
+        ) : (
+          // Slow connections: Use optimized images with video upgrade option
+          <div className="relative w-full h-full">
+            <picture>
+              <source
+                media="(max-width: 640px)"
+                srcSet={`${mobileImages[currentVideo]}?w=640&f=avif 640w, ${mobileImages[currentVideo]}?w=750&f=avif 750w`}
+                sizes="100vw"
+                type="image/avif"
+              />
+              <source
+                media="(max-width: 640px)"
+                srcSet={`${mobileImages[currentVideo]}?w=640&f=webp 640w, ${mobileImages[currentVideo]}?w=750&f=webp 750w`}
+                sizes="100vw"
+                type="image/webp"
+              />
+              <Image
+                src={`${mobileImages[currentVideo]}?w=750&f=webp`}
+                alt="ADCC Construction"
+                fill
+                priority
+                quality={85}
+                sizes="100vw"
+                className="object-cover"
+                onLoad={() => setVideoLoaded(true)}
+              />
+            </picture>
+            
+            {/* Optional: Video upgrade button */}
+            <button
+              onClick={() => setShouldShowVideo(true)}
+              className="absolute bottom-4 right-4 bg-black/50 text-white px-4 py-2 rounded-lg backdrop-blur-sm hover:bg-black/70 transition-all"
+            >
+              🎬 Watch Video
+            </button>
+          </div>
         )}
         
         {/* Overlay */}
@@ -120,7 +139,7 @@ export default function HeroSection() {
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div 
-          className="backdrop-blur-lg bg-gradient-to-b from-black/30 via-black/20 to-black/10 rounded-3xl px-10 py-6 md:p-12 shadow-2xl border border-transparent opacity-100 translate-y-0"
+          className="backdrop-blur-sm bg-gradient-to-b from-black/30 via-black/20 to-black/10 rounded-3xl px-10 py-6 md:p-12 shadow-2xl border border-transparent opacity-100 translate-y-0"
           style={{ minHeight: '400px' }} // Prevent CLS
         >
           <h1 className="hero-text text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">

@@ -13,20 +13,6 @@ const ProjectsSection = dynamic(() => import('../../components/projects-section'
   loading: () => <ProjectsSkeleton />
 })
 
-const AboutSection = dynamic(() => import('../../components/about-section').then(mod => ({ default: mod.default })), {
-  ssr: true,
-  loading: () => <AboutSkeleton />
-})
-
-const TestimonialsSection = dynamic(() => import('../../components/testimonials-section').then(mod => ({ default: mod.default })), {
-  ssr: true,
-  loading: () => <TestimonialsSkeleton />
-})
-
-const ContactSection = dynamic(() => import('../../components/contact-section').then(mod => ({ default: mod.default })), {
-  ssr: true,
-  loading: () => <ContactSkeleton />
-})
 
 const ClientsSection = dynamic(() => import('../../components/clients-section').then(mod => ({ default: mod.default })), {
   ssr: true,
@@ -35,25 +21,26 @@ const ClientsSection = dynamic(() => import('../../components/clients-section').
 import {
    OrganizationStructuredData, 
    ServicesStructuredData, BreadcrumbStructuredData } from '../../components/structured-data'
+import { AboutSection, TestimonialsSection, ContactSection } from '../../components/client-sections'
    
 import { generateQueryOp } from '../../lib/generated'
 import { directus } from '../../lib/directus'
 
 function ServicesSkeleton() {
   return (
-    <section className="py-24 bg-slate-50">
+    <section className="py-24 bg-slate-50 contain-layout" style={{ minHeight: '600px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Skeleton className="h-12 w-64 mx-auto mb-4" />
-        <Skeleton className="h-6 w-96 mx-auto mb-16" />
+        <div className="skeleton h-12 w-64 mx-auto mb-4 rounded"></div>
+        <div className="skeleton h-6 w-96 mx-auto mb-16 rounded"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <Skeleton className="aspect-[16/9] w-full" />
+            <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden" style={{ minHeight: '380px' }}>
+              <div className="skeleton aspect-[16/9] w-full"></div>
               <div className="p-6">
-                <Skeleton className="h-12 w-12 rounded-lg mb-4" />
-                <Skeleton className="h-6 w-full mb-2" />
-                <Skeleton className="h-4 w-full mb-1" />
-                <Skeleton className="h-4 w-3/4" />
+                <div className="skeleton h-12 w-12 rounded-lg mb-4"></div>
+                <div className="skeleton h-6 w-full mb-2 rounded"></div>
+                <div className="skeleton h-4 w-full mb-1 rounded"></div>
+                <div className="skeleton h-4 w-3/4 rounded"></div>
               </div>
             </div>
           ))}
@@ -65,82 +52,19 @@ function ServicesSkeleton() {
 
 function ProjectsSkeleton() {
   return (
-    <section className="py-24">
+    <section className="py-24 contain-layout" style={{ minHeight: '800px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Skeleton className="h-12 w-64 mx-auto mb-16" />
+        <div className="skeleton h-12 w-64 mx-auto mb-16 rounded"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-xl overflow-hidden shadow-lg">
-              <Skeleton className="aspect-[4/3] w-full" />
+            <div key={i} className="bg-white rounded-xl overflow-hidden shadow-lg" style={{ minHeight: '320px' }}>
+              <div className="skeleton aspect-[4/3] w-full"></div>
               <div className="p-6">
-                <Skeleton className="h-6 w-full mb-2" />
-                <Skeleton className="h-4 w-2/3" />
+                <div className="skeleton h-6 w-full mb-2 rounded"></div>
+                <div className="skeleton h-4 w-2/3 rounded"></div>
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function AboutSkeleton() {
-  return (
-    <section className="py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <Skeleton className="aspect-[4/3] w-full rounded-2xl" />
-          <div>
-            <Skeleton className="h-12 w-3/4 mb-6" />
-            <Skeleton className="h-4 w-full mb-2" />
-            <Skeleton className="h-4 w-full mb-2" />
-            <Skeleton className="h-4 w-2/3 mb-8" />
-            <Skeleton className="h-12 w-40" />
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function TestimonialsSkeleton() {
-  return (
-    <section className="py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Skeleton className="h-12 w-64 mx-auto mb-16" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="bg-white p-8 rounded-2xl shadow-lg">
-              <Skeleton className="h-20 w-full mb-6" />
-              <div className="flex items-center">
-                <Skeleton className="h-12 w-12 rounded-full mr-4" />
-                <div>
-                  <Skeleton className="h-5 w-24 mb-2" />
-                  <Skeleton className="h-4 w-32" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function ContactSkeleton() {
-  return (
-    <section className="py-24 bg-slate-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Skeleton className="h-12 w-64 mx-auto mb-16" />
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full md:col-span-2" />
-            <Skeleton className="h-12 w-full md:col-span-2" />
-            <Skeleton className="h-32 w-full md:col-span-2" />
-            <Skeleton className="h-12 w-40" />
-          </div>
         </div>
       </div>
     </section>
@@ -149,12 +73,12 @@ function ContactSkeleton() {
 
 function ClientsSkeleton() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white contain-layout" style={{ minHeight: '200px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Skeleton className="h-8 w-48 mx-auto mb-12" />
+        <div className="skeleton h-8 w-48 mx-auto mb-12 rounded"></div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-16 w-full" />
+            <div key={i} className="skeleton h-16 w-full rounded"></div>
           ))}
         </div>
       </div>
