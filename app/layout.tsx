@@ -88,8 +88,13 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="dns-prefetch" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev" />
         <link rel="preconnect" href="https://admin.adcc.sa" />
-        <link rel="preload" href="/logo_white.png" as="image" />
-        <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg?w=750&f=webp" as="image" />
+        <link rel="preload" href="/logo_white.png" as="image" type="image/png" />
+        <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg?w=750&f=avif" as="image" type="image/avif" />
+        <link rel="preload" href="https://pub-739d7839c19e41459d767b500777a0c7.r2.dev/hero-images/hero-1-mobile.jpg?w=750&f=webp" as="image" type="image/webp" />
+        <link rel="modulepreload" href="/_next/static/chunks/main.js" />
+        <meta name="theme-color" content="#1e293b" />
+        <meta name="color-scheme" content="light" />
+        <meta name="application-name" content="ADCC" />
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Critical CSS for above-the-fold content */

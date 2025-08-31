@@ -1,3 +1,8 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+})
+const crypto = require('crypto')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -21,14 +26,27 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [320, 420, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 24, 32, 48, 64, 96, 128, 256, 384],
+    quality: 85,
+    minimumCacheTTL: 31536000,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
     workerThreads: false,
     cpus: 1,
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-select', '@radix-ui/react-dropdown-menu'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-select', '@radix-ui/react-dropdown-menu', '@radix-ui/react-dialog', '@radix-ui/react-tooltip', 'class-variance-authority'],
+    optimizeCss: true,
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
   compress: true,
   poweredByHeader: false,
@@ -39,7 +57,68 @@ const nextConfig = {
         aggregateTimeout: 300,
       }
     }
+    
+    // Optimize bundle splitting
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        ...config.optimization.splitChunks,
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          framework: {
+            chunks: 'all',
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+          lib: {
+            test(module) {
+              return module.size() > 160000 && /node_modules[/\\]/.test(module.identifier())
+            },
+            name(module) {
+              const hash = crypto.createHash('sha1')
+              hash.update(module.libIdent ? module.libIdent({ context: config.context }) : module.identifier())
+              return 'lib-' + hash.digest('hex').substring(0, 8)
+            },
+            priority: 30,
+            minChunks: 1,
+            reuseExistingChunk: true,
+            chunks: 'all',
+          },
+          commons: {
+            name: 'commons',
+            minChunks: 2,
+            priority: 20,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+        },
+      }
+    }
+    
+    // Tree shaking for lodash and other libs
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'lodash': 'lodash-es',
+    }
+    
     return config
+  },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.adcc.sa',
+          },
+        ],
+        destination: 'https://adcc.sa/:path*',
+        permanent: true,
+      },
+    ]
   },
   async headers() {
     return [
@@ -95,4 +174,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withBundleAnalyzer(nextConfig)
