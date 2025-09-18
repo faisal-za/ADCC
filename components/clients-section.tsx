@@ -31,8 +31,8 @@ const createInfiniteSlides = (clients: Client[]) => {
 
 // Individual client logo slide component
 const ClientLogoSlide = ({ client }: { client: Client }) => (
-  <CarouselItem className="basis-1/3 sm:basis-1/4 md:basis-1/6 lg:basis-1/8">
-    <div className="flex items-center justify-center min-h-[120px] p-6 bg-white rounded-xl transition-all duration-300 mx-2">
+  <CarouselItem className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 pl-4">
+    <div className="p-2">
       {client.logo?.id ? (
         <ClientLogo client={client} />
       ) : (
@@ -47,11 +47,11 @@ const ClientLogo = ({ client }: { client: Client }) => (
     <Image
       src={`https://admin.adcc.sa/assets/${client.logo!.id}`}
       alt={client.name || 'Client logo'}
-      width={500}
-      height={500}
+      width={130}
+      height={95}
       className="rounded-sm"
       loading="lazy"
-      sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, 220px"
+      sizes="(max-width: 640px) 150px, (max-width: 768px) 120px, 100px"
     />
 );
 
