@@ -1,9 +1,15 @@
 "use client";
 
 import React from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useTranslation } from "../hooks/use-translation";
+import { useLanguage } from "../contexts/language-context";
+import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "./ui/carousel";
 
 interface Client {
   id: string;
@@ -18,27 +24,56 @@ interface ClientsSectionProps {
   locale: string;
 }
 
+// Helper function to create infinite scrolling slides
+const createInfiniteSlides = (clients: Client[]) => {
+  return [...clients, ...clients, ...clients];
+};
+
+// Individual client logo slide component
+const ClientLogoSlide = ({ client }: { client: Client }) => (
+  <CarouselItem className="basis-1/3 sm:basis-1/4 md:basis-1/6 lg:basis-1/8">
+    <div className="flex items-center justify-center min-h-[120px] p-6 bg-white rounded-xl transition-all duration-300 mx-2">
+      {client.logo?.id ? (
+        <ClientLogo client={client} />
+      ) : (
+        <ClientPlaceholder name={client.name} />
+      )}
+    </div>
+  </CarouselItem>
+);
+
+// Client logo component
+const ClientLogo = ({ client }: { client: Client }) => (
+    <Image
+      src={`https://admin.adcc.sa/assets/${client.logo!.id}`}
+      alt={client.name || 'Client logo'}
+      width={500}
+      height={500}
+      className="rounded-sm"
+      loading="lazy"
+      sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, 220px"
+    />
+);
+
+// Client placeholder for missing logos
+const ClientPlaceholder = ({ name }: { name: string | null }) => (
+  <div className="text-center text-slate-400 font-medium text-sm">
+    {name || 'Client'}
+  </div>
+);
+
 export default function ClientsSection({ clients, locale }: ClientsSectionProps) {
   const { t } = useTranslation();
-  
-  // Initialize Embla with auto-scroll plugin (not autoplay)
-  const [emblaRef] = useEmblaCarousel(
-    { 
-      loop: true,
-      dragFree: true,
-      containScroll: "keepSnaps",
-      watchSlides: false,
-      direction: locale === 'ar' ? 'rtl' : 'ltr',
-    },
-    [
-      AutoScroll({
-        playOnInit: true,
-        speed: 1,
-        stopOnInteraction: false,
-        stopOnMouseEnter: false,
-        stopOnFocusIn: false
-      })
-    ]
+  const { isRTL } = useLanguage();
+
+  const plugin = React.useRef(
+    AutoScroll({
+      playOnInit: true,
+      speed: 1,
+      stopOnInteraction: false,
+      stopOnMouseEnter: false,
+      stopOnFocusIn: false
+    })
   );
 
   if (!clients || clients.length === 0) {
@@ -56,33 +91,26 @@ export default function ClientsSection({ clients, locale }: ClientsSectionProps)
             {t('clientsDescription') || 'Trusted by leading companies across Saudi Arabia'}
           </p>
         </div>
-
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex">
-            {[...clients, ...clients, ...clients].map((client, index) => (
-              <div
+        <Carousel
+          plugins={[plugin.current]}
+          opts={{
+            align: "start",
+            loop: true,
+            dragFree: true,
+            containScroll: "keepSnaps",
+            direction: isRTL ? "rtl" : "ltr",
+          }}
+         
+        >
+          <CarouselContent>
+            {createInfiniteSlides(clients).map((client, index) => (
+              <ClientLogoSlide
                 key={`${client.id}-${index}`}
-                className="flex-[0_0_33.333%] min-w-0 px-3 sm:flex-[0_0_25%] md:flex-[0_0_16.666%] lg:flex-[0_0_12.5%]"
-              >
-                <div className="flex items-center justify-center h-28 sm:h-32 md:h-32 lg:h-36 p-4 bg-white rounded-xl hover:border-primary-300 hover:shadow-md transition-all duration-300">
-                  {client.logo?.id ? (
-                    <img
-                      src={`https://admin.adcc.sa/assets/${client.logo.id}`}
-                      alt={client.name || 'Client logo'}
-                      className="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
-                      style={{ maxWidth: '120px', maxHeight: '80px' }}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="text-center text-slate-400 font-medium text-sm">
-                      {client.name || 'Client'}
-                    </div>
-                  )}
-                </div>
-              </div>
+                client={client}
+              />
             ))}
-          </div>
-        </div>
+          </CarouselContent>
+        </Carousel>
       </div>
     </section>
   );

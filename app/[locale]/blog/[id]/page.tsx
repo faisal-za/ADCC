@@ -49,6 +49,9 @@ async function getBlogPost(id: string, locale: string) {
   return result.blog_by_id;
 }
 
+// Force dynamic rendering - fresh data on every request
+export const dynamic = 'force-dynamic'
+
 export default async function BlogPostPage({ 
   params 
 }: { 

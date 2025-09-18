@@ -6,6 +6,9 @@ import { generateQueryOp } from "../../../lib/generated";
 import { directus } from "../../../lib/directus";
 import BlogPageClient from "../../../components/blog-page-client";
 
+// Force dynamic rendering - fresh data on every request
+export const dynamic = 'force-dynamic'
+
 export default async function BlogPage({ 
   params 
 }: { 
