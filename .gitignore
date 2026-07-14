@@ -4,5 +4,8 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+*.tsbuildinfo
 .next
+.vercel
 .claude
+.env*

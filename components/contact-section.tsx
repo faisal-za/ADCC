@@ -8,7 +8,7 @@ import { Textarea } from "./ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useTranslation } from "../hooks/use-translation";
 import { submitContactForm } from "../lib/actions/contact";
-import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 
 export default function ContactSection() {
   const { t } = useTranslation();
@@ -207,17 +207,34 @@ export default function ContactSection() {
                       href="https://www.linkedin.com/company/adccsa/" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      aria-label="LinkedIn"
                       className="p-3 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-all btn-hover"
                     >
-                      <Linkedin className="h-6 w-6" />
+                      <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6 fill-current">
+                        <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V9H7.1v11.45Z" />
+                      </svg>
                     </a>
                     <a 
                       href="https://www.instagram.com/adccsaudi/" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      aria-label="Instagram"
                       className="p-3 bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-600 transition-all btn-hover"
                     >
-                      <Instagram className="h-6 w-6" />
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        className="h-6 w-6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect width="18" height="18" x="3" y="3" rx="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                      </svg>
                     </a>
                   </div>
               </div>

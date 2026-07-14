@@ -1,9 +1,4 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
-import crypto from 'crypto'
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true'
-})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -36,67 +31,23 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-select', '@radix-ui/react-dropdown-menu', '@radix-ui/react-dialog', '@radix-ui/react-tooltip', 'class-variance-authority'],
-    optimizeServerReact: true,
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-select',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-tooltip',
+      'class-variance-authority',
+    ],
   },
-  serverExternalPackages: ['@directus/sdk'],
+  // TypeScript 7's native compiler no longer exposes the legacy compiler API
+  // that Next's built-in checker loads. `npm run build` runs `npm run check`
+  // first, so type safety remains mandatory before this build phase.
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   compress: true,
   poweredByHeader: false,
-  webpack: (config, { dev, isServer }) => {
-    if (dev && !isServer) {
-      config.watchOptions = {
-        poll: 1000,
-        aggregateTimeout: 300,
-      }
-    }
-    
-    // Optimize bundle splitting
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        ...config.optimization.splitChunks,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          framework: {
-            chunks: 'all',
-            name: 'framework',
-            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
-            priority: 40,
-            enforce: true,
-          },
-          lib: {
-            test(module) {
-              return module.size() > 160000 && /node_modules[/\\]/.test(module.identifier())
-            },
-            name(module) {
-              const hash = crypto.createHash('sha1')
-              hash.update(module.libIdent ? module.libIdent({ context: config.context }) : module.identifier())
-              return 'lib-' + hash.digest('hex').substring(0, 8)
-            },
-            priority: 30,
-            minChunks: 1,
-            reuseExistingChunk: true,
-            chunks: 'all',
-          },
-          commons: {
-            name: 'commons',
-            minChunks: 2,
-            priority: 20,
-            chunks: 'all',
-            reuseExistingChunk: true,
-          },
-        },
-      }
-    }
-    
-    // Tree shaking for lodash and other libs
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'lodash': 'lodash-es',
-    }
-    
-    return config
-  },
   async redirects() {
     return [
       {
@@ -166,4 +117,6 @@ const nextConfig = {
   },
 }
 
-export default withBundleAnalyzer(nextConfig)
+export default process.env.ANALYZE === 'true'
+  ? bundleAnalyzer({ enabled: true })(nextConfig)
+  : nextConfig

@@ -1,8 +1,8 @@
 'use server'
 
 import { z } from 'zod'
+import { createItem } from '@directus/sdk'
 import { directus } from '../directus'
-import { generateMutationOp } from '../generated'
 
 const contactSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -24,15 +24,7 @@ export async function submitContactForm(formData: FormData) {
 
     const validated = contactSchema.parse(data)
 
-    const { query, variables } = generateMutationOp({
-      create_contact_us_item: {
-        __args: {
-          data: validated
-        }
-      }
-    })
-
-    await directus.query(query, variables)
+    await directus.request(createItem('contact_us', validated))
 
     return { success: true }
   } catch (error) {

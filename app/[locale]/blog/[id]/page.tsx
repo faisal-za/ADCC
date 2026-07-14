@@ -1,52 +1,56 @@
 import { Card, CardContent } from "../../../../components/ui/card";
 import { User, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { generateQueryOp } from "../../../../lib/generated";
+import { readItem } from "@directus/sdk";
 import { directus } from "../../../../lib/directus";
 import { notFound } from "next/navigation";
 import ShareButton from "../../../../components/share-button";
 
-// Helper function to get blog post data
 async function getBlogPost(id: string, locale: string) {
   const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US';
-  
-  const { query, variables } = generateQueryOp({
-    blog_by_id: {
-      __args: { id },
-      id: true,
-      image: { id: true },
-      read_time: true,
-      categories: {
-        id: true,
-        categories: {
-          id: true,
-          translations: {
-            __args: {
-              filter: {
-                languages_code: { code: { _eq: directusLocale } }
-              }
-            },
-            title: true,
-            languages_code: { code: true }
-          }
-        }
-      },
-      translations: {
-        __args: {
-          filter: {
-            languages_code: { code: { _eq: directusLocale } }
-          }
-        },
-        title: true,
-        description: true,
-        content: true,
-        languages_code: { code: true }
-      }
-    }
-  });
+  const translationFilter = {
+    languages_code: { code: { _eq: directusLocale } }
+  } as const;
 
-  const result = await directus.query(query, variables);
-  return result.blog_by_id;
+  return directus.request(readItem('blog', id, {
+    fields: [
+      'id',
+      { image: ['id'] },
+      'read_time',
+      {
+        categories: [
+          'id',
+          {
+            categories: [
+              'id',
+              {
+                translations: [
+                  'title',
+                  { languages_code: ['code'] },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        translations: [
+          'title',
+          'description',
+          'content',
+          { languages_code: ['code'] },
+        ],
+      },
+    ],
+    deep: {
+      translations: { _filter: translationFilter, _limit: 1 },
+      categories: {
+        categories: {
+          translations: { _filter: translationFilter, _limit: 1 },
+        },
+      },
+    },
+  }));
 }
 
 // Force dynamic rendering - fresh data on every request

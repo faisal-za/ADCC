@@ -1,51 +1,65 @@
-'use server';
+'use server'
 
-import { generateQueryOp } from '../generated';
-import { directus } from '../directus';
+import { readItems } from '@directus/sdk'
+import { directus } from '../directus'
 
 export async function loadMoreBlogPosts(offset: number, limit: number, locale: string) {
   try {
-    const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US';
-    
-    const { query, variables } = generateQueryOp({
-      blog: {
-        __args: { 
-          sort: ["-date_created"], 
-          limit,
-          offset 
-        },
-        id: true,
-        image: { id: true },
-        read_time: true,
-        date_created: true,
-        categories: {
-          id: true,
-          categories: {
-            id: true,
-            translations: {
-              __args: { filter: { languages_code: { code: { _eq: directusLocale } } } },
-              title: true,
-              languages_code: { code: true }
-            }
-          }
-        },
-        translations: {
-          __args: { filter: { languages_code: { code: { _eq: directusLocale } } } },
-          title: true,
-          description: true,
-          content: true,
-          languages_code: { code: true }
-        }
-      }
-    });
+    const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US'
+    const translationFilter = {
+      languages_code: { code: { _eq: directusLocale } }
+    } as const
 
-    const result = await directus.query(query, variables);
+    const posts = await directus.request(readItems('blog', {
+      fields: [
+        'id',
+        { image: ['id'] },
+        'read_time',
+        'date_created',
+        {
+          categories: [
+            'id',
+            {
+              categories: [
+                'id',
+                {
+                  translations: [
+                    'title',
+                    { languages_code: ['code'] },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          translations: [
+            'title',
+            'description',
+            'content',
+            { languages_code: ['code'] },
+          ],
+        },
+      ],
+      sort: ['-date_created'],
+      limit,
+      offset,
+      deep: {
+        translations: { _filter: translationFilter, _limit: 1 },
+        categories: {
+          categories: {
+            translations: { _filter: translationFilter, _limit: 1 },
+          },
+        },
+      },
+    }))
+
     return {
-      data: result.blog || [],
-      hasMore: (result.blog || []).length === limit
-    };
+      data: posts,
+      hasMore: posts.length === limit,
+    }
   } catch (error) {
-    console.error('Error loading more blog posts:', error);
-    throw new Error('Failed to load more posts');
+    console.error('Error loading more blog posts:', error)
+    throw new Error('Failed to load more posts')
   }
 }

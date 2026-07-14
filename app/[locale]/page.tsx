@@ -23,7 +23,7 @@ import {
    ServicesStructuredData, BreadcrumbStructuredData } from '../../components/structured-data'
 import { AboutSection, TestimonialsSection, ContactSection } from '../../components/client-sections'
    
-import { generateQueryOp } from '../../lib/generated'
+import { readItems } from '@directus/sdk'
 import { directus } from '../../lib/directus'
 
 function ServicesSkeleton() {
@@ -130,130 +130,87 @@ export default async function HomePage({
 }) {
   const { locale } = await params
   
-  // Fetch all data in a single GraphQL query
   const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US'
-  
-  const { query, variables } = generateQueryOp({
-    service: {
-      id: true,
-      date_created: true,
-      date_updated: true,
-      icon: true,
-      image: {
-        id: true
-      },
-      translations: {
-        __args: {
-          filter: {
-            languages_code: { 
-              code: { _eq: directusLocale }
-            }
-          }
-        },
-        id: true,
-        title: true,
-        description: true,
-        languages_code: {
-          code: true,
-          name: true
-        }
-      }
-    },
-    project: {
-      id: true,
-      date_created: true,
-      date_updated: true,
-      images: {
-        id: true,
-        directus_files_id: {
-          id: true
-        }
-      },
-      categories: {
-        id: true,
-        categories: {
-          id: true,
-          translations: {
-            __args: {
-              filter: {
-                languages_code: {
-                  code: { _eq: directusLocale }
-                }
-              }
-            },
-            id: true,
-            title: true,
-            slug: true
-          }
-        }
-      },
-      translations: {
-        __args: {
-          filter: {
-            languages_code: {
-              code: { _eq: directusLocale }
-            }
-          }
-        },
-        id: true,
-        title: true,
-        description: true
-      }
-    },
-    categories: {
-      id: true,
-      translations: {
-        __args: {
-          filter: {
-            languages_code: {
-              code: { _eq: directusLocale }
-            }
-          }
-        },
-        id: true,
-        title: true,
-        slug: true
-      }
-    },
-    testimonials: {
-      id: true,
-      date_created: true,
-      translations: {
-        __args: {
-          filter: {
-            languages_code: {
-              code: { _eq: directusLocale }
-            }
-          }
-        },
-        id: true,
-        name: true,
-        text: true,
-        client: true
-      }
-    },
-    clients: {
-      id: true,
-      name: true,
-      logo: {
-        id: true
-      }
-    }
-  })
+  const translationFilter = {
+    languages_code: { code: { _eq: directusLocale } }
+  } as const
 
-  let servicesData = []
-  let projectsData = []
-  let categoriesData = []
-  let testimonialsData = []
-  let clientsData = []
+  let servicesData: any[] = []
+  let projectsData: any[] = []
+  let categoriesData: any[] = []
+  let testimonialsData: any[] = []
+  let clientsData: any[] = []
+
   try {
-    const result = await directus.query(query, variables)
-    
-    servicesData = result.service || []
-    projectsData = result.project || []
-    categoriesData = result.categories || []
-    testimonialsData = result.testimonials || []
-    clientsData = result.clients || []
+    [servicesData, projectsData, categoriesData, testimonialsData, clientsData] = await Promise.all([
+      directus.request(readItems('service', {
+        fields: [
+          'id',
+          'date_created',
+          'date_updated',
+          'icon',
+          { image: ['id'] },
+          {
+            translations: [
+              'id',
+              'title',
+              'description',
+              { languages_code: ['code', 'name'] },
+            ],
+          },
+        ],
+        deep: {
+          translations: { _filter: translationFilter, _limit: 1 },
+        },
+      })),
+      directus.request(readItems('project', {
+        fields: [
+          'id',
+          'date_created',
+          'date_updated',
+          { images: ['id', { directus_files_id: ['id'] }] },
+          {
+            categories: [
+              'id',
+              {
+                categories: [
+                  'id',
+                  { translations: ['id', 'title', 'slug'] },
+                ],
+              },
+            ],
+          },
+          { translations: ['id', 'title', 'description'] },
+        ],
+        deep: {
+          translations: { _filter: translationFilter, _limit: 1 },
+          categories: {
+            categories: {
+              translations: { _filter: translationFilter, _limit: 1 },
+            },
+          },
+        },
+      })),
+      directus.request(readItems('categories', {
+        fields: ['id', { translations: ['id', 'title', 'slug'] }],
+        deep: {
+          translations: { _filter: translationFilter, _limit: 1 },
+        },
+      })),
+      directus.request(readItems('testimonials', {
+        fields: [
+          'id',
+          'date_created',
+          { translations: ['id', 'name', 'text', 'client'] },
+        ],
+        deep: {
+          translations: { _filter: translationFilter, _limit: 1 },
+        },
+      })),
+      directus.request(readItems('clients', {
+        fields: ['id', 'name', { logo: ['id'] }],
+      })),
+    ])
   } catch (error) {
     console.error('Failed to fetch data:', error)
   }

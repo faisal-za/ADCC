@@ -11,7 +11,21 @@
       "Bash(taskkill:*)",
       "Bash(npx kill-port:*)",
       "Bash(wmic process where:*)",
-      "WebFetch(domain:ui.shadcn.com)"
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:docs.directus.io)",
+      "WebFetch(domain:directus.io)",
+      "WebFetch(domain:zod.dev)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run:*)",
+      "Bash(dir \"C:\\Users\\noc-9\\Documents\\ADCC\\public\")",
+      "Bash(mkdir:*)",
+      "Bash(dir:*)",
+      "Bash(git checkout:*)",
+      "WebFetch(domain:www.radix-ui.com)",
+      "WebFetch(domain:pagespeed.web.dev)",
+      "Bash(find:*)",
+      "Bash(rg:*)"
     ],
     "deny": [],
     "ask": []

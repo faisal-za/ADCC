@@ -1,90 +1,240 @@
-import { createDirectus, graphql, rest, authentication } from '@directus/sdk';
-import { generateGraphqlOperation } from './generated/runtime';
-import type { Query, Mutation } from './generated/schema';
-import { generateQueryOp } from './generated';
+import 'server-only'
 
-// Define the Directus instance URL
-const DIRECTUS_URL = 'https://admin.adcc.sa';
+import { createDirectus, rest, staticToken } from '@directus/sdk'
 
-// Create the Directus client with GraphQL and REST capabilities
-export const directus = createDirectus(DIRECTUS_URL)
-  .with(graphql())
+export type PrimaryKey = string | number
+export type Relation<T> = PrimaryKey | T
+
+export interface DirectusFile {
+  id: string
+}
+
+export interface Language {
+  code: string
+  name: string | null
+  direction: string | null
+}
+
+export interface ServiceTranslation {
+  id: PrimaryKey
+  service_id: Relation<Service> | null
+  languages_code: Relation<Language> | null
+  title: string | null
+  description: string | null
+}
+
+export interface Service {
+  id: string
+  date_created: string | null
+  date_updated: string | null
+  icon: string | null
+  image: Relation<DirectusFile> | null
+  translations: ServiceTranslation[]
+}
+
+export interface CategoryTranslation {
+  id: PrimaryKey
+  categories_id: Relation<Category> | null
+  languages_code: Relation<Language> | null
+  title: string | null
+  slug: string | null
+  description: string | null
+}
+
+export interface Category {
+  id: string
+  translations: CategoryTranslation[]
+}
+
+export interface ProjectTranslation {
+  id: PrimaryKey
+  project_id: Relation<Project> | null
+  languages_code: Relation<Language> | null
+  title: string | null
+  description: string | null
+}
+
+export interface ProjectFile {
+  id: PrimaryKey
+  project_id: Relation<Project> | null
+  directus_files_id: Relation<DirectusFile> | null
+}
+
+export interface ProjectCategory {
+  id: PrimaryKey
+  project: Relation<Project> | null
+  categories: Relation<Category> | null
+}
+
+export interface Project {
+  id: string
+  date_created: string | null
+  date_updated: string | null
+  translations: ProjectTranslation[]
+  images: ProjectFile[]
+  categories: ProjectCategory[]
+}
+
+export interface BlogTranslation {
+  id: PrimaryKey
+  blog_id: Relation<Blog> | null
+  languages_code: Relation<Language> | null
+  title: string | null
+  description: string | null
+  content: string | null
+}
+
+export interface BlogCategory {
+  id: PrimaryKey
+  blog: Relation<Blog> | null
+  categories: Relation<Category> | null
+}
+
+export interface Blog {
+  id: string
+  date_created: string | null
+  date_updated: string | null
+  image: Relation<DirectusFile> | null
+  read_time: string | null
+  translations: BlogTranslation[]
+  categories: BlogCategory[]
+}
+
+export interface TestimonialTranslation {
+  id: PrimaryKey
+  testimonials_id: Relation<Testimonial> | null
+  languages_code: Relation<Language> | null
+  text: string | null
+  client: string | null
+  name: string | null
+}
+
+export interface Testimonial {
+  id: string
+  date_created: string | null
+  translations: TestimonialTranslation[]
+}
+
+export interface Client {
+  id: string
+  name: string | null
+  logo: Relation<DirectusFile> | null
+}
+
+export interface ContactUs {
+  id?: string | null
+  name: string
+  email?: string | null
+  phone_number: string
+  service_type?: string | null
+  description?: string | null
+}
+
+export interface Schema {
+  directus_files: DirectusFile[]
+  languages: Language[]
+  service: Service[]
+  service_translations: ServiceTranslation[]
+  categories: Category[]
+  categories_translations: CategoryTranslation[]
+  project: Project[]
+  project_translations: ProjectTranslation[]
+  project_files: ProjectFile[]
+  project_categories_1: ProjectCategory[]
+  blog: Blog[]
+  blog_translations: BlogTranslation[]
+  blog_categories: BlogCategory[]
+  testimonials: Testimonial[]
+  testimonials_translations: TestimonialTranslation[]
+  clients: Client[]
+  contact_us: ContactUs[]
+}
+
+// These projection types match this application's explicit expanded REST fields.
+// The exported collection types above retain Directus's scalar-or-expanded relation shape.
+type ExpandedServiceTranslation = Omit<ServiceTranslation, 'service_id' | 'languages_code'> & {
+  service_id: ExpandedService | null
+  languages_code: Language | null
+}
+type ExpandedService = Omit<Service, 'image' | 'translations'> & {
+  image: DirectusFile | null
+  translations: ExpandedServiceTranslation[]
+}
+type ExpandedCategoryTranslation = Omit<CategoryTranslation, 'categories_id' | 'languages_code'> & {
+  categories_id: ExpandedCategory | null
+  languages_code: Language | null
+}
+type ExpandedCategory = Omit<Category, 'translations'> & {
+  translations: ExpandedCategoryTranslation[]
+}
+type ExpandedProjectTranslation = Omit<ProjectTranslation, 'project_id' | 'languages_code'> & {
+  project_id: ExpandedProject | null
+  languages_code: Language | null
+}
+type ExpandedProjectFile = Omit<ProjectFile, 'project_id' | 'directus_files_id'> & {
+  project_id: ExpandedProject | null
+  directus_files_id: DirectusFile | null
+}
+type ExpandedProjectCategory = Omit<ProjectCategory, 'project' | 'categories'> & {
+  project: ExpandedProject | null
+  categories: ExpandedCategory | null
+}
+type ExpandedProject = Omit<Project, 'translations' | 'images' | 'categories'> & {
+  translations: ExpandedProjectTranslation[]
+  images: ExpandedProjectFile[]
+  categories: ExpandedProjectCategory[]
+}
+type ExpandedBlogTranslation = Omit<BlogTranslation, 'blog_id' | 'languages_code'> & {
+  blog_id: ExpandedBlog | null
+  languages_code: Language | null
+}
+type ExpandedBlogCategory = Omit<BlogCategory, 'blog' | 'categories'> & {
+  blog: ExpandedBlog | null
+  categories: ExpandedCategory | null
+}
+type ExpandedBlog = Omit<Blog, 'image' | 'translations' | 'categories'> & {
+  image: DirectusFile | null
+  translations: ExpandedBlogTranslation[]
+  categories: ExpandedBlogCategory[]
+}
+type ExpandedTestimonialTranslation = Omit<TestimonialTranslation, 'testimonials_id' | 'languages_code'> & {
+  testimonials_id: ExpandedTestimonial | null
+  languages_code: Language | null
+}
+type ExpandedTestimonial = Omit<Testimonial, 'translations'> & {
+  translations: ExpandedTestimonialTranslation[]
+}
+type ExpandedClient = Omit<Client, 'logo'> & {
+  logo: DirectusFile | null
+}
+
+interface ExpandedSchema {
+  directus_files: DirectusFile[]
+  languages: Language[]
+  service: ExpandedService[]
+  service_translations: ExpandedServiceTranslation[]
+  categories: ExpandedCategory[]
+  categories_translations: ExpandedCategoryTranslation[]
+  project: ExpandedProject[]
+  project_translations: ExpandedProjectTranslation[]
+  project_files: ExpandedProjectFile[]
+  project_categories_1: ExpandedProjectCategory[]
+  blog: ExpandedBlog[]
+  blog_translations: ExpandedBlogTranslation[]
+  blog_categories: ExpandedBlogCategory[]
+  testimonials: ExpandedTestimonial[]
+  testimonials_translations: ExpandedTestimonialTranslation[]
+  clients: ExpandedClient[]
+  contact_us: ContactUs[]
+}
+
+const directusUrl = process.env.DIRECTUS_URL ?? 'https://admin.adcc.sa'
+const directusToken = process.env.DIRECTUS_TOKEN
+
+if (process.env.VERCEL === '1' && !directusToken) {
+  throw new Error('DIRECTUS_TOKEN is required for Vercel deployments')
+}
+
+export const directus = createDirectus<ExpandedSchema>(directusUrl)
+  .with(staticToken(directusToken ?? ''))
   .with(rest())
-  .with(authentication('json', { autoRefresh: true }));
-
-/**
- * Execute a GraphQL query using GenQL-generated types
- * This combines Directus SDK with GenQL for type-safe queries
- */
-export async function graphqlQuery<T extends object = any>(
-  query: any,
-  options?: { 
-    variables?: Record<string, any>;
-    operationName?: string;
-  }
-) {
-  // Generate the GraphQL query string and variables using GenQL
-  const { query: queryString, variables } = generateGraphqlOperation('query', query);
-  
-  // Execute the query using Directus SDK's GraphQL client
-  const result = await directus.query<T>(queryString, variables || options?.variables);
-  
-  return result;
-}
-
-/**
- * Execute a GraphQL mutation using GenQL-generated types
- */
-export async function graphqlMutation<T extends object = any>(
-  mutation: any,
-  options?: { 
-    variables?: Record<string, any>;
-    operationName?: string;
-  }
-) {
-  // Generate the GraphQL mutation string and variables using GenQL
-  const { query: mutationString, variables } = generateGraphqlOperation('mutation', mutation);
-  
-  // Execute the mutation using Directus SDK's GraphQL client
-  const result = await directus.query<T>(mutationString, variables || options?.variables);
-  
-  return result;
-}
-
-/**
- * Helper function to build typed queries using GenQL
- * This provides full TypeScript support for your Directus schema
- */
-export function buildQuery<T extends keyof Query>(
-  field: T,
-  selection: any
-): Record<T, any> {
-  return { [field]: selection } as Record<T, any>;
-}
-
-/**
- * Helper function to build typed mutations using GenQL
- */
-export function buildMutation<T extends keyof Mutation>(
-  field: T,
-  selection: any
-): Record<T, any> {
-  return { [field]: selection } as Record<T, any>;
-}
-
-// Export types from generated schema for use in components
-export type { 
-  Query, 
-  Mutation,
-  blog,
-  blog_translations,
-  project,
-  project_translations,
-  service,
-  service_translations,
-  categories,
-  categories_translations,
-  testimonials,
-  testimonials_translations,
-  languages
-} from './generated/schema';

@@ -1,7 +1,7 @@
 /* Fonts are now loaded via Next.js Google Fonts in layout.tsx */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@config "../tailwind.config.ts";
 
 :root {
   --background: hsl(0 0% 100%);
