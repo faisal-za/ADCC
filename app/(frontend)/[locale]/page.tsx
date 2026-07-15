@@ -1,30 +1,30 @@
 import { Metadata } from 'next'
-import HeroSection from '../../components/hero-section'
+import HeroSection from '@/components/hero-section'
 import nextDynamic from 'next/dynamic'
-import { Skeleton } from '../../components/ui/skeleton'
+import { Skeleton } from '@/components/ui/skeleton'
 
-const ServicesSection = nextDynamic(() => import('../../components/services-section').then(mod => ({ default: mod.default })), {
+const ServicesSection = nextDynamic(() => import('@/components/services-section').then(mod => ({ default: mod.default })), {
   ssr: true,
   loading: () => <ServicesSkeleton />
 })
 
-const ProjectsSection = nextDynamic(() => import('../../components/projects-section').then(mod => ({ default: mod.default })), {
+const ProjectsSection = nextDynamic(() => import('@/components/projects-section').then(mod => ({ default: mod.default })), {
   ssr: true,
   loading: () => <ProjectsSkeleton />
 })
 
 
-const ClientsSection = nextDynamic(() => import('../../components/clients-section').then(mod => ({ default: mod.default })), {
+const ClientsSection = nextDynamic(() => import('@/components/clients-section').then(mod => ({ default: mod.default })), {
   ssr: true,
   loading: () => <ClientsSkeleton />
 })
 import {
    OrganizationStructuredData, 
-   ServicesStructuredData, BreadcrumbStructuredData } from '../../components/structured-data'
-import { AboutSection, TestimonialsSection, ContactSection } from '../../components/client-sections'
+   ServicesStructuredData, BreadcrumbStructuredData } from '@/components/structured-data'
+import { AboutSection, TestimonialsSection, ContactSection } from '@/components/client-sections'
    
 import { readItems } from '@directus/sdk'
-import { directus } from '../../lib/directus'
+import { directus } from '@/lib/directus'
 
 export const dynamic = 'force-dynamic'
 

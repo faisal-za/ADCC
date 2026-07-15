@@ -1,4 +1,5 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
+import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -13,6 +14,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pub-739d7839c19e41459d767b500777a0c7.r2.dev',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
         port: '',
         pathname: '/**',
       },
@@ -96,6 +103,8 @@ const nextConfig = {
   },
 }
 
-export default process.env.ANALYZE === 'true'
+const analyzedConfig = process.env.ANALYZE === 'true'
   ? bundleAnalyzer({ enabled: true })(nextConfig)
   : nextConfig
+
+export default withPayload(analyzedConfig)

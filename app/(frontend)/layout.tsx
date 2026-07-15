@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Almarai } from 'next/font/google'
-import '../lib/globals.css'
+import '@/lib/globals.css'
 import Providers from './providers'
 import { ReactNode } from 'react'
 

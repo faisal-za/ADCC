@@ -8,8 +8,8 @@ const runtimeFiles = [
   'components/projects-section.tsx',
   'components/clients-section.tsx',
   'components/blog-page-client.tsx',
-  'app/[locale]/blog/[id]/page.tsx',
-  'app/layout.tsx',
+  'app/(frontend)/[locale]/blog/[id]/page.tsx',
+  'app/(frontend)/layout.tsx',
   'next.config.js',
 ]
 
@@ -35,7 +35,7 @@ test('renders Directus-managed media through same-origin asset paths', () => {
     'components/projects-section.tsx',
     'components/clients-section.tsx',
     'components/blog-page-client.tsx',
-    'app/[locale]/blog/[id]/page.tsx',
+    'app/(frontend)/[locale]/blog/[id]/page.tsx',
   ]
 
   for (const path of assetFiles) {
@@ -44,7 +44,7 @@ test('renders Directus-managed media through same-origin asset paths', () => {
 })
 
 test('renders the homepage dynamically for runtime Directus bindings', () => {
-  assert.match(read('app/[locale]/page.tsx'), /export const dynamic = ['"]force-dynamic['"]/)
+  assert.match(read('app/(frontend)/[locale]/page.tsx'), /export const dynamic = ['"]force-dynamic['"]/)
 })
 
 test('serves homepage Directus images without the Next.js image proxy', () => {

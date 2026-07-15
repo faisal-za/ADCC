@@ -1,10 +1,10 @@
-import { Card, CardContent } from "../../../../components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { User, ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { readItem } from "@directus/sdk";
-import { directus } from "../../../../lib/directus";
+import { directus } from "@/lib/directus";
 import { notFound } from "next/navigation";
-import ShareButton from "../../../../components/share-button";
+import ShareButton from "@/components/share-button";
 
 async function getBlogPost(id: string, locale: string) {
   const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US';

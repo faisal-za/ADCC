@@ -1,6 +1,6 @@
 import { aggregate, readItems } from '@directus/sdk'
-import { directus } from '../../../lib/directus'
-import BlogPageClient from '../../../components/blog-page-client'
+import { directus } from '@/lib/directus'
+import BlogPageClient from '@/components/blog-page-client'
 
 export const dynamic = 'force-dynamic'
 

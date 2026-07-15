@@ -5,7 +5,12 @@ import { i18n } from './i18n.config'
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+  if (
+    pathname === '/admin' ||
+    pathname.startsWith('/admin/') ||
+    pathname === '/api' ||
+    pathname.startsWith('/api/')
+  ) {
     return NextResponse.next()
   }
 

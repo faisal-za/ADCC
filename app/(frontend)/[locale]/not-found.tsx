@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '../../components/ui/button'
-import { useTranslation } from '../../hooks/use-translation'
+import { Button } from '@/components/ui/button'
+import { useTranslation } from '@/hooks/use-translation'
 
 export default function NotFound() {
   const { t } = useTranslation()

@@ -2,14 +2,14 @@
 
 import { ReactNode } from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '../lib/queryClient'
-import { LanguageProvider } from '../contexts/language-context'
-import { Toaster } from '../components/ui/toaster'
-import { TooltipProvider } from '../components/ui/tooltip'
+import { queryClient } from '@/lib/queryClient'
+import { LanguageProvider } from '@/contexts/language-context'
+import { Toaster } from '@/components/ui/toaster'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import dynamic from 'next/dynamic'
-import Navigation from '../components/navigation'
+import Navigation from '@/components/navigation'
 
-const Footer = dynamic(() => import('../components/footer').then(mod => ({ default: mod.default })), {
+const Footer = dynamic(() => import('@/components/footer').then(mod => ({ default: mod.default })), {
   ssr: true
 })
 
