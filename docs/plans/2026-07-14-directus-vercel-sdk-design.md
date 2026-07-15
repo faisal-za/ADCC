@@ -1,5 +1,7 @@
 # Directus Vercel Services and SDK REST Design
 
+> **Superseded:** The application now uses embedded Payload CMS; this Directus design is retained only as historical context.
+
 **Date:** 2026-07-14
 **Status:** Implemented; deployment smoke tests pending credentials
 

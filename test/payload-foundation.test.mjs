@@ -45,6 +45,6 @@ test('provides Payload maintenance and migration-aware CI scripts', () => {
   }
 })
 
-test('retains Directus until the dedicated retirement task', () => {
-  assert.ok(packageJson.dependencies?.['@directus/sdk'])
+test('contains no Directus runtime dependency after retirement', () => {
+  assert.equal(packageJson.dependencies?.['@directus/sdk'], undefined)
 })

@@ -13,7 +13,7 @@ const exists = async (path) => {
   }
 }
 
-test('separates frontend and official Payload App Router files without GraphQL routes', async () => {
+test('separates frontend and official Payload App Router files with GraphQL disabled and no GraphQL routes', async () => {
   for (const path of [
     'app/(frontend)/layout.tsx',
     'app/(frontend)/[locale]/page.tsx',
@@ -35,6 +35,9 @@ test('separates frontend and official Payload App Router files without GraphQL r
   assert.equal(await exists('app/(payload)/api/graphql-playground/route.ts'), false)
   assert.equal(await exists('app/(payload)/graphql/route.ts'), false)
   assert.equal(await exists('app/(payload)/graphql-playground/route.ts'), false)
+
+  const payloadConfig = await source('payload.config.ts')
+  assert.match(payloadConfig, /graphQL:\s*\{\s*disable:\s*true,?\s*\}/)
 
   const robotsBridge = await source('app/robots.ts')
   assert.match(robotsBridge, /from ['"]\.\/\(frontend\)\/robots['"]/)

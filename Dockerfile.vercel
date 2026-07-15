@@ -1,9 +1,0 @@
-FROM directus/directus:12.1.1
-
-# Vercel forwards container traffic to port 80 by default.
-ENV HOST=0.0.0.0
-ENV PORT=80
-
-# Start HTTP immediately to satisfy Vercel's 15-second startup deadline.
-# Database migrations for this existing installation are managed separately.
-CMD ["node", "cli.js", "start"]

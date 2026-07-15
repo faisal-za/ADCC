@@ -1,5 +1,7 @@
 # Same-Origin Directus Routing Implementation Plan
 
+> **Superseded:** The application now uses embedded Payload CMS; this Directus implementation plan is retained only as historical context.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Serve Directus Admin at `https://adcc.sa/admin` while preserving the locale-routed Next.js site and avoiding an enumerated Directus endpoint list.

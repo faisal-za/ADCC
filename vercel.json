@@ -1,24 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "frontend": {
-      "root": ".",
-      "framework": "nextjs",
-      "bindings": [
-        {
-          "type": "service",
-          "service": "directus",
-          "format": "url",
-          "env": "DIRECTUS_INTERNAL_URL"
-        }
-      ]
-    },
-    "directus": {
-      "root": ".",
-      "runtime": "container",
-      "entrypoint": "Dockerfile.vercel"
-    }
-  },
   "redirects": [
     {
       "source": "/",
@@ -38,20 +19,5 @@
       "destination": "https://adcc.sa/:path*",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    { "source": "/", "destination": { "service": "frontend" } },
-    { "source": "/en", "destination": { "service": "frontend" } },
-    { "source": "/en/(.*)", "destination": { "service": "frontend" } },
-    { "source": "/ar", "destination": { "service": "frontend" } },
-    { "source": "/ar/(.*)", "destination": { "service": "frontend" } },
-    { "source": "/_next/(.*)", "destination": { "service": "frontend" } },
-    { "source": "/api/revalidate", "destination": { "service": "frontend" } },
-    { "source": "/robots.txt", "destination": { "service": "frontend" } },
-    { "source": "/sitemap.xml", "destination": { "service": "frontend" } },
-    { "source": "/favicon.ico", "destination": { "service": "frontend" } },
-    { "source": "/logo_dark.png", "destination": { "service": "frontend" } },
-    { "source": "/logo_white.png", "destination": { "service": "frontend" } },
-    { "source": "/(.*)", "destination": { "service": "directus" } }
   ]
 }

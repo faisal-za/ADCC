@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@directus/sdk':
-        specifier: ^23.0.0
-        version: 23.0.0
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.81.0(react@19.2.7))
@@ -229,10 +226,6 @@ packages:
 
   '@date-fns/tz@1.2.0':
     resolution: {integrity: sha512-LBrd7MiJZ9McsOgxqWX7AaxrDjcFVjWH/tIKJd7pnR7McaslGYOP1QmmiBXdJH/H/yLCT+rcQ7FaPBUxRGUtrg==}
-
-  '@directus/sdk@23.0.0':
-    resolution: {integrity: sha512-hoPSj9bhe2dxaq9PXuvqqCHzjy9sUvcik2vi5DA/xKZ7E42O2TgDfNgRjYY8gb0ZOkm3TAUeLuEKf4aJTrUYIw==}
-    engines: {node: '>=22'}
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -3621,8 +3614,6 @@ snapshots:
   '@borewit/text-codec@0.2.2': {}
 
   '@date-fns/tz@1.2.0': {}
-
-  '@directus/sdk@23.0.0': {}
 
   '@discoveryjs/json-ext@0.5.7': {}
 

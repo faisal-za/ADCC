@@ -1,5 +1,7 @@
 # Research: Directus on Vercel container images
 
+> **Superseded:** The application now uses embedded Payload CMS; this Directus research is retained only as historical context.
+
 **Date:** 2026-07-14  
 **Status:** Superseded by the approved deployment design in `docs/plans/2026-07-14-directus-vercel-sdk-design.md` after the deployment requirements were clarified.  
 **Original research decision:** **Do not add `Dockerfile.vercel` to this frontend repository now.** Directus appears technically deployable as a Vercel container for its HTTP API/admin workload, but production suitability is not established for Directus Realtime/WebSockets, and a safe deployment also requires external PostgreSQL, object storage, and (for multi-instance/realtime use) Redis. If migration is explicitly approved, deploy Directus as a separate Vercel project/service and validate the blocking unknowns first.

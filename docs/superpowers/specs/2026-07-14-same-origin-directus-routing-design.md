@@ -1,5 +1,7 @@
 # Same-Origin Directus Routing Design
 
+> **Superseded:** The application now uses embedded Payload CMS; this Directus routing design is retained only as historical context.
+
 **Date:** 2026-07-14
 **Status:** Approved
 
