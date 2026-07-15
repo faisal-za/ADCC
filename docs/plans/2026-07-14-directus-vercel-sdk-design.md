@@ -7,9 +7,10 @@
 
 - Deploy Directus 12.1.1 from a root `Dockerfile.vercel` in the same Vercel project as the Next.js frontend.
 - Define two explicit Vercel Services: Next.js frontend and Directus container.
-- Route requests whose `Host` is `admin.adcc.sa` to Directus; route all other hosts to Next.js.
+- Route the explicit frontend surface (`/`, localized `/en` and `/ar` pages, Next internals, metadata, revalidation, and current public root files) to Next.js.
+- Route the final catch-all to Directus so Admin is available at `https://adcc.sa/admin` without enumerating Directus endpoints.
 - Preserve the existing PostgreSQL database and R2/S3-compatible asset storage.
-- Keep `https://admin.adcc.sa` as the public CMS/API/assets origin.
+- Use `https://adcc.sa` as the shared public website, CMS API, and asset origin.
 - Disable Directus Realtime/WebSockets; Redis is not required for this initial deployment.
 - Remove GenQL and all GraphQL application code. Use only Directus SDK REST commands from Server Components and Server Actions.
 - Upgrade project dependencies to the latest versions in the already-approved staged sequence.
@@ -20,17 +21,18 @@ Add a minimal root `Dockerfile.vercel` pinned to `directus/directus:12.1.1`. Pre
 
 Add `vercel.json` with:
 
-- `frontend`: repository root, explicitly configured as Next.js.
+- `frontend`: repository root, explicitly configured as Next.js and bound internally to `directus` as `DIRECTUS_INTERNAL_URL`.
 - `directus`: repository root, explicitly configured as a container using `Dockerfile.vercel`.
-- First rewrite: all paths on host `admin.adcc.sa` to `directus`.
-- Final catch-all rewrite: all remaining traffic to `frontend`.
+- Top-level canonical redirects from `www.adcc.sa` and the legacy `admin.adcc.sa` host.
+- Ordered frontend allowlist rewrites for localized pages, Next internals, metadata, revalidation, and current root public files.
+- Final catch-all rewrite to `directus`.
 
 This same-root Services topology must pass Vercel configuration validation. If Vercel rejects duplicate roots, the fallback is moving only the Directus Dockerfile into a `directus/` subdirectory; no separate repository or project will be introduced without approval.
 
 Configure secrets in Vercel, never in the image or repository:
 
-- Directus: `SECRET`, `PUBLIC_URL=https://admin.adcc.sa`, `DB_CLIENT=pg`, PostgreSQL connection string/SSL settings, and R2 storage driver/bucket/endpoint/key/secret.
-- Frontend server: `DIRECTUS_URL=https://admin.adcc.sa` and a static `DIRECTUS_TOKEN` with read access plus create access only for `contact_us`.
+- Directus: `SECRET`, `PUBLIC_URL=https://adcc.sa`, `DB_CLIENT=pg`, PostgreSQL connection string/SSL settings, and R2 storage driver/bucket/endpoint/key/secret.
+- Frontend server: runtime binding `DIRECTUS_INTERNAL_URL`, build fallback `DIRECTUS_URL=https://adcc.sa`, and a static `DIRECTUS_TOKEN` with read access plus create access only for `contact_us`.
 - Non-secret: `WEBSOCKETS_ENABLED=false`.
 
 The existing database already has its admin user, so bootstrap admin credentials will not be configured.
@@ -113,15 +115,14 @@ Completed locally:
 - `npm run build` with Next.js 16's default Turbopack path
 - `npm run analyze` with Webpack and bundle-analyzer
 - `npm audit` (zero reported vulnerabilities)
-- `vercel.json` validation against Vercel's published schema
-- Local HTTP smoke checks for English/Arabic home and blog routes
+- Node deployment routing contract tests
+- Same-origin SDK and asset URL contract tests
+- Published Vercel schema validation for `vercel.json`
 
 Pending deployment access:
 
-- `npx vercel build` (the local Vercel token is invalid)
-- Docker image build/config inspection (Docker is not installed locally)
-- Live Directus checks (the configured domain currently refuses connections)
-- After deployment: `/server/health`, Admin login, representative REST list/detail requests, contact creation, R2 asset read/upload, cold start, and host routing for both `adcc.sa` and `admin.adcc.sa`
+- Set `PUBLIC_URL=https://adcc.sa` and `DIRECTUS_URL=https://adcc.sa` in the appropriate Vercel environments before deployment; do not manually set Vercel's generated `DIRECTUS_INTERNAL_URL` binding.
+- After deployment: `/admin`, `/server/health`, Admin login, representative REST list/detail requests, contact creation, R2 asset read/upload, canonical host redirects, scale-from-zero, and frontend ownership for `/`, `/en`, `/ar`, `/_next`, metadata, and revalidation.
 
 ## Known constraints
 
