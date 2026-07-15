@@ -230,7 +230,7 @@ export default function ProjectsSection({ projects = [], categories = [] }: Proj
               className="project-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
             >
               <ImageScroller
-                images={project.images?.map((img: any) => `/assets/${img.directus_files_id?.id}`).filter(Boolean) || []}
+                images={project.images?.map((img: any) => img.directus_files_id?.id).filter(Boolean).map((id: any) => `/assets/${id}`) || []}
                 title={project.translations?.[0]?.title || 'Project'}
               />
               <CardContent className="p-6">
