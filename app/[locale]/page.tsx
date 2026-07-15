@@ -1,20 +1,20 @@
 import { Metadata } from 'next'
 import HeroSection from '../../components/hero-section'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { Skeleton } from '../../components/ui/skeleton'
 
-const ServicesSection = dynamic(() => import('../../components/services-section').then(mod => ({ default: mod.default })), {
+const ServicesSection = nextDynamic(() => import('../../components/services-section').then(mod => ({ default: mod.default })), {
   ssr: true,
   loading: () => <ServicesSkeleton />
 })
 
-const ProjectsSection = dynamic(() => import('../../components/projects-section').then(mod => ({ default: mod.default })), {
+const ProjectsSection = nextDynamic(() => import('../../components/projects-section').then(mod => ({ default: mod.default })), {
   ssr: true,
   loading: () => <ProjectsSkeleton />
 })
 
 
-const ClientsSection = dynamic(() => import('../../components/clients-section').then(mod => ({ default: mod.default })), {
+const ClientsSection = nextDynamic(() => import('../../components/clients-section').then(mod => ({ default: mod.default })), {
   ssr: true,
   loading: () => <ClientsSkeleton />
 })
@@ -25,6 +25,8 @@ import { AboutSection, TestimonialsSection, ContactSection } from '../../compone
    
 import { readItems } from '@directus/sdk'
 import { directus } from '../../lib/directus'
+
+export const dynamic = 'force-dynamic'
 
 function ServicesSkeleton() {
   return (

@@ -78,6 +78,7 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
                       src={service.image?.id ? `/assets/${service.image.id}` : '/placeholder-service.jpg'}
                       alt={service.translations?.[0]?.title || 'Service'}
                       fill
+                      unoptimized
                       className="object-cover transition-transform duration-300 hover:scale-105"
                       loading="lazy"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"

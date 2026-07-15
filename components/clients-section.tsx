@@ -49,6 +49,7 @@ const ClientLogo = ({ client }: { client: Client }) => (
       alt={client.name || 'Client logo'}
       width={130}
       height={95}
+      unoptimized
       className="rounded-sm"
       loading="lazy"
       sizes="(max-width: 640px) 150px, (max-width: 768px) 120px, 100px"

@@ -124,6 +124,7 @@ function ImageScroller({ images, title }: { images: string[]; title: string }) {
           src={image}
           alt={`${title} - ${index + 1}`}
           fill
+          unoptimized
           loading="lazy"
           priority={false}
           quality={85}
