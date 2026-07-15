@@ -1,113 +1,44 @@
-import { aggregate, readItems } from '@directus/sdk'
-import { directus } from '@/lib/directus'
 import BlogPageClient from '@/components/blog-page-client'
+import { getBlogPage, getCategories } from '@/lib/cms'
+import { parseCMSLocale, type BlogPageResult, type CategoryView } from '@/lib/cms-types'
 
-export const dynamic = 'force-dynamic'
-
-function parseAggregateCount(result: unknown): number {
-  if (!Array.isArray(result) || result.length === 0) return 0
-
-  const count = (result[0] as { count?: unknown }).count
-  if (typeof count === 'number' || typeof count === 'string') {
-    return Number(count) || 0
-  }
-
-  if (count && typeof count === 'object' && '*' in count) {
-    const wildcardCount = (count as { '*': unknown })['*']
-    return Number(wildcardCount) || 0
-  }
-
-  return 0
-}
+export const revalidate = 3600
 
 export default async function BlogPage({
-  params
+  params,
 }: {
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US'
-  const translationFilter = {
-    languages_code: { code: { _eq: directusLocale } }
-  } as const
+  const cmsLocale = parseCMSLocale(locale)
+  const pageSize = 6
 
-  let blogData: any[] = []
-  let categoriesData: any[] = []
-  let totalBlogCount = 0
-  const initialPageSize = 6
+  let initialResult: BlogPageResult = {
+    docs: [],
+    totalDocs: 0,
+    hasNextPage: false,
+    page: 1,
+    totalPages: 0,
+  }
+  let categories: CategoryView[] = []
 
   try {
-    const [countResult, posts, categories] = await Promise.all([
-      directus.request(aggregate('blog', {
-        aggregate: { count: '*' },
-      })),
-      directus.request(readItems('blog', {
-        fields: [
-          'id',
-          { image: ['id'] },
-          'read_time',
-          'date_created',
-          {
-            categories: [
-              'id',
-              {
-                categories: [
-                  'id',
-                  {
-                    translations: [
-                      'title',
-                      { languages_code: ['code'] },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            translations: [
-              'title',
-              'description',
-              'content',
-              { languages_code: ['code'] },
-            ],
-          },
-        ],
-        sort: ['-date_created'],
-        limit: initialPageSize,
-        deep: {
-          translations: { _filter: translationFilter, _limit: 1 },
-          categories: {
-            categories: {
-              translations: { _filter: translationFilter, _limit: 1 },
-            },
-          },
-        },
-      })),
-      directus.request(readItems('categories', {
-        fields: [
-          'id',
-          { translations: ['title', { languages_code: ['code'] }] },
-        ],
-        deep: {
-          translations: { _filter: translationFilter, _limit: 1 },
-        },
-      })),
+    const [blogResult, categoryResult] = await Promise.all([
+      getBlogPage({ locale: cmsLocale, page: 1, limit: pageSize }),
+      getCategories(cmsLocale),
     ])
-
-    totalBlogCount = parseAggregateCount(countResult)
-    blogData = posts
-    categoriesData = categories
+    initialResult = blogResult
+    categories = categoryResult
   } catch (error) {
-    console.error('Error fetching data server-side:', error)
+    console.error('Failed to fetch blog data:', error)
   }
 
   return (
     <BlogPageClient
-      locale={locale}
-      initialBlogData={blogData}
-      categoriesData={categoriesData}
-      totalBlogCount={totalBlogCount}
-      pageSize={initialPageSize}
+      locale={cmsLocale}
+      initialResult={initialResult}
+      categories={categories}
+      pageSize={pageSize}
     />
   )
 }

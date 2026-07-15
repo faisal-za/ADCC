@@ -28,14 +28,3 @@ test('prefers the runtime service binding and keeps a build-time public fallback
     /process\.env\.DIRECTUS_INTERNAL_URL\s*\?\?\s*process\.env\.DIRECTUS_URL\s*\?\?\s*['"]https:\/\/adcc\.sa['"]/,
   )
 })
-
-test('renders Directus-managed media through same-origin asset paths', () => {
-  const assetFiles = [
-    'components/blog-page-client.tsx',
-    'app/(frontend)/[locale]/blog/[id]/page.tsx',
-  ]
-
-  for (const path of assetFiles) {
-    assert.match(read(path), /['"`]\/assets\/\$\{/, path)
-  }
-})

@@ -1,89 +1,103 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { User, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "../hooks/use-translation";
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { loadMoreBlogPosts } from "../lib/actions/blog";
+import type {
+  BlogPageResult,
+  CategoryView,
+  CMSLocale,
+  PostCardView,
+} from "@/lib/cms-types";
 
 interface BlogPageClientProps {
-  locale: string;
-  initialBlogData: any[];
-  categoriesData: any[];
-  totalBlogCount: number;
+  locale: CMSLocale;
+  initialResult: BlogPageResult;
+  categories: CategoryView[];
   pageSize: number;
 }
 
-export default function BlogPageClient({ 
-  locale, 
-  initialBlogData, 
-  categoriesData, 
-  totalBlogCount, 
-  pageSize 
+export default function BlogPageClient({
+  locale,
+  initialResult,
+  categories,
+  pageSize,
 }: BlogPageClientProps) {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const requestSequence = useRef(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [blogData, setBlogData] = useState(initialBlogData);
-  const [currentOffset, setCurrentOffset] = useState(initialBlogData.length);
-  const [hasMore, setHasMore] = useState(initialBlogData.length < totalBlogCount);
+  const [blogData, setBlogData] = useState<PostCardView[]>(initialResult.docs);
+  const [currentPage, setCurrentPage] = useState(initialResult.page);
+  const [totalDocs, setTotalDocs] = useState(initialResult.totalDocs);
+  const [hasMore, setHasMore] = useState(initialResult.hasNextPage);
+  const [loading, setLoading] = useState(false);
 
-  // TanStack Query for loading more posts
-  const {
-    data: morePostsData,
-    refetch: loadMorePosts,
-    isLoading: loading,
-    isSuccess
-  } = useQuery({
-    queryKey: ['blog-load-more', locale, currentOffset],
-    queryFn: async () => {
-      return await loadMoreBlogPosts(currentOffset, pageSize, locale);
-    },
-    enabled: false // Only run when manually triggered
-  });
+  const loadPage = useCallback(async (
+    category: string,
+    page: number,
+    replace: boolean,
+  ) => {
+    const requestID = ++requestSequence.current;
+    const categoryId = category === "all" ? undefined : category;
+    setLoading(true);
 
-  // Handle successful load more response
-  useEffect(() => {
-    if (isSuccess && morePostsData) {
-      const newPosts = morePostsData.data || [];
-      setBlogData(prev => [...prev, ...newPosts]);
-      setCurrentOffset(prev => prev + newPosts.length);
-      setHasMore(morePostsData.hasMore && (blogData.length + newPosts.length < totalBlogCount));
+    try {
+      const result = await queryClient.fetchQuery({
+        queryKey: ["blog-posts", locale, category, page, pageSize],
+        queryFn: () => loadMoreBlogPosts({
+          page,
+          limit: pageSize,
+          locale,
+          categoryId,
+        }),
+        staleTime: 0,
+      });
+
+      if (requestID !== requestSequence.current) return;
+
+      setBlogData((previous) => {
+        if (replace) return result.docs;
+
+        const existingIDs = new Set(previous.map((post) => post.id));
+        return [...previous, ...result.docs.filter((post) => !existingIDs.has(post.id))];
+      });
+      setCurrentPage(result.page);
+      setTotalDocs(result.totalDocs);
+      setHasMore(result.hasNextPage);
+    } catch (error) {
+      if (requestID === requestSequence.current) {
+        console.error("Failed to load blog posts:", error);
+        setHasMore(false);
+      }
+    } finally {
+      if (requestID === requestSequence.current) {
+        setLoading(false);
+      }
     }
-  }, [isSuccess, morePostsData, blogData.length, totalBlogCount]);
+  }, [locale, pageSize, queryClient]);
 
-  // Get unique categories from the actual data
-  const allCategories = categoriesData.map(cat => ({
-    id: cat.id,
-    title: cat.translations?.[0]?.title || 'Unknown'
-  }));
-  
   const availableCategories = [
     { id: "all", title: t("allCategories") || "All" },
-    ...allCategories
+    ...categories,
   ];
-
-  const filteredPosts = selectedCategory === "all" 
-    ? blogData 
-    : blogData.filter((post: any) => {
-        const postCategoryId = post.categories?.[0]?.categories?.id;
-        return postCategoryId === selectedCategory;
-      });
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
-    if (categoryId === "all") {
-      setBlogData(initialBlogData);
-      setCurrentOffset(initialBlogData.length);
-      setHasMore(initialBlogData.length < totalBlogCount);
-    } else {
-      // For category filtering, we reset to show all posts and filter client-side
-      setBlogData(initialBlogData);
-      setCurrentOffset(initialBlogData.length);
-      setHasMore(false); // Disable load more for category filtering for now
-    }
+    setBlogData([]);
+    setCurrentPage(0);
+    setTotalDocs(0);
+    setHasMore(false);
+    void loadPage(categoryId, 1, true);
+  };
+
+  const handleLoadMore = () => {
+    void loadPage(selectedCategory, currentPage + 1, false);
   };
 
   return (
@@ -94,7 +108,7 @@ export default function BlogPageClient({
             href={`/${locale}`}
             className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-4"
           >
-            {locale === 'ar' ? (
+            {locale === "ar" ? (
               <div className="flex flex-row items-center gap-2">
                 <ArrowRight className="h-4 w-4 mr-2" />
                 <p>{t("home")}</p>
@@ -116,13 +130,13 @@ export default function BlogPageClient({
         </div>
       </div>
 
-      {/* Category Filter */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-wrap gap-3 mb-8">
           {availableCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => handleCategoryChange(category.id)}
+              disabled={loading && selectedCategory === category.id}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
                 selectedCategory === category.id
                   ? "bg-primary-600 text-white shadow-lg scale-105"
@@ -134,66 +148,77 @@ export default function BlogPageClient({
           ))}
         </div>
 
-        {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {filteredPosts && filteredPosts.map((post: any) => (
-            <Link key={post.id} href={`/${locale}/blog/${post.id}`} className="group">
-              <Card className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col group-hover:-translate-y-1">
-                <div className="relative">
-                  <div
-                    className="h-48 bg-cover bg-center bg-gray-200"
-                    style={{ 
-                      backgroundImage: post.image?.id
-                        ? `url('/assets/${post.image.id}')`
-                        : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                    }}
-                  />
-                  <div className="absolute top-4 left-4">
-                    <Badge 
-                      variant="default"
-                      className="bg-white/90 text-slate-700 text-xs font-medium hover:bg-white"
-                    >
-                      {post.categories?.[0]?.categories?.translations?.[0]?.title || 'General'}
-                    </Badge>
-                  </div>
-                </div>
-                
-                <CardContent className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-semibold text-slate-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
-                    {post.translations?.[0]?.title || 'Untitled'}
-                  </h3>
+          {blogData.map((post) => {
+            const imageURL = post.image?.value?.url;
+            const hasResolvedCategory = post.categories.some((category) => category.value);
 
-                  <p className="text-slate-600 mb-4 line-clamp-3 flex-1 leading-relaxed">
-                    {post.translations?.[0]?.description || ''}
-                  </p>
-                </CardContent>
-
-                <CardFooter className="p-6 pt-0">
-                  <div className="flex items-center justify-between text-sm text-slate-500 w-full">
-                    <div className="flex flex-row items-center gap-2">
-                      <User className="h-4 w-4" />
-                      <span>ADCC Team</span>
+            return (
+              <Link key={post.id} href={`/${locale}/blog/${post.id}`} className="group">
+                <Card className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col group-hover:-translate-y-1">
+                  <div className="relative">
+                    <div
+                      className="h-48 bg-cover bg-center bg-gray-200"
+                      style={{
+                        backgroundImage: imageURL
+                          ? `url("${imageURL}")`
+                          : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                      }}
+                    />
+                    <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                      {hasResolvedCategory ? post.categories.map((category) =>
+                        category.value ? (
+                          <Badge
+                            key={category.id}
+                            variant="default"
+                            className="bg-white/90 text-slate-700 text-xs font-medium hover:bg-white"
+                          >
+                            {category.value?.title}
+                          </Badge>
+                        ) : null
+                      ) : (
+                        <Badge
+                          variant="default"
+                          className="bg-white/90 text-slate-700 text-xs font-medium hover:bg-white"
+                        >
+                          General
+                        </Badge>
+                      )}
                     </div>
-                    <div className="flex flex-row items-center gap-1">
+                  </div>
+
+                  <CardContent className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-xl font-semibold text-slate-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-slate-600 mb-4 line-clamp-3 flex-1 leading-relaxed">
+                      {post.description || ""}
+                    </p>
+                  </CardContent>
+
+                  <CardFooter className="p-6 pt-0">
+                    <div className="flex items-center justify-between text-sm text-slate-500 w-full">
+                      <div className="flex flex-row items-center gap-2">
+                        <User className="h-4 w-4" />
+                        <span>ADCC Team</span>
+                      </div>
                       <span>
-                        {locale === 'ar' 
-                          ? `${post.read_time || '3'} ${t("minRead") || "دقائق قراءة"}`
-                          : `${post.read_time || '3'} ${t("minRead") || "min read"}`
-                        }
+                        {locale === "ar"
+                          ? `${post.readTime} ${t("minRead") || "دقائق قراءة"}`
+                          : `${post.readTime} ${t("minRead") || "min read"}`}
                       </span>
                     </div>
-                  </div>
-                </CardFooter>
-              </Card>
-            </Link>
-          ))}
+                  </CardFooter>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Load More Button */}
-        {hasMore && selectedCategory === "all" && (
+        {hasMore && blogData.length < totalDocs && (
           <div className="text-center mt-12">
             <button
-              onClick={() => loadMorePosts()}
+              onClick={handleLoadMore}
               disabled={loading}
               className="inline-flex items-center px-8 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
@@ -205,8 +230,8 @@ export default function BlogPageClient({
               ) : (
                 <>
                   {t("loadMore") || "Load More Posts"}
-                  <ArrowLeft 
-                    className={`w-4 h-4 transition-transform ${locale === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`}
+                  <ArrowLeft
+                    className={`w-4 h-4 transition-transform ${locale === "ar" ? "mr-2 rotate-180" : "ml-2"}`}
                   />
                 </>
               )}
@@ -214,14 +239,12 @@ export default function BlogPageClient({
           </div>
         )}
 
-        {/* No Posts State */}
-        {(!filteredPosts || filteredPosts.length === 0) && (
+        {!loading && blogData.length === 0 && (
           <div className="text-center py-12">
             <p className="text-slate-600 text-lg">
-              {selectedCategory === "all" 
+              {selectedCategory === "all"
                 ? (t("noBlogPosts") || "No blog posts available yet. Check back soon!")
-                : (t("noPostsInCategory") || "No posts found in this category.")
-              }
+                : (t("noPostsInCategory") || "No posts found in this category.")}
             </p>
           </div>
         )}
