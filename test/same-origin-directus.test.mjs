@@ -39,6 +39,6 @@ test('renders Directus-managed media through same-origin asset paths', () => {
   ]
 
   for (const path of assetFiles) {
-    assert.match(read(path), /\/assets\/\$\{/, path)
+    assert.match(read(path), /['"`]\/assets\/\$\{/, path)
   }
 })
