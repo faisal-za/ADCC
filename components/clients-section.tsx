@@ -45,7 +45,7 @@ const ClientLogoSlide = ({ client }: { client: Client }) => (
 // Client logo component
 const ClientLogo = ({ client }: { client: Client }) => (
     <Image
-      src={`https://admin.adcc.sa/assets/${client.logo!.id}`}
+      src={`/assets/${client.logo!.id}`}
       alt={client.name || 'Client logo'}
       width={130}
       height={95}

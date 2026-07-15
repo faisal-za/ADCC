@@ -228,9 +228,9 @@ export default function ProjectsSection({ projects = [], categories = [] }: Proj
               key={project.id}
               className="project-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
             >
-              <ImageScroller 
-                images={project.images?.map((img: any) => `https://admin.adcc.sa/assets/${img.directus_files_id?.id}`).filter(Boolean) || []} 
-                title={project.translations?.[0]?.title || 'Project'} 
+              <ImageScroller
+                images={project.images?.map((img: any) => `/assets/${img.directus_files_id?.id}`).filter(Boolean) || []}
+                title={project.translations?.[0]?.title || 'Project'}
               />
               <CardContent className="p-6">
                 <div className="flex flex-wrap gap-2 mb-3">

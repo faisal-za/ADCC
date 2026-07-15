@@ -143,8 +143,8 @@ export default function BlogPageClient({
                   <div
                     className="h-48 bg-cover bg-center bg-gray-200"
                     style={{ 
-                      backgroundImage: post.image?.id 
-                        ? `url('https://admin.adcc.sa/assets/${post.image.id}')` 
+                      backgroundImage: post.image?.id
+                        ? `url('/assets/${post.image.id}')`
                         : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                     }}
                   />

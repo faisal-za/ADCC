@@ -228,7 +228,10 @@ interface ExpandedSchema {
   contact_us: ContactUs[]
 }
 
-const directusUrl = process.env.DIRECTUS_URL ?? 'https://admin.adcc.sa'
+const directusUrl =
+  process.env.DIRECTUS_INTERNAL_URL ??
+  process.env.DIRECTUS_URL ??
+  'https://adcc.sa'
 const directusToken = process.env.DIRECTUS_TOKEN
 
 if (process.env.VERCEL === '1' && !directusToken) {

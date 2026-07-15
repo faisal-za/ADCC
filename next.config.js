@@ -12,12 +12,6 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'admin.adcc.sa',
-        port: '',
-        pathname: '/assets/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'pub-739d7839c19e41459d767b500777a0c7.r2.dev',
         port: '',
         pathname: '/**',

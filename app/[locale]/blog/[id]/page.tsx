@@ -86,8 +86,8 @@ export default async function BlogPostPage({
   };
 
   const getImageUrl = () => {
-    return hasImage 
-      ? `url('https://admin.adcc.sa/assets/${blogPost.image.id}')`
+    return hasImage
+      ? `url('/assets/${blogPost.image.id}')`
       : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
   };
 

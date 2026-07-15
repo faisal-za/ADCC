@@ -75,7 +75,7 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
                 >
                   <div className="aspect-[16/9] relative overflow-hidden">
                     <Image
-                      src={service.image?.id ? `https://admin.adcc.sa/assets/${service.image.id}` : '/placeholder-service.jpg'}
+                      src={service.image?.id ? `/assets/${service.image.id}` : '/placeholder-service.jpg'}
                       alt={service.translations?.[0]?.title || 'Service'}
                       fill
                       className="object-cover transition-transform duration-300 hover:scale-105"
