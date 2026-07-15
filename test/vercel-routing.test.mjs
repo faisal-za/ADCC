@@ -84,9 +84,9 @@ test('keeps canonical host routing out of the frontend-only Next config', () => 
   assert.doesNotMatch(nextConfigSource, /async redirects\s*\(/)
 })
 
-test('starts Directus immediately on Vercel-provided host and port settings', () => {
+test('starts Directus immediately on Vercel container port 80', () => {
   assert.match(dockerfileSource, /^ENV HOST=0\.0\.0\.0\r?$/m)
+  assert.match(dockerfileSource, /^ENV PORT=80\r?$/m)
   assert.match(dockerfileSource, /^CMD \["node", "cli\.js", "start"\]\r?$/m)
-  assert.doesNotMatch(dockerfileSource, /^\s*ENV\s+PORT(?:\s|=)/m)
   assert.doesNotMatch(dockerfileSource, /^\s*(?:RUN|CMD|ENTRYPOINT)\b.*\bbootstrap\b/m)
 })
