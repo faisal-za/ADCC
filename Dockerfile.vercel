@@ -1,5 +1,6 @@
-FROM directus/directus:12.1.1
-
-# Vercel injects PORT at runtime; Directus reads it from the environment.
-ENV HOST=0.0.0.0
-ENV PORT=8055
+FROM node:26-alpine
+WORKDIR /app
+RUN npm ci
+ENV PORT=80
+# Directus must listen on $PORT
+CMD ["npx", "directus", "start"]
