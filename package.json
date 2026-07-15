@@ -12,6 +12,7 @@
     "analyze": "npm run check && cross-env ANALYZE=true next build --webpack",
     "start": "next start",
     "check": "tsc",
+    "test:deployment": "node --test",
     "build:production": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {

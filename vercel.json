@@ -3,7 +3,15 @@
   "services": {
     "frontend": {
       "root": ".",
-      "framework": "nextjs"
+      "framework": "nextjs",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "directus",
+          "format": "url",
+          "env": "DIRECTUS_INTERNAL_URL"
+        }
+      ]
     },
     "directus": {
       "root": ".",
@@ -11,24 +19,39 @@
       "entrypoint": "Dockerfile.vercel"
     }
   },
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "admin.adcc.sa"
-        }
-      ],
-      "destination": {
-        "service": "directus"
-      }
+      "source": "/",
+      "has": [{ "type": "host", "value": "admin.adcc.sa" }],
+      "destination": "https://adcc.sa/admin",
+      "permanent": true
     },
     {
-      "source": "/(.*)",
-      "destination": {
-        "service": "frontend"
-      }
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "admin.adcc.sa" }],
+      "destination": "https://adcc.sa/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.adcc.sa" }],
+      "destination": "https://adcc.sa/:path*",
+      "permanent": true
     }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": { "service": "frontend" } },
+    { "source": "/en", "destination": { "service": "frontend" } },
+    { "source": "/en/(.*)", "destination": { "service": "frontend" } },
+    { "source": "/ar", "destination": { "service": "frontend" } },
+    { "source": "/ar/(.*)", "destination": { "service": "frontend" } },
+    { "source": "/_next/(.*)", "destination": { "service": "frontend" } },
+    { "source": "/api/revalidate", "destination": { "service": "frontend" } },
+    { "source": "/robots.txt", "destination": { "service": "frontend" } },
+    { "source": "/sitemap.xml", "destination": { "service": "frontend" } },
+    { "source": "/favicon.ico", "destination": { "service": "frontend" } },
+    { "source": "/logo_dark.png", "destination": { "service": "frontend" } },
+    { "source": "/logo_white.png", "destination": { "service": "frontend" } },
+    { "source": "/(.*)", "destination": { "service": "directus" } }
   ]
 }

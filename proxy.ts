@@ -4,13 +4,15 @@ import { i18n } from './i18n.config'
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
-  
-  // Check if pathname is missing locale
+
+  if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+    return NextResponse.next()
+  }
+
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
 
-  // Redirect to default locale if missing
   if (pathnameIsMissingLocale) {
     return NextResponse.redirect(
       new URL(`/${i18n.defaultLocale}${pathname}`, request.url)

@@ -48,21 +48,6 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.adcc.sa',
-          },
-        ],
-        destination: 'https://adcc.sa/:path*',
-        permanent: true,
-      },
-    ]
-  },
   async headers() {
     return [
       {
