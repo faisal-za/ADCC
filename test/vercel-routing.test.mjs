@@ -5,6 +5,7 @@ import test from 'node:test'
 const vercel = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'))
 const proxySource = readFileSync(new URL('../proxy.ts', import.meta.url), 'utf8')
 const nextConfigSource = readFileSync(new URL('../next.config.js', import.meta.url), 'utf8')
+const dockerfileSource = readFileSync(new URL('../Dockerfile.vercel', import.meta.url), 'utf8')
 
 const frontendSources = [
   '/',
@@ -81,4 +82,11 @@ test('does not reinterpret the Directus Admin path as a locale', () => {
 
 test('keeps canonical host routing out of the frontend-only Next config', () => {
   assert.doesNotMatch(nextConfigSource, /async redirects\s*\(/)
+})
+
+test('starts Directus immediately on Vercel-provided host and port settings', () => {
+  assert.match(dockerfileSource, /^ENV HOST=0\.0\.0\.0\r?$/m)
+  assert.match(dockerfileSource, /^CMD \["node", "cli\.js", "start"\]\r?$/m)
+  assert.doesNotMatch(dockerfileSource, /^\s*ENV\s+PORT(?:\s|=)/m)
+  assert.doesNotMatch(dockerfileSource, /^\s*(?:RUN|CMD|ENTRYPOINT)\b.*\bbootstrap\b/m)
 })

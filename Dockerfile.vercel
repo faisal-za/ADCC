@@ -1,1 +1,8 @@
 FROM directus/directus:12.1.1
+
+# Vercel injects PORT at runtime; Directus reads it from the environment.
+ENV HOST=0.0.0.0
+
+# Start HTTP immediately to satisfy Vercel's 15-second startup deadline.
+# Database migrations for this existing installation are managed separately.
+CMD ["node", "cli.js", "start"]

@@ -17,7 +17,7 @@
 
 ## Deployment
 
-Add a minimal root `Dockerfile.vercel` pinned to `directus/directus:12.1.1`. Preserve the image's inherited bootstrap/start command and consume Vercel's runtime `PORT`; do not hard-code port 8055.
+Add a minimal root `Dockerfile.vercel` pinned to `directus/directus:12.1.1`. Set `HOST=0.0.0.0`, consume Vercel's runtime `PORT` without hard-coding port 8055, and start Directus directly with `node cli.js start`. The official image's inherited command runs database maintenance before opening its HTTP listener, which exceeds Vercel's 15-second startup deadline for this deployment. Run required database migrations separately and deliberately before changing the pinned Directus version.
 
 Add `vercel.json` with:
 
