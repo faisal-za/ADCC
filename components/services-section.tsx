@@ -5,9 +5,10 @@ import { Card, CardContent } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 import { getIconComponent } from "../lib/icon-map";
 import ServicesSectionHeader from "./services-section-header";
+import type { ServiceView } from "@/lib/cms-types";
 
 interface ServicesSectionProps {
-  services?: any[];
+  services?: ServiceView[];
 }
 
 function getServiceColorClass(index: number): string {
@@ -67,6 +68,7 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
             services.map((service, index) => {
               const IconComponent = getIconComponent(service.icon);
               const colorClass = getServiceColorClass(index);
+              const image = service.image?.value;
               
               return (
                 <Card
@@ -75,8 +77,8 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
                 >
                   <div className="aspect-[16/9] relative overflow-hidden">
                     <Image
-                      src={service.image?.id ? `/assets/${service.image.id}` : '/placeholder-service.jpg'}
-                      alt={service.translations?.[0]?.title || 'Service'}
+                      src={image?.url || '/placeholder-service.jpg'}
+                      alt={image?.alt || service.title}
                       fill
                       unoptimized
                       className="object-cover transition-transform duration-300 hover:scale-105"
@@ -89,10 +91,10 @@ export default function ServicesSection({ services = [] }: ServicesSectionProps)
                       <IconComponent className="h-6 w-6" aria-hidden="true" />
                     </div>
                     <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                      {service.translations?.[0]?.title || 'Service'}
+                      {service.title}
                     </h3>
                     <p className="text-slate-600 mb-4">
-                      {service.translations?.[0]?.description || ''}
+                      {service.description || ''}
                     </p>
                   </CardContent>
                 </Card>

@@ -22,11 +22,10 @@ import {
    OrganizationStructuredData, 
    ServicesStructuredData, BreadcrumbStructuredData } from '@/components/structured-data'
 import { AboutSection, TestimonialsSection, ContactSection } from '@/components/client-sections'
-   
-import { readItems } from '@directus/sdk'
-import { directus } from '@/lib/directus'
+import { getHomepageData } from '@/lib/cms'
+import { parseCMSLocale, type HomepageData } from '@/lib/cms-types'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 function ServicesSkeleton() {
   return (
@@ -131,90 +130,20 @@ export default async function HomePage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  
-  const directusLocale = locale === 'ar' ? 'ar-SA' : 'en-US'
-  const translationFilter = {
-    languages_code: { code: { _eq: directusLocale } }
-  } as const
+  const cmsLocale = parseCMSLocale(locale)
 
-  let servicesData: any[] = []
-  let projectsData: any[] = []
-  let categoriesData: any[] = []
-  let testimonialsData: any[] = []
-  let clientsData: any[] = []
+  let homepageData: HomepageData = {
+    services: [],
+    projects: [],
+    categories: [],
+    testimonials: [],
+    clients: [],
+  }
 
   try {
-    [servicesData, projectsData, categoriesData, testimonialsData, clientsData] = await Promise.all([
-      directus.request(readItems('service', {
-        fields: [
-          'id',
-          'date_created',
-          'date_updated',
-          'icon',
-          { image: ['id'] },
-          {
-            translations: [
-              'id',
-              'title',
-              'description',
-              { languages_code: ['code', 'name'] },
-            ],
-          },
-        ],
-        deep: {
-          translations: { _filter: translationFilter, _limit: 1 },
-        },
-      })),
-      directus.request(readItems('project', {
-        fields: [
-          'id',
-          'date_created',
-          'date_updated',
-          { images: ['id', { directus_files_id: ['id'] }] },
-          {
-            categories: [
-              'id',
-              {
-                categories: [
-                  'id',
-                  { translations: ['id', 'title', 'slug'] },
-                ],
-              },
-            ],
-          },
-          { translations: ['id', 'title', 'description'] },
-        ],
-        deep: {
-          translations: { _filter: translationFilter, _limit: 1 },
-          categories: {
-            categories: {
-              translations: { _filter: translationFilter, _limit: 1 },
-            },
-          },
-        },
-      })),
-      directus.request(readItems('categories', {
-        fields: ['id', { translations: ['id', 'title', 'slug'] }],
-        deep: {
-          translations: { _filter: translationFilter, _limit: 1 },
-        },
-      })),
-      directus.request(readItems('testimonials', {
-        fields: [
-          'id',
-          'date_created',
-          { translations: ['id', 'name', 'text', 'client'] },
-        ],
-        deep: {
-          translations: { _filter: translationFilter, _limit: 1 },
-        },
-      })),
-      directus.request(readItems('clients', {
-        fields: ['id', 'name', { logo: ['id'] }],
-      })),
-    ])
+    homepageData = await getHomepageData(cmsLocale)
   } catch (error) {
-    console.error('Failed to fetch data:', error)
+    console.error('Failed to fetch homepage data:', error)
   }
   
   return (
@@ -224,11 +153,11 @@ export default async function HomePage({
       <BreadcrumbStructuredData locale={locale} />
       <div className="min-h-screen overflow-x-hidden">
         <HeroSection />
-        <ServicesSection services={servicesData} />
-        <ClientsSection clients={clientsData} locale={locale} />
+        <ServicesSection services={homepageData.services} />
+        <ClientsSection clients={homepageData.clients} locale={locale} />
         <AboutSection />
-        <ProjectsSection projects={projectsData} categories={categoriesData} />
-        <TestimonialsSection testimonials={testimonialsData} />
+        <ProjectsSection projects={homepageData.projects} categories={homepageData.categories} />
+        <TestimonialsSection testimonials={homepageData.testimonials} />
         <ContactSection />
       </div>
     </>

@@ -7,10 +7,11 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "../hooks/use-translation";
+import type { CategoryView, ProjectView } from "@/lib/cms-types";
 
 interface ProjectsSectionProps {
-  projects?: any[];
-  categories?: any[];
+  projects?: ProjectView[];
+  categories?: CategoryView[];
 }
 
 const fallbackProjects = [
@@ -177,8 +178,8 @@ export default function ProjectsSection({ projects = [], categories = [] }: Proj
 
   // Filter projects based on selected category
   const filteredProjects = selectedCategory 
-    ? projects.filter(project => 
-        project.categories?.some((cat: any) => cat.categories?.id === selectedCategory)
+    ? projects.filter(project =>
+        project.categories.some((category) => category.id === selectedCategory)
       )
     : projects;
 
@@ -218,7 +219,7 @@ export default function ProjectsSection({ projects = [], categories = [] }: Proj
                   : "border-slate-300 text-slate-600 hover:bg-slate-50"
               }`}
             >
-              {category.translations?.[0]?.title || 'Category'}
+              {category.title}
             </Button>
           ))}
         </div>
@@ -230,30 +231,30 @@ export default function ProjectsSection({ projects = [], categories = [] }: Proj
               className="project-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
             >
               <ImageScroller
-                images={project.images?.map((img: any) => img.directus_files_id?.id).filter(Boolean).map((id: any) => `/assets/${id}`) || []}
-                title={project.translations?.[0]?.title || 'Project'}
+                images={project.images.flatMap((image) => image.value?.url ? [image.value.url] : [])}
+                title={project.title}
               />
               <CardContent className="p-6">
                 <div className="flex flex-wrap gap-2 mb-3">
-                  {project.categories?.map((cat: any) => (
+                  {project.categories.map((category) => (
                     <Badge 
-                      key={cat.id}
-                      variant={cat.categories?.id === selectedCategory ? "default" : "secondary"}
+                      key={category.id}
+                      variant={category.id === selectedCategory ? "default" : "secondary"}
                       className={`transition-all duration-300 ${
-                        cat.categories?.id === selectedCategory 
+                        category.id === selectedCategory
                           ? "bg-primary-600 text-white shadow-md" 
                           : "bg-slate-100 text-slate-700"
                       }`}
                     >
-                      {cat.categories?.translations?.[0]?.title || 'Category'}
+                      {category.value?.title || 'Category'}
                     </Badge>
-                  )) || []}
+                  ))}
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  {project.translations?.[0]?.title || 'Untitled'}
+                  {project.title}
                 </h3>
                 <p className="text-slate-600 mb-4">
-                  {project.translations?.[0]?.description || ''}
+                  {project.description || ''}
                 </p>
               </CardContent>
             </Card>

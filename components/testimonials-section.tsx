@@ -10,85 +10,79 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "./ui/carousel";
 import { useTranslation } from "../hooks/use-translation";
 import { useLanguage } from "../contexts/language-context";
+import type { TestimonialView } from "@/lib/cms-types";
 
-interface Testimonial {
-  id: number;
-  name: string;
-  company: string;
-  content: string;
-  rating: number;
-}
-
-const fallbackTestimonials = [
+const fallbackTestimonials: TestimonialView[] = [
   {
-    id: 1,
+    id: "1",
     name: "Sarah Johnson",
-    company: "Downtown Plaza LLC",
-    content: "ADCC transformed our space beyond expectations. Exceptional quality and professional service.",
+    client: "Downtown Plaza LLC",
+    text: "ADCC transformed our space beyond expectations. Exceptional quality and professional service.",
     rating: 5,
   },
   {
-    id: 2,
+    id: "2",
     name: "Michael Rodriguez",
-    company: "Residential Client",
-    content: "On time, within budget, outstanding craftsmanship. Highly recommend ADCC for any project.",
+    client: "Residential Client",
+    text: "On time, within budget, outstanding craftsmanship. Highly recommend ADCC for any project.",
     rating: 5,
   },
   {
-    id: 3,
+    id: "3",
     name: "Emily Chen",
-    company: "Golden Dragon Restaurant",
-    content: "Perfect execution of our restaurant redesign. Beautiful, functional space with minimal disruption.",
+    client: "Golden Dragon Restaurant",
+    text: "Perfect execution of our restaurant redesign. Beautiful, functional space with minimal disruption.",
     rating: 5,
   },
   {
-    id: 4,
+    id: "4",
     name: "David Thompson",
-    company: "Tech Innovations Inc",
-    content: "Exceptional project management and coordination. Created a modern, inspiring workspace.",
+    client: "Tech Innovations Inc",
+    text: "Exceptional project management and coordination. Created a modern, inspiring workspace.",
     rating: 5,
   },
   {
-    id: 5,
+    id: "5",
     name: "Lisa Martinez",
-    company: "Urban Retail Group",
-    content: "Creative solutions with remarkable attention to detail. Stayed true to our brand identity.",
+    client: "Urban Retail Group",
+    text: "Creative solutions with remarkable attention to detail. Stayed true to our brand identity.",
     rating: 5,
   },
   {
-    id: 6,
+    id: "6",
     name: "Ahmed Al-Mansouri",
-    company: "Gulf Construction",
-    content: "Outstanding construction quality and timely delivery. ADCC exceeded all our expectations for this major project.",
+    client: "Gulf Construction",
+    text: "Outstanding construction quality and timely delivery. ADCC exceeded all our expectations for this major project.",
     rating: 5,
   },
   {
-    id: 7,
+    id: "7",
     name: "Fatima Hassan",
-    company: "Modern Living Spaces",
-    content: "Incredible interior design work. They understood our vision perfectly and brought it to life beautifully.",
+    client: "Modern Living Spaces",
+    text: "Incredible interior design work. They understood our vision perfectly and brought it to life beautifully.",
     rating: 5,
   },
   {
-    id: 8,
+    id: "8",
     name: "Omar Khalil",
-    company: "Riyadh Developments",
-    content: "Professional team with excellent project management. Delivered a high-quality renovation on schedule.",
+    client: "Riyadh Developments",
+    text: "Professional team with excellent project management. Delivered a high-quality renovation on schedule.",
     rating: 5,
   }
 ];
 
 interface TestimonialsSectionProps {
-  testimonials?: any[];
+  testimonials?: TestimonialView[];
 }
 
 export default function TestimonialsSection({ testimonials = [] }: TestimonialsSectionProps) {
   const { t } = useTranslation();
   const { isRTL } = useLanguage();
-  const [api, setApi] = React.useState<any>();
+  const [api, setApi] = React.useState<CarouselApi>();
   
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: false })
@@ -150,10 +144,10 @@ export default function TestimonialsSection({ testimonials = [] }: TestimonialsS
                           </div>
                           <div>
                             <h4 className="font-semibold text-slate-900 text-sm">
-                              {testimonial.translations?.[0]?.name || testimonial.name || 'Client'}
+                              {testimonial.name || 'Client'}
                             </h4>
                             <p className="text-slate-600 text-xs">
-                              {testimonial.translations?.[0]?.client || testimonial.company || ''}
+                              {testimonial.client || ''}
                             </p>
                           </div>
                         </div>
@@ -165,7 +159,7 @@ export default function TestimonialsSection({ testimonials = [] }: TestimonialsS
 
                         {/* Testimonial Content - Takes remaining space with overflow hidden */}
                         <blockquote className="text-slate-700 text-sm leading-relaxed overflow-hidden">
-                          "{testimonial.translations?.[0]?.text || testimonial.content || ''}"
+                          "{testimonial.text || ''}"
                         </blockquote>
                       </CardContent>
                     </Card>

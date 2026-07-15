@@ -10,43 +10,41 @@ import {
   CarouselContent,
   CarouselItem,
 } from "./ui/carousel";
-
-interface Client {
-  id: string;
-  name: string | null;
-  logo: {
-    id: string;
-  } | null;
-}
+import type { ClientView } from "@/lib/cms-types";
 
 interface ClientsSectionProps {
-  clients: Client[];
+  clients: ClientView[];
   locale: string;
 }
 
 // Helper function to create infinite scrolling slides
-const createInfiniteSlides = (clients: Client[]) => {
+const createInfiniteSlides = (clients: ClientView[]) => {
   return [...clients, ...clients, ...clients];
 };
 
 // Individual client logo slide component
-const ClientLogoSlide = ({ client }: { client: Client }) => (
-  <CarouselItem className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 pl-4">
-    <div className="p-2">
-      {client.logo?.id ? (
-        <ClientLogo client={client} />
-      ) : (
-        <ClientPlaceholder name={client.name} />
-      )}
-    </div>
-  </CarouselItem>
-);
+const ClientLogoSlide = ({ client }: { client: ClientView }) => {
+  const logoURL = client.logo?.value?.url;
+  const logoAlt = client.logo?.value?.alt || client.name;
+
+  return (
+    <CarouselItem className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 pl-4">
+      <div className="p-2">
+        {logoURL ? (
+          <ClientLogo url={logoURL} alt={logoAlt} />
+        ) : (
+          <ClientPlaceholder name={client.name} />
+        )}
+      </div>
+    </CarouselItem>
+  );
+};
 
 // Client logo component
-const ClientLogo = ({ client }: { client: Client }) => (
+const ClientLogo = ({ url, alt }: { url: string; alt: string }) => (
     <Image
-      src={`/assets/${client.logo!.id}`}
-      alt={client.name || 'Client logo'}
+      src={url}
+      alt={alt}
       width={130}
       height={95}
       unoptimized
@@ -57,7 +55,7 @@ const ClientLogo = ({ client }: { client: Client }) => (
 );
 
 // Client placeholder for missing logos
-const ClientPlaceholder = ({ name }: { name: string | null }) => (
+const ClientPlaceholder = ({ name }: { name: string }) => (
   <div className="text-center text-slate-400 font-medium text-sm">
     {name || 'Client'}
   </div>
