@@ -23,8 +23,7 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       label: { en: 'Alt Text', ar: 'النص البديل' },
-      localized: true,
-      required: true,
+      localized: true
     },
   ],
   upload: true,
