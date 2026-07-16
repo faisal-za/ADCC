@@ -11,6 +11,7 @@ export default function Footer() {
   const { language } = useLanguage();
   const router = useRouter();
   const pathname = usePathname();
+  const currentYear = new Date().getFullYear();
 
   const scrollToSection = useCallback((id: string) => {
     const isHomePage = pathname === `/${language}`;
@@ -159,7 +160,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-secondary-foreground/20 mt-8 pt-8 text-center">
-          <p className="">&copy; 2024 Advanced Design & Contracting Co. {t('allRights')}</p>
+          <p className="">&copy; {currentYear} Advanced Design & Contracting Co. {t('allRights')}</p>
         </div>
       </div>
     </footer>
