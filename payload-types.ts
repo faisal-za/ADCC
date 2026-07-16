@@ -98,7 +98,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'ar') | ('en' | 'ar')[];
   globals: {};
@@ -136,7 +136,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -161,7 +161,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -180,11 +180,11 @@ export interface Media {
  * via the `definition` "services".
  */
 export interface Service {
-  id: number;
+  id: string;
   title: string;
   description?: string | null;
   icon?: string | null;
-  image?: (number | null) | Media;
+  image?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -193,7 +193,7 @@ export interface Service {
  * via the `definition` "categories".
  */
 export interface Category {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   description?: string | null;
@@ -205,11 +205,11 @@ export interface Category {
  * via the `definition` "projects".
  */
 export interface Project {
-  id: number;
+  id: string;
   title: string;
   description?: string | null;
-  images?: (number | Media)[] | null;
-  categories?: (number | Category)[] | null;
+  images?: (string | Media)[] | null;
+  categories?: (string | Category)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -218,7 +218,7 @@ export interface Project {
  * via the `definition` "posts".
  */
 export interface Post {
-  id: number;
+  id: string;
   title: string;
   description?: string | null;
   content: {
@@ -236,9 +236,9 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  image?: (number | null) | Media;
+  image?: (string | null) | Media;
   readTime: number;
-  categories?: (number | Category)[] | null;
+  categories?: (string | Category)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -247,7 +247,7 @@ export interface Post {
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
-  id: number;
+  id: string;
   name: string;
   client?: string | null;
   text: string;
@@ -260,9 +260,9 @@ export interface Testimonial {
  * via the `definition` "clients".
  */
 export interface Client {
-  id: number;
+  id: string;
   name: string;
-  logo?: (number | null) | Media;
+  logo?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -271,7 +271,7 @@ export interface Client {
  * via the `definition` "contact-submissions".
  */
 export interface ContactSubmission {
-  id: number;
+  id: string;
   name: string;
   email?: string | null;
   phoneNumber: string;
@@ -285,7 +285,7 @@ export interface ContactSubmission {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number;
+  id: string;
   key: string;
   data:
     | {
@@ -302,48 +302,48 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'services';
-        value: number | Service;
+        value: string | Service;
       } | null)
     | ({
         relationTo: 'categories';
-        value: number | Category;
+        value: string | Category;
       } | null)
     | ({
         relationTo: 'projects';
-        value: number | Project;
+        value: string | Project;
       } | null)
     | ({
         relationTo: 'posts';
-        value: number | Post;
+        value: string | Post;
       } | null)
     | ({
         relationTo: 'testimonials';
-        value: number | Testimonial;
+        value: string | Testimonial;
       } | null)
     | ({
         relationTo: 'clients';
-        value: number | Client;
+        value: string | Client;
       } | null)
     | ({
         relationTo: 'contact-submissions';
-        value: number | ContactSubmission;
+        value: string | ContactSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -353,10 +353,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -376,7 +376,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;

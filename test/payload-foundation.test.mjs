@@ -9,7 +9,7 @@ const workspaceConfig = await readFile(new URL('pnpm-workspace.yaml', root), 'ut
 const exactPayloadPackages = [
   'payload',
   '@payloadcms/next',
-  '@payloadcms/db-vercel-postgres',
+  '@payloadcms/db-mongodb',
   '@payloadcms/richtext-lexical',
   '@payloadcms/storage-vercel-blob',
   '@payloadcms/ui',
@@ -34,17 +34,19 @@ test('pins Payload runtime peers and keeps Sharp build approval explicit', () =>
   assert.match(workspaceConfig, /^  bufferutil:\s*false\s*$/m)
 })
 
-test('provides Payload maintenance and migration-aware CI scripts', () => {
+test('provides Payload maintenance scripts without a relational migration step', () => {
   assert.equal(packageJson.scripts?.payload, 'cross-env NODE_OPTIONS=--no-deprecation payload')
   assert.equal(packageJson.scripts?.['generate:types'], 'pnpm payload generate:types')
   assert.equal(packageJson.scripts?.['generate:importmap'], 'pnpm payload generate:importmap')
-  assert.equal(packageJson.scripts?.ci, 'pnpm payload migrate && pnpm build')
+  assert.equal(packageJson.scripts?.ci, 'pnpm build')
+  assert.doesNotMatch(JSON.stringify(packageJson.scripts), /payload\s+migrate|migrate:/)
 
   for (const scriptName of Object.keys(packageJson.scripts ?? {})) {
     assert.doesNotMatch(scriptName, /graphql/i)
   }
 })
 
-test('contains no Directus runtime dependency after retirement', () => {
+test('contains neither retired database nor Directus runtime dependencies', () => {
+  assert.equal(packageJson.dependencies?.['@payloadcms/db-vercel-postgres'], undefined)
   assert.equal(packageJson.dependencies?.['@directus/sdk'], undefined)
 })

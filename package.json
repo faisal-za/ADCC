@@ -16,12 +16,12 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "generate:types": "pnpm payload generate:types",
     "generate:importmap": "pnpm payload generate:importmap",
-    "ci": "pnpm payload migrate && pnpm build",
+    "ci": "pnpm build",
     "build:production": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
-    "@payloadcms/db-vercel-postgres": "3.86.0",
+    "@payloadcms/db-mongodb": "3.86.0",
     "@payloadcms/next": "3.86.0",
     "@payloadcms/richtext-lexical": "3.86.0",
     "@payloadcms/storage-vercel-blob": "3.86.0",

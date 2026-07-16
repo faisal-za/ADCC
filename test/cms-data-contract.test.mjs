@@ -22,32 +22,42 @@ test('defines strict locales and serializable relationship-safe CMS view models'
   assert.match(source, /parseCMSLocale/)
   assert.match(source, /throw new RangeError/)
   assert.match(source, /type CMSRelation<[^>]+>\s*=\s*\{[\s\S]*id:\s*string[\s\S]*value:\s*T\s*\|\s*null/)
-  assert.match(source, /typeof source === ['"]number['"]\s*\|\|\s*typeof source === ['"]string['"]/)
+  assert.match(source, /typeof source === ['"]string['"]/)
+  assert.doesNotMatch(source, /typeof source === ['"]number['"]/)
   assert.match(source, /value:\s*null/)
   assert.doesNotMatch(source, /\bany\b/)
 })
 
-test('normalizes locales, IDs, and unresolved relationships without losing identifiers', () => {
+test('normalizes locales, strict Mongo ObjectIDs, and unresolved relationships without losing identifiers', () => {
   assert.equal(cmsTypes.parseCMSLocale('en'), 'en')
   assert.equal(cmsTypes.parseCMSLocale('ar'), 'ar')
   assert.throws(() => cmsTypes.parseCMSLocale('fr'), RangeError)
 
-  assert.equal(cmsTypes.parsePayloadID('42'), 42)
-  assert.equal(cmsTypes.parsePayloadID(9), 9)
-  for (const invalid of ['', '01', '1.5', 0, -2, Number.MAX_SAFE_INTEGER + 1]) {
+  const objectID = '507f1f77bcf86cd799439011'
+  const upperObjectID = '507F1F77BCF86CD799439011'
+  assert.equal(cmsTypes.parsePayloadID(objectID), objectID)
+  assert.equal(cmsTypes.parsePayloadID(upperObjectID), upperObjectID)
+  for (const invalid of ['', '42', '507f1f77bcf86cd79943901', '507f1f77bcf86cd7994390110', 'g07f1f77bcf86cd799439011', ` ${objectID}`, 9, null]) {
     assert.equal(cmsTypes.parsePayloadID(invalid), null)
   }
 
   assert.equal(cmsTypes.normalizeRelation(null, String), null)
-  assert.deepEqual(cmsTypes.normalizeRelation(42, String), { id: '42', value: null })
-  assert.deepEqual(cmsTypes.normalizeRelation('asset-id', String), {
-    id: 'asset-id',
+  assert.deepEqual(cmsTypes.normalizeRelation(objectID, String), {
+    id: objectID,
     value: null,
   })
   assert.deepEqual(
-    cmsTypes.normalizeRelation({ id: 7, title: 'Expanded' }, ({ title }) => title),
-    { id: '7', value: 'Expanded' },
+    cmsTypes.normalizeRelation({ id: objectID, title: 'Expanded' }, ({ title }) => title),
+    { id: objectID, value: 'Expanded' },
   )
+})
+
+test('generates Mongo string identifiers for Payload collections', async () => {
+  const generated = await readSource('payload-types.ts')
+
+  assert.match(generated, /export interface User \{[\s\S]*?id: string;/)
+  assert.match(generated, /export interface Post \{[\s\S]*?id: string;/)
+  assert.doesNotMatch(generated, /\bid: number;/)
 })
 
 test('reads homepage collections in parallel through trusted Local API calls', async () => {
@@ -75,11 +85,13 @@ test('uses Payload pagination and all-category relationship filtering', async ()
   assert.match(source, /limit:/)
 })
 
-test('looks up posts by strict numeric ID and only treats Payload NotFound as missing', async () => {
+test('looks up posts by strict Mongo ObjectID and only treats Payload NotFound as missing', async () => {
   const source = await readSource('lib/cms.ts')
+  const typesSource = await readSource('lib/cms-types.ts')
 
   assert.match(source, /parsePayloadID/)
-  assert.match(source, /Number\.isSafeInteger/)
+  assert.match(typesSource, /\^\[a-fA-F0-9\]\{24\}\$/)
+  assert.doesNotMatch(typesSource, /Number\.isSafeInteger|Number\(id\)/)
   assert.match(source, /findByID\(/)
   assert.match(source, /error instanceof NotFound/)
   assert.match(source, /return null/)

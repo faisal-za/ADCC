@@ -1,4 +1,4 @@
-import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { ar } from '@payloadcms/translations/languages/ar'
@@ -22,7 +22,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 if (process.env.NODE_ENV === 'production') {
-  for (const name of ['PAYLOAD_SECRET', 'DATABASE_URL', 'BLOB_READ_WRITE_TOKEN'] as const) {
+  for (const name of ['PAYLOAD_SECRET', 'MONGODB_URI', 'BLOB_READ_WRITE_TOKEN'] as const) {
     if (!process.env[name]) {
       throw new Error(`${name} is required in production`)
     }
@@ -47,10 +47,8 @@ export default buildConfig({
     Clients,
     ContactSubmissions,
   ],
-  db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URL,
-    },
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI ?? '',
   }),
   editor: lexicalEditor(),
   graphQL: {

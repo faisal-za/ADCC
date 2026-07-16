@@ -45,7 +45,7 @@ test('removes retired Directus runtime, container, and revalidation artifacts', 
   }
 })
 
-test('contains no Directus SDK, Directus environment contract, or CMS asset-ID construction in active code', async () => {
+test('contains no retired Directus or relational database contract in active code', async () => {
   const activeFiles = [
     ...await collectSources('app'),
     ...await collectSources('components'),
@@ -60,7 +60,11 @@ test('contains no Directus SDK, Directus environment contract, or CMS asset-ID c
 
   for (const relativePath of activeFiles) {
     const source = await readFile(path.join(root, relativePath), 'utf8')
-    assert.doesNotMatch(source, /@directus\/sdk|DIRECTUS_[A-Z_]+|\/assets\/\$\{/, relativePath)
+    assert.doesNotMatch(
+      source,
+      /@directus\/sdk|DIRECTUS_[A-Z_]+|\/assets\/\$\{|DATABASE_URL|POSTGRES_URL|db-vercel-postgres|vercelPostgresAdapter/,
+      relativePath,
+    )
   }
 })
 

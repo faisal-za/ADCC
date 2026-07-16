@@ -1,5 +1,7 @@
 # Payload CMS Migration Implementation Plan
 
+> **MongoDB correction:** Supersede all Neon/Postgres and SQL migration instructions below. Use `@payloadcms/db-mongodb` 3.86.0 with `MONGODB_URI`; Task 8 requires isolated test, Preview, and Production Mongo databases plus Local API integration tests, but no initial relational migration, `payload migrate`, or migration-aware build command.
+
 **Source of truth:** `docs/superpowers/specs/2026-07-15-payload-cms-migration-design.md`  
 **Execution mode:** isolated sequential workers, one implementation commit per task, followed by an independent read-only review  
 **Stop line:** do not push, deploy, mutate Vercel settings, create production users, or run migrations against Production without explicit user authorization

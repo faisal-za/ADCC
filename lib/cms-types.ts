@@ -9,7 +9,10 @@ import type {
 } from '@/payload-types'
 
 export type CMSLocale = 'en' | 'ar'
-export type PayloadIdentifier = number | string
+export type PayloadIdentifier = string
+
+declare const mongoObjectIDBrand: unique symbol
+export type MongoObjectID = string & { readonly [mongoObjectIDBrand]: true }
 
 export type CMSRelation<T> = {
   id: string
@@ -104,11 +107,9 @@ export function parseCMSLocale(locale: string): CMSLocale {
   throw new RangeError(`Unsupported CMS locale: ${locale}`)
 }
 
-export function parsePayloadID(id: PayloadIdentifier): number | null {
-  if (typeof id === 'string' && !/^[1-9]\d*$/.test(id)) return null
-
-  const parsed = typeof id === 'number' ? id : Number(id)
-  return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : null
+export function parsePayloadID(id: unknown): MongoObjectID | null {
+  if (typeof id !== 'string' || !/^[a-fA-F0-9]{24}$/.test(id)) return null
+  return id as MongoObjectID
 }
 
 export function normalizeRelation<T extends { id: PayloadIdentifier }, V>(
@@ -117,7 +118,7 @@ export function normalizeRelation<T extends { id: PayloadIdentifier }, V>(
 ): CMSRelation<V> | null {
   if (source == null) return null
 
-  if (typeof source === 'number' || typeof source === 'string') {
+  if (typeof source === 'string') {
     return { id: String(source), value: null }
   }
 

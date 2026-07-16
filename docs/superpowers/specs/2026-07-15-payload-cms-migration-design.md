@@ -1,5 +1,7 @@
 # Payload CMS Clean-Rebuild Migration Design
 
+> **MongoDB correction:** MongoDB now replaces every Neon/Postgres assumption below. Payload uses `@payloadcms/db-mongodb` 3.86.0 with `MONGODB_URI`; Development, Preview, and Production require isolated Mongo databases, and no relational schema migration or migration-aware build command is used.
+
 **Status:** Approved on 2026-07-15
 
 ## 1. Purpose

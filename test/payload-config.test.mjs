@@ -17,12 +17,13 @@ const collections = [
   ['ContactSubmissions.ts', 'contact-submissions'],
 ]
 
-test('configures Payload with explicit Neon, public Blob, localization, and disabled GraphQL', async () => {
+test('configures Payload with MongoDB, public Blob, localization, and disabled GraphQL', async () => {
   const source = await readSource('payload.config.ts')
 
   assert.match(source, /graphQL:\s*\{\s*disable:\s*true,?\s*\}/s)
-  assert.match(source, /vercelPostgresAdapter\(\{[\s\S]*pool:\s*\{[\s\S]*connectionString:\s*process\.env\.DATABASE_URL/)
-  assert.doesNotMatch(source, /POSTGRES_URL/)
+  assert.match(source, /import \{ mongooseAdapter \} from ['"]@payloadcms\/db-mongodb['"]/)
+  assert.match(source, /mongooseAdapter\(\{[\s\S]*url:\s*process\.env\.MONGODB_URI\s*\?\?\s*['"]['"]/)
+  assert.doesNotMatch(source, /DATABASE_URL|POSTGRES_URL|db-vercel-postgres|vercelPostgresAdapter/)
   assert.match(source, /vercelBlobStorage\(\{[\s\S]*access:\s*['"]public['"]/)
   assert.match(source, /collections:\s*\{\s*media:\s*true\s*\}/s)
   assert.match(source, /token:\s*process\.env\.BLOB_READ_WRITE_TOKEN/)
@@ -31,7 +32,7 @@ test('configures Payload with explicit Neon, public Blob, localization, and disa
   assert.match(source, /defaultLocale:\s*['"]en['"]/)
   assert.match(source, /editor:\s*lexicalEditor\(\)/)
   assert.match(source, /process\.env\.NODE_ENV\s*===\s*['"]production['"]/)
-  for (const name of ['PAYLOAD_SECRET', 'DATABASE_URL', 'BLOB_READ_WRITE_TOKEN']) {
+  for (const name of ['PAYLOAD_SECRET', 'MONGODB_URI', 'BLOB_READ_WRITE_TOKEN']) {
     assert.match(source, new RegExp(`['"]${name}['"]`))
   }
   assert.match(source, /throw new Error\(`\$\{name\} is required in production`\)/)
@@ -86,6 +87,7 @@ test('does not embed credential-shaped values in Payload source', async () => {
   const files = ['payload.config.ts', ...collections.map(([name]) => `payload/collections/${name}`)]
   const source = (await Promise.all(files.map(readSource))).join('\n')
 
+  assert.doesNotMatch(source, /mongodb(?:\+srv)?:\/\/[^\s'"`]+:[^\s'"`]+@/i)
   assert.doesNotMatch(source, /postgres(?:ql)?:\/\/[^\s'"`]+:[^\s'"`]+@/i)
   assert.doesNotMatch(source, /vercel_blob_rw_[A-Za-z0-9_-]+/)
   assert.doesNotMatch(source, /BLOB_READ_WRITE_TOKEN\s*\|\|\s*['"][^'"]+['"]/)

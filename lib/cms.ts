@@ -117,7 +117,7 @@ export async function getBlogPage({
 
   const parsedCategoryID = categoryId === undefined ? null : parsePayloadID(categoryId)
   if (categoryId !== undefined && parsedCategoryID === null) {
-    throw new RangeError('Category ID must be a positive integer')
+    throw new RangeError('Category ID must be a valid Mongo ObjectID')
   }
 
   const payload = await getPayloadClient()
