@@ -62,11 +62,11 @@ export default buildConfig({
     locales: [
       {
         code: 'en',
-        label: 'English',
+        label: { en: 'English', ar: 'الإنجليزية' },
       },
       {
         code: 'ar',
-        label: 'Arabic',
+        label: { en: 'Arabic', ar: 'العربية' },
         rtl: true,
       },
     ],

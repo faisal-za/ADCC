@@ -5,8 +5,13 @@ import { mediaRevalidation } from '../hooks/revalidate'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    singular: { en: 'Media Item', ar: 'ملف وسائط' },
+    plural: { en: 'Media', ar: 'الوسائط' },
+  },
   access: authenticatedAccess,
   admin: {
+    group: { en: 'Content', ar: 'المحتوى' },
     useAsTitle: 'filename',
   },
   hooks: {
@@ -17,6 +22,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
+      label: { en: 'Alt Text', ar: 'النص البديل' },
       localized: true,
       required: true,
     },
