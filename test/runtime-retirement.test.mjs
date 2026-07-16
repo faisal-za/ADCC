@@ -38,6 +38,7 @@ test('removes retired Directus runtime, container, and revalidation artifacts', 
     'lib/directus.ts',
     'Dockerfile.vercel',
     '.dockerignore',
+    'app/api/revalidate/route.ts',
     'app/(frontend)/api/revalidate/route.ts',
     'test/same-origin-directus.test.mjs',
   ]) {
